@@ -1,0 +1,24 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "discord-battleship": "^1.0.4",
+    "discord.js": "^12.5.1",
+    "discord.js-commando": "^0.10.0",
+    "ffmpeg": "0.0.4",
+    "nodemon": "^2.0.7",
+    "opusscript": "0.0.7",
+    "relevant-urban": "^2.0.0",
+    "request": "^2.88.2",
+    "ytdl-core": "^3.4.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
