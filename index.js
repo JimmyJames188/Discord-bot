@@ -22,15 +22,28 @@ var servers = {};
 
 const fs = require('fs');
 
-SundleikurinnData = {
+// Types: 0. Bad, 1. Neutral, 2. Good
+let EndingsList = [
+    {Number: 5, Type: 0}
+]
+
+let SundleikurinnData = {
     userData: {
-        Endings: fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", function(err, data) {
-            if (err){console.error(err); return 0};
-            data = JSON.parse(data)
-            console.log(data)
-        })
+        Endings: undefined
     }
 }
+bot.on('ready', () => {
+    fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", async (err, data) => {
+        if (err){console.error(err); return 0};
+        data = JSON.parse(data)
+
+        for(let i = 0; i < data.length; i++){
+            data[i].User = await bot.users.fetch(data[i].UserId)
+        }
+        console.log(data)
+        SundleikurinnData.userData.Endings = data
+    })
+})
 
 
 
