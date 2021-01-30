@@ -22,7 +22,15 @@ var servers = {};
 
 const fs = require('fs');
 
-
+SundleikurinnData = {
+    userData: {
+        Endings: fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", function(err, data) {
+            if (err){console.error(err); return 0};
+            data = JSON.parse(data)
+            console.log(data)
+        })
+    }
+}
 
 
 
