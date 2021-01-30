@@ -638,12 +638,28 @@ exports.run = async (bot, message, args, tools) => {
 
 bot.on('message', msg=>{
     if(msg.content === "!game"){
-        msg.reply('Ertu viss um að þú viljir spila "Sundleikurinn"?');
+        msg.channel.send('Ertu viss um að þú viljir spila "Sundleikurinn"?');
         
-        const collector = msg.channel.createMessageCollector(m => m.author == msg.author)
+        let collector = msg.channel.createMessageCollector(m => m.author == msg.author)
         collector.on('collect', m =>{
+            
+            
             if(m.content === 'Ja'){
-                msg.reply('Ok nú skulum við byrja')
+                collector.stop()
+                msg.channel.send('**Ok nú skulum við byrja**')
+                setTimeout(() => {
+                    msg.channel.send("**Æfing er klukkan 17:30 í laugardalslauginni. Hvenær leggurðu af stað?** \n 1. 17:30 \n 2. 17:00 \n 3. 16:30 \n 4. Fara bara ekki")
+                    
+                    collector = msg.channel.createMessageCollector(m => m.author == msg.author)
+                    collector.on('collect', m =>{
+                        
+                        switch(m.content){
+                            case '1':
+                                
+                        }
+
+                    })
+                }, 2000);
             }
         })
     }
