@@ -647,20 +647,86 @@ bot.on('message', msg=>{
             if(m.content === 'Ja'){
                 collector.stop()
                 msg.channel.send('**Ok nú skulum við byrja**')
-                setTimeout(() => {
-                    msg.channel.send("**Æfing er klukkan 17:30 í laugardalslauginni. Hvenær leggurðu af stað?** \n 1. 17:30 \n 2. 17:00 \n 3. 16:30 \n 4. Fara bara ekki")
-                    
-                    collector = msg.channel.createMessageCollector(m => m.author == msg.author)
-                    collector.on('collect', m =>{
-                        
-                        switch(m.content){
-                            case '1':
-                                
-                        }
 
-                    })
-                }, 2000);
+                Sundleikurinn(msg.member, msg.channel, 3)
             }
         })
     }
 })
+
+/**
+ * 
+ * @param {Discord.GuildMember} player 
+ * @param {Discord.TextChannel} channel
+ * @param {number} id
+ */
+function Sundleikurinn(player, channel, id){
+    collector = channel.createMessageCollector(m => m.author == player.user)
+    switch(id){
+        case 3:
+            setTimeout(() => {
+                channel.send("**Æfing er klukkan 17:30 í laugardalslauginni. Hvenær leggurðu af stað?** \n 1. 17:30 \n 2. 17:00 \n 3. 16:30 \n 4. Fara bara ekki")
+                
+                collector.on('collect', m =>{
+                    
+                    switch(m.content){
+                        case '1':
+                            collector.stop()
+                            Sundleikurinn(m.member, m.channel, 4)
+                            break;
+                        
+                        case '2':
+                            collector.stop()
+                            break;
+                            
+                        case '3':
+                            collector.stop()
+                            break;
+                            
+                        case '4':
+                            collector.stop()
+                            break;
+
+                        default:
+                            channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 4__`)
+
+                    }
+
+                })
+            }, 2000);
+            break;
+        
+        case 4:
+            channel.send("**Þú kemur of seint… Bíbí er brjáluð. Hún lætur þig synda kílómetra flugsund með einni hendi. \nHvað viltu gera?** \n 1. Synda \n 2. Ekki synda")
+                
+                collector.on('collect', m =>{
+                    
+                    switch(m.content){
+                        case '1':
+                            collector.stop()
+                            Sundleikurinn(m.member, m.channel, 6)
+                            break;
+                        
+                        case '2':
+                            collector.stop()
+                            Sundleikurinn(m.member, m.channel, 5)
+                            break;
+                            
+
+                        default:
+                            channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
+
+                    }
+
+                })
+            break;
+            
+        case 5:
+            channel.send("**Bíbí ræðst á þig og drekkir þig í sundlauginni - Endir**")
+            break;
+            
+        case 6:
+            collector.stop()
+            break;
+    }
+}
