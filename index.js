@@ -697,10 +697,11 @@ function Sundleikurinn(player, channel, id){
             break;
         
         case 4:
-            channel.send("**Þú kemur of seint… Bíbí er brjáluð. Hún lætur þig synda kílómetra flugsund með einni hendi. \nHvað viltu gera?** \n 1. Synda \n 2. Ekki synda")
-                
+            channel.send("**Þú kemur of seint…")
+            setTimeout(() => {
                 collector.on('collect', m =>{
                     
+                    channel.send('**Bíbí er brjáluð! Hún lætur þig synda kílómetra flugsund með einni hendi. \nHvað viltu gera?** \n 1. Synda \n 2. Neita að synda**')
                     switch(m.content){
                         case '1':
                             collector.stop()
@@ -715,10 +716,10 @@ function Sundleikurinn(player, channel, id){
 
                         default:
                             channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
-
                     }
-
                 })
+
+            }, 2000);
             break;
             
         case 5:
