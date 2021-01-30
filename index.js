@@ -697,11 +697,11 @@ function Sundleikurinn(player, channel, id){
             break;
         
         case 4:
-            channel.send("**Þú kemur of seint…")
+            channel.send("**Þú kemur of seint…**")
             setTimeout(() => {
+                channel.send('**Bíbí er brjáluð! Hún lætur þig synda kílómetra flugsund með einni hendi. \nHvað viltu gera?** \n 1. Synda \n 2. Neita að synda')
+                
                 collector.on('collect', m =>{
-                    
-                    channel.send('**Bíbí er brjáluð! Hún lætur þig synda kílómetra flugsund með einni hendi. \nHvað viltu gera?** \n 1. Synda \n 2. Neita að synda**')
                     switch(m.content){
                         case '1':
                             collector.stop()
