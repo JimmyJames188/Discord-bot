@@ -855,5 +855,10 @@ function Sundleikurinn(player, channel, id, PlayerData){
             })
 
             break;
+
+            case 7:
+               
+    
+                break;
     }
 }
