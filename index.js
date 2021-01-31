@@ -27,7 +27,11 @@ const delay = 1000
 // Types: 0. Bad, 1. Neutral, 2. Good
 const EndingsList = [
     {},
-    {Number: 5, Type: 0}
+    {Number: 5, Type: 0},
+    {Number: 7, Type: 2},
+    {Number: 8, Type: 0},
+    {Number: 9, Type: 1},
+    {Number: 12, Type: 0}
 ]
 
 let SundleikurinnData = {
