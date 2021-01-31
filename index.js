@@ -31,7 +31,8 @@ const EndingsList = [
     {Number: 7, Type: 2},
     {Number: 8, Type: 0},
     {Number: 9, Type: 1},
-    {Number: 12, Type: 0}
+    {Number: 12, Type: 0},
+    {Number: 13, Type: 1}
 ]
 
 let SundleikurinnData = {
@@ -1003,10 +1004,12 @@ function Sundleikurinn(player, channel, id, PlayerData){
                     
                     case '2':
                         collector.stop()
+                        Sundleikurinn(m.member, m.channel, 13, PlayerData)
                         break;
                     
                     case '3':
                         collector.stop()
+                        Sundleikurinn(m.member, m.channel, 14, PlayerData)
                         break;
 
                     default:
@@ -1046,5 +1049,35 @@ function Sundleikurinn(player, channel, id, PlayerData){
 
             }
             break;
+        
+            case 13:
+                channel.send("**Þú ferð heim og ekkert sérstakt gerist - Endir**")
+                if(PlayerData.Endings.Endings.length == 0){
+    
+                    PlayerData.Endings.Endings.push(6)
+                    fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                        if (err){console.error(err); return 0}; 
+                        console.log("New ending has been added to user");
+                    });
+                    channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                    return;
+    
+                }else{
+    
+                    for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                        if(PlayerData.Endings.Endings[i] == 6){
+                            return;
+                        }
+                    }
+    
+                    PlayerData.Endings.Endings.push(6)
+                    fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                        if (err){console.error(err); return 0}; 
+                        console.log("New ending has been added to user");
+                    });
+                    channel.send("**Til hamingju með að klára endinguna n. 6 í fyrsta skipti!**")
+    
+                }
+                break;
     }
 }
