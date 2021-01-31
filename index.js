@@ -758,7 +758,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
                     }
 
                 })
-            }, 2000);
+            }, 1000);
             break;
         
         case 4:
@@ -784,7 +784,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
                     }
                 })
 
-            }, 2000);
+            }, 1000);
             break;
             
         case 5:
@@ -819,7 +819,10 @@ function Sundleikurinn(player, channel, id, PlayerData){
             break;
             
         case 6:
-            collector.stop()
+            channel.send('Það er svo mikið álag á hendinni að hún dettur af! Þú sekkur á botninn á lauginni. Einmitt þegar þú hefur sætt þig við dauðann stingur Snær sér ofaní lauginna og blæs á þig svo að þú flýgur upp úr lauginni! Hann tekur þig svo upp með litlu tánni sinni og endurlífgar þig með… Hvað á hann að nota til þess að bjarga þér?')
+            setTimeout(() => {
+
+            },2000);
             break;
     }
 }
