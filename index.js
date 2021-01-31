@@ -669,10 +669,6 @@ bot.on('message', msg=>{
                 collector.stop()
                 msg.channel.send('**Ok nú skulum við byrja**')
 
-                // [{
-                //     "UserId": "394432981667807233",
-                //     "Endings": [1]
-                // }]
                 for(let i = 0; i < SundleikurinnData.userData.Endings.length; i++){
                     if(SundleikurinnData.userData.Endings[i].User == msg.author){
                         Sundleikurinn(msg.member, msg.channel, 3, {Endings: SundleikurinnData.userData.Endings[i]})
