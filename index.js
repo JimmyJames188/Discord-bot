@@ -348,7 +348,7 @@ bot.on("message", async message => {
 })
 
 bot.on("message", async message => {
-    let blacklisted = ['ÞORSTEINN BAD', 'JAMES FOR OWNER', 'PP', "I'M HOME"];
+    let blacklisted = ['ÞORSTEINN BAD', 'JAMES FOR OWNER', "I'M HOME"];
 
     let foundInText = false;
     for (var i in blacklisted) {
@@ -797,7 +797,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
                             channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
                     }
                 })
-
+                
             }, delay);
             break;
             
@@ -832,7 +832,29 @@ function Sundleikurinn(player, channel, id, PlayerData){
             break;
             
         case 6:
-            collector.stop()
+            channel.send('***Það er svo mikið álag á hendinni að hún dettur af! Þú sekkur á botninn á lauginni. Einmitt þegar þú hefur sætt þig við dauðann stingur Snær sér ofaní lauginna og blæs á þig svo að þú flýgur upp úr lauginni! Hann tekur þig svo upp með litlu tánni sinni og endurlífgar þig með… Hvað á hann að nota til þess að bjarga þér?*** \n 1. Lysi \n 2. CPR \n 3. Syngur fyrir þig KR lagið')
+            collector.on('collect', m =>{
+                switch(m.content){
+                    case '1':
+                        collector.stop()
+                        Sundleikurinn(m.member, m.channel, 7, PlayerData)
+                        break;
+                    
+                    case '2':
+                        collector.stop()
+                        Sundleikurinn(m.member, m.channel, 8, PlayerData)
+                        break;
+
+                        case '3':
+                            collector.stop()
+                            Sundleikurinn(m.member, m.channel, 9, PlayerData)
+                            break;
+
+                    default:
+                        channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
+                }
+            })
+
             break;
         case 10:
             channel.send("**Þú kemur á réttum tíma og Bíbí er glöð!**")
