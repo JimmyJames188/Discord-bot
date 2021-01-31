@@ -25,7 +25,7 @@ const fs = require('fs');
 const sl = require('./commands/Sundleikurinn.js')
 
 
-// Types: 0. Bad, 1. Neutral, 2. Good
+// Types: 0. Bad, 1. Neutral, 2. Good 3. Secret
 const EndingsList = [
     {},
     {Number: 5, Type: 0},
@@ -33,7 +33,13 @@ const EndingsList = [
     {Number: 8, Type: 0},
     {Number: 9, Type: 1},
     {Number: 12, Type: 0},
-    {Number: 13, Type: 1}
+    {Number: 13, Type: 1},
+    {Number: 17, Type: 0},
+    {Number: 18, Type: 1},
+    {Number: 19, Type: 0},
+    {Number: 20, Type: 0},
+    {Number: 21, Type: 2},
+    {Number: 22, Type: 1}
 ]
 
 bot.on('ready', () => {
@@ -691,7 +697,7 @@ bot.on('message', msg=>{
         })
 
     }else if(msg.content === "!stats"){
-        let stats = {good: 0, neutral: 0, bad: 0}
+        let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
 
         for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
             if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
@@ -700,8 +706,10 @@ bot.on('message', msg=>{
                         stats.bad++;
                     }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
                         stats.neutral++;
-                    }else{
+                    }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 2){
                         stats.good++;
+                    }else{
+                        stats.sc++;
                     }
                 }
 
@@ -722,7 +730,8 @@ bot.on('message', msg=>{
                     .addFields([
                         {name: "Góðar endingar:", value: stats.good, inline: true},
                         {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
-                        {name: "Vondar endingar:", value: stats.bad, inline: true}
+                        {name: "Vondar endingar:", value: stats.bad, inline: true},
+                        {name: "Secret endingar:", value: stats.sc, inline: false}
                     ])
                     .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
             
