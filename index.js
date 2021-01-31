@@ -699,8 +699,19 @@ bot.on('message', msg=>{
                         stats.good++;
                     }
                 }
+
+                stats.sum = stats.good + stats.bad
+                let color = {red: Math.round((stats.bad / stats.sum) * 255).toString(16), green: Math.round((stats.good / stats.sum) * 255).toString(16)}
+                if(color.red.length < 2){
+                    color.red = "0" * (2 - color.green.length) + color.red
+                }
+                if(color.green.length < 2){
+                    color.green = "0" * (2 - color.green.length) + color.green
+                }
+
+
                 const embeded = new Discord.MessageEmbed()
-                    .setColor('#00A000')
+                    .setColor(`#${color.red + color.green}00`)
                     .setTitle("Tölfræðin þín er:")
                     .setAuthor(msg.member.displayName, msg.author.avatarURL())
                     .addFields([
