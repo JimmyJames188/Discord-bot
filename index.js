@@ -23,7 +23,8 @@ var servers = {};
 const fs = require('fs');
 
 // Types: 0. Bad, 1. Neutral, 2. Good
-let EndingsList = [
+const EndingsList = [
+    {},
     {Number: 5, Type: 0}
 ]
 
@@ -684,6 +685,36 @@ bot.on('message', msg=>{
                 Sundleikurinn(msg.member, msg.channel, 3, {Endings: SundleikurinnData.userData.Endings[SundleikurinnData.userData.Endings.length - 1]})
             }
         })
+    }else if(msg.content === "!stats"){
+        let stats = {good: 0, neutral: 0, bad: 0}
+
+        for(let i = 0; i < SundleikurinnData.userData.Endings.length; i++){
+            if(SundleikurinnData.userData.Endings[i].User == msg.author){
+                for (let j = 0; j < SundleikurinnData.userData.Endings[i].Endings.length; j++) {
+                    if(EndingsList[SundleikurinnData.userData.Endings[i].Endings[j]].Type == 0){
+                        stats.bad++;
+                    }else if(EndingsList[SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
+                        stats.neutral++;
+                    }else{
+                        stats.good++;
+                    }
+                }
+                const embeded = new Discord.MessageEmbed()
+                    .setColor('#00A000')
+                    .setTitle("Tölfræðin þín er:")
+                    .setAuthor(msg.member.displayName, msg.author.avatarURL())
+                    .addFields([
+                        {name: "Góðar endingar:",value: stats.good, inline: true},
+                        {name: "Hlutlausar endingar:",value: stats.neutral, inline: true},
+                        {name: "Vondar endingar:",value: stats.bad, inline: true}
+                    ])
+                    .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
+            
+                msg.channel.send(embeded)
+                return;
+            }
+        }
+        msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
     }
 })
 
