@@ -930,7 +930,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
 
 
             case 9:
-                channel.send('Hann syngur fyrir þér og þú fyllist af ást fyrir KR og grærð hendina til baka. Þú færð lagið á heilann restina af æfingunni - Endir')
+                channel.send('**Hann syngur fyrir þér og þú fyllist af ást fyrir KR og grærð hendina til baka. Þú færð lagið á heilann restina af æfingunni - Endir**')
 
                 if(PlayerData.Endings.Endings.length == 0){
 
