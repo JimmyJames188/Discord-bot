@@ -691,6 +691,7 @@ bot.on('message', msg=>{
                 Sundleikurinn(msg.member, msg.channel, 3, {Endings: SundleikurinnData.userData.Endings[SundleikurinnData.userData.Endings.length - 1]})
             }
         })
+
     }else if(msg.content === "!stats"){
         let stats = {good: 0, neutral: 0, bad: 0}
 
@@ -707,7 +708,7 @@ bot.on('message', msg=>{
                 }
 
                 stats.sum = stats.good + stats.bad
-                let color = {red: Math.round((stats.bad / stats.sum) * 255).toString(16), green: Math.round((stats.good / stats.sum) * 255).toString(16)}
+                let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
                 if(color.red.length < 2){
                     color.red = "0" * (2 - color.green.length) + color.red
                 }
@@ -734,6 +735,8 @@ bot.on('message', msg=>{
         msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
     }
 })
+
+
 
 /**
  * 
