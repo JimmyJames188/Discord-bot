@@ -22,6 +22,8 @@ var servers = {};
 
 const fs = require('fs');
 
+const delay = 1000
+
 // Types: 0. Bad, 1. Neutral, 2. Good
 const EndingsList = [
     {},
@@ -769,7 +771,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
                     }
 
                 })
-            }, 1000);
+            }, delay);
             break;
         
         case 4:
@@ -794,13 +796,12 @@ function Sundleikurinn(player, channel, id, PlayerData){
                             channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
                     }
                 })
-
-            }, 1000);
+                
+            }, delay);
             break;
             
         case 5:
             channel.send("**Bíbí ræðst á þig og drekkir þig í sundlauginni - Endir**")
-            console.log(PlayerData.Endings.Endings)
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(1)
