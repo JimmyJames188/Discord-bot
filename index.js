@@ -893,7 +893,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
                 break;
 
             case 8:
-                channel.send('Snær gerir það of fast og hendin hans fer í gegnum þig - Endir')
+                channel.send('**Snær gerir það of fast og hendin hans fer í gegnum þig - Endir**')
                 
                 if(PlayerData.Endings.Endings.length == 0){
 
