@@ -669,7 +669,23 @@ bot.on('message', msg=>{
                 collector.stop()
                 msg.channel.send('**Ok nú skulum við byrja**')
 
-                Sundleikurinn(msg.member, msg.channel, 3)
+                // [{
+                //     "UserId": "394432981667807233",
+                //     "Endings": [1]
+                // }]
+                for(let i = 0; i < SundleikurinnData.userData.Endings.length; i++){
+                    if(SundleikurinnData.userData.Endings[i].User == msg.author){
+                        Sundleikurinn(msg.member, msg.channel, 3, {Endings: SundleikurinnData.userData.Endings[i]})
+                        return;
+                    }
+                }
+
+                SundleikurinnData.userData.Endings.push({UserId: msg.author.id, User: msg.author, Endings: []})
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New user has been added to Sundleikurinn");
+                });
+                Sundleikurinn(msg.member, msg.channel, 3, {Endings: SundleikurinnData.userData.Endings[SundleikurinnData.userData.Endings.length - 1]})
             }
         })
     }
@@ -680,8 +696,9 @@ bot.on('message', msg=>{
  * @param {Discord.GuildMember} player 
  * @param {Discord.TextChannel} channel
  * @param {number} id
+ * @param {{Endings: {UserId: String, User: Discord.User, Endings: Number[]}}} PlayerData
  */
-function Sundleikurinn(player, channel, id){
+function Sundleikurinn(player, channel, id, PlayerData){
     collector = channel.createMessageCollector(m => m.author == player.user)
     switch(id){
         case 3:
@@ -693,7 +710,7 @@ function Sundleikurinn(player, channel, id){
                     switch(m.content){
                         case '1':
                             collector.stop()
-                            Sundleikurinn(m.member, m.channel, 4)
+                            Sundleikurinn(m.member, m.channel, 4, PlayerData)
                             break;
                         
                         case '2':
@@ -726,12 +743,12 @@ function Sundleikurinn(player, channel, id){
                     switch(m.content){
                         case '1':
                             collector.stop()
-                            Sundleikurinn(m.member, m.channel, 6)
+                            Sundleikurinn(m.member, m.channel, 6, PlayerData)
                             break;
                         
                         case '2':
                             collector.stop()
-                            Sundleikurinn(m.member, m.channel, 5)
+                            Sundleikurinn(m.member, m.channel, 5, PlayerData)
                             break;
                             
 
