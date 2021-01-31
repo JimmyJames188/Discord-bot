@@ -755,6 +755,7 @@ function Sundleikurinn(player, channel, id, PlayerData){
                         
                         case '2':
                             collector.stop()
+                            Sundleikurinn(m.member, m.channel, 10, PlayerData)
                             break;
                             
                         case '3':
@@ -855,10 +856,87 @@ function Sundleikurinn(player, channel, id, PlayerData){
             })
 
             break;
+        case 10:
+            channel.send("**Þú kemur á réttum tíma og Bíbí er glöð!**")
+            setTimeout(() => {
+                channel.send("**Eftir langa og góða æfingu spyr sundfélaginn þinn þig hvort þú viljir koma í pottinn. \nViltu fara með honum?** \n 1. Fara í pottinn \n 2. Afþakka boðið")
+                
+                collector.on('collect', m =>{
+                    
+                    switch(m.content){
+                        case '1':
+                            collector.stop()
+                            Sundleikurinn(m.member, m.channel, 11, PlayerData)
+                            break;
+                        
+                        case '2':
+                            collector.stop()
+                            break;
 
-            case 7:
-               
-    
-                break;
+                        default:
+                            channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
+
+                    }
+
+                })
+            }, delay);
+            break;
+
+        case 11:
+            channel.send("**Þú ferð í pottinn en það eru minnst 30 ármenningar í pottinum! Hvað viltu gera?** \n 1. Bíða eftir að þeir fari úr pottinum  \n 2. Fara bara heim \n 3. Biðja þá um að fara úr pottinum")
+            
+            collector.on('collect', m =>{
+                
+                switch(m.content){
+                    case '1':
+                        collector.stop()
+                        Sundleikurinn(m.member, m.channel, 12, PlayerData)
+                        break;
+                    
+                    case '2':
+                        collector.stop()
+                        break;
+                    
+                    case '3':
+                        collector.stop()
+                        break;
+
+                    default:
+                        channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
+
+                }
+
+            })
+            break;
+        
+        case 12:
+            channel.send("**Vinur þinn nennir ekki að bíða og hann fer en þú neitar að fara. Þú bíður og bíður og bíður þangað til að lokum þú sveltur í hel - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+
+                PlayerData.Endings.Endings.push(5)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+
+            }else{
+
+                for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                    if(PlayerData.Endings.Endings[i] == 5){
+                        return;
+                    }
+                }
+
+                PlayerData.Endings.Endings.push(5)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endinguna n. 5 í fyrsta skipti!**")
+
+            }
+            break;
     }
 }
