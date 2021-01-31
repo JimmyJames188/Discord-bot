@@ -665,6 +665,7 @@ exports.run = async (bot, message, args, tools) => {
 
 
 bot.on('message', msg=>{
+    if(msg.author.id == '691972281840304129')return;
     if(msg.content === "!game"){
         msg.channel.send('Ertu viss um að þú viljir spila "Sundleikurinn"?');
         
