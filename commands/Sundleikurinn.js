@@ -698,6 +698,42 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
     
             }
             break;
+
+        case 25:
+            channel.send("**Þið skorið á þá í skólabaksunds boðsundi. Þið ákvarðið að hver ármenningur fari 25 metra sem þýðir það að þú og vinur þinn skiptið á milli ykkar samtals 750 metra. Þið ákvarðið að synda bara allt í einu og þú byrjar.**")
+
+            setTimeout(() => {
+                channel.send("**Þú tekur góða stungu og byrjar vel. Það líða tveir klukkutímar og þú ert á loka 50 metrunum! Þú byrjar að spretta og klárar! Sundfélaginn þinn stekkur ofaní með glæsilegan snúning í loftinu! Þú bíður í tvo klukkutíma eftir að vinur þinn klári. Hann er á loka metrunum!**")
+
+                setTimeout(() => {
+                    channel.send("**Þið vinnið!**")                    
+                    
+                    setTimeout(() => {
+                        channel.send("**Oh oh! Klukkan er orðin rosa margt! Sundlaugin er lokuð! Hvað viltu gera?** \n 1. Reyna að brjótast út  \n 2. Reyna að finna stað til þess að hanga þangað til að laugin opnar um morguninn")
+                        
+                        collector.on('collect', m =>{
+                            
+                            switch(m.content){
+                                case '1':
+                                    collector.stop()
+                                    exports.Sundleikurinn(m.member, m.channel, 26, PlayerData)
+                                    break;
+                                
+                                case '2':
+                                    collector.stop()
+                                    exports.Sundleikurinn(m.member, m.channel, 30, PlayerData)
+                                    break;
+
+                                default:
+                                    channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
+
+                            }
+
+                        })
+                    }, delay/2)
+                }, delay)
+            }, delay)
+            break;
         
     }
 }
