@@ -127,10 +127,15 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                         exports.Sundleikurinn(m.member, m.channel, 8, PlayerData)
                         break;
 
-                        case '3':
-                            collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 9, PlayerData)
-                            break;
+                    case '3':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 9, PlayerData)
+                        break;
+                            
+                    case '4':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 31, PlayerData)
+                        break;
 
                     default:
                         channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
@@ -852,6 +857,40 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 channel.send("**Til hamingju með að klára endingu n. 17 í fyrsta skipti!**")
     
             }
+            break;
+
+        case 31:
+            channel.send("**Snær reynir að bjarga þér en er allt of seinn. Þegar allir halda að þetta sé búið birtist Gummi Guð. Honum fynnst ekki sanngjarn að þú náðir ekki að klára refsinguna og semur við Gjöfullin að hann leifi þér að koma aftur til Jarðar en þú munt þurfa að stofna kult og forna 100 túristum og Hann mun gefa þér öfl til að hjálpa þér**")
+            
+            setTimeout(() => {
+                channel.send("**Þú gerir eins og hann segir og fórnar 100 túristum með því að nota öldur til að drekkja þá í Vík og lifir svo sem ódauðlegur maður með yfirnáttúrulega krafta - Endir**")
+                if(PlayerData.Endings.Endings.length == 0){
+        
+                    PlayerData.Endings.Endings.push(18)
+                    fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                        if (err){console.error(err); return 0}; 
+                        console.log("New ending has been added to user");
+                    });
+                    channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                    return;
+        
+                }else{
+        
+                    for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                        if(PlayerData.Endings.Endings[i] == 18){
+                            return;
+                        }
+                    }
+        
+                    PlayerData.Endings.Endings.push(18)
+                    fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                        if (err){console.error(err); return 0}; 
+                        console.log("New ending has been added to user");
+                    });
+                    channel.send("**Til hamingju með að klára endingu n. 18 í fyrsta skipti!**")
+        
+                }
+            }, delay)
             break;
         
     }
