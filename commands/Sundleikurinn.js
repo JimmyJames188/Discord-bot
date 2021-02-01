@@ -863,7 +863,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             channel.send("**Þið ákvarðið að bíða til morguns með að reyna að komast út því að þið vitið að allar útidyrahurðir séu lokaðar. Þið farið niður í þreksalinn til þess að ná í dýnurnar þar og farið með þær undir áhorfendapallana. Þið sofið þar. Þið vaknið við óhljóðin í hana! Þú fattar að þú sért niðurkomin/n í miðjan húsdýragarðinn! Starfsfólkið neitar að hleypa þér út þannig að þú lifir restina af lífinu þínu hjá selunum - Endir**")
             if(PlayerData.Endings.Endings.length == 0){
         
-                PlayerData.Endings.Endings.push(19)
+                PlayerData.Endings.Endings.push(18)
                 fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
                     if (err){console.error(err); return 0}; 
                     console.log("New ending has been added to user");
@@ -874,7 +874,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             }else{
     
                     for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
-                       if(PlayerData.Endings.Endings[i] == 19){
+                       if(PlayerData.Endings.Endings[i] == 18){
                          return;
                     }
                 }
