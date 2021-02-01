@@ -30,25 +30,25 @@ const sl = require('./commands/Sundleikurinn.js')
 // Types: 0. Bad, 1. Neutral, 2. Good
 const EndingsList = [
     {},
-    {Number: 5, Type: 0, Secret: false},
-    {Number: 7, Type: 2, Secret: false},
-    {Number: 8, Type: 0, Secret: false},
-    {Number: 9, Type: 1, Secret: false},
-    {Number: 12, Type: 0, Secret: false},
-    {Number: 13, Type: 1, Secret: false},
-    {Number: 17, Type: 0, Secret: true},
-    {Number: 18, Type: 1, Secret: true},
-    {Number: 19, Type: 0, Secret: false},
-    {Number: 20, Type: 0, Secret: false},
-    {Number: 21, Type: 2, Secret: false},
-    {Number: 22, Type: 1, Secret: true},
-    {Number: 23, Type: 2, Secret: false},
-    {Number: 24, Type: 0, Secret: false},
-    {Number: 27, Type: 1, Secret: false},
-    {Number: 28, Type: 2, Secret: false},
-    {Number: 29, Type: 0, Secret: false},
-    {Number: 30, Type: 0, Secret: false},
-    {Number: 31, Type: 2, Secret: true}
+    {Number: 5, Type: 0, Secret: false}, // 1
+    {Number: 7, Type: 2, Secret: false}, // 2
+    {Number: 8, Type: 0, Secret: false}, // 3
+    {Number: 9, Type: 1, Secret: false}, // 4
+    {Number: 12, Type: 0, Secret: false}, //5
+    {Number: 13, Type: 1, Secret: false}, //6
+    {Number: 17, Type: 0, Secret: true}, // 7
+    {Number: 18, Type: 1, Secret: true}, // 1
+    {Number: 19, Type: 0, Secret: false}, //9
+    {Number: 20, Type: 0, Secret: false}, //10
+    {Number: 21, Type: 2, Secret: false}, //11
+    {Number: 22, Type: 1, Secret: true},  //12
+    {Number: 23, Type: 2, Secret: false}, //13
+    {Number: 24, Type: 0, Secret: false}, //14
+    {Number: 27, Type: 1, Secret: false}, //15
+    {Number: 28, Type: 2, Secret: false}, //16
+    {Number: 29, Type: 0, Secret: false}, //17
+    {Number: 30, Type: 0, Secret: false}, //18
+    {Number: 31, Type: 2, Secret: true} //  19
 ]
 
 cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
