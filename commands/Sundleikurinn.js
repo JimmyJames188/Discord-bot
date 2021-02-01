@@ -896,7 +896,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 channel.send("**Þú gerir eins og hann segir og fórnar 100 túristum með því að nota öldur til að drekkja þá í Vík og lifir svo sem ódauðlegur maður með yfirnáttúrulega krafta - Endir**")
                 if(PlayerData.Endings.Endings.length == 0){
         
-                    PlayerData.Endings.Endings.push(18)
+                    PlayerData.Endings.Endings.push(19)
                     fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
                         if (err){console.error(err); return 0}; 
                         console.log("New ending has been added to user");
@@ -907,17 +907,17 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 }else{
         
                     for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
-                        if(PlayerData.Endings.Endings[i] == 18){
+                        if(PlayerData.Endings.Endings[i] == 19){
                             return;
                         }
                     }
         
-                    PlayerData.Endings.Endings.push(18)
+                    PlayerData.Endings.Endings.push(19)
                     fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
                         if (err){console.error(err); return 0}; 
                         console.log("New ending has been added to user");
                     });
-                    channel.send("**Til hamingju með að klára endingu n. 18 í fyrsta skipti!**")
+                    channel.send("**Til hamingju með að klára endingu n. 19 í fyrsta skipti!**")
         
                 }
             }, delay)
