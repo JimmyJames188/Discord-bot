@@ -47,6 +47,7 @@ const EndingsList = [
     {Number: 27, Type: 1, Secret: false},
     {Number: 28, Type: 2, Secret: false},
     {Number: 29, Type: 0, Secret: false},
+    {Number: 30, Type: 0, Secret: false},
     {Number: 31, Type: 2, Secret: true}
 ]
 
