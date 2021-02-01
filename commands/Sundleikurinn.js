@@ -697,7 +697,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 channel.send("**Til hamingju með að klára endingu n. 14 í fyrsta skipti!**")
     
             }
-                break;
+            break;
         
     }
 }
