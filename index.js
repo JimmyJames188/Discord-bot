@@ -4,6 +4,8 @@ const Discord = require("discord.js");
 
 const urban = require("relevant-urban")
 
+const cvs = require('canvas')
+
 const cheerio = require('cheerio');
 
 const request = require('request');
@@ -47,6 +49,19 @@ const EndingsList = [
     {Number: 29, Type: 0, Secret: false},
     {Number: 31, Type: 2, Secret: true}
 ]
+
+cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
+    if (width < 2 * radius) radius = width / 2;
+    if (height < 2 * radius) radius = height / 2;
+    this.beginPath();
+    this.moveTo(x + radius, y);
+    this.arcTo(x + width, y, x + width, y + height, radius);
+    this.arcTo(x + width, y + height, x, y + height, radius);
+    this.arcTo(x, y + height, x, y, radius);
+    this.arcTo(x, y, x + width, y, radius);
+    this.closePath();
+    return this;
+}
 
 bot.on('ready', () => {
     fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", async (err, data) => {
@@ -743,6 +758,102 @@ bot.on('message', msg=>{
                     .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
             
                 msg.channel.send(embeded)
+                return;
+            }
+        }
+        msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
+    }else if(msg.content === "!stats map"){
+        let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
+
+        for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
+            if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
+                for (let j = 0; j < sl.SundleikurinnData.userData.Endings[i].Endings.length; j++) {
+                    if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 0){
+                        stats.bad++;
+                    }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
+                        stats.neutral++;
+                    }else{
+                        stats.good++;
+                    }
+                    if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Secret){
+                        stats.sc++;
+                    }
+                }
+
+                stats.sum = stats.good + stats.bad
+                let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
+                if(color.red.length < 2){
+                    color.red = "0" * (2 - color.green.length) + color.red
+                }
+                if(color.green.length < 2){
+                    color.green = "0" * (2 - color.green.length) + color.green
+                }
+
+                
+                const w = 125
+                const h = 200
+                const w1 = Math.floor(Math.sqrt(EndingsList.length - 1)) * 2
+                const width = (w + 100) * w1
+                const height = Math.ceil((EndingsList.length - 1) / w1) * (h + 100)
+
+                const canvas = cvs.createCanvas(width, height)
+                const context = canvas.getContext('2d')
+
+                for (let k = 0; k < EndingsList.length - 1; k++) {
+                    context.fillStyle = '#000000'
+                    context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
+                    context.fill();
+
+                    
+                    context.fillStyle = '#000000'
+                    for (let j = 0; j < sl.SundleikurinnData.userData.Endings[i].Endings.length; j++) {
+                        if(sl.SundleikurinnData.userData.Endings[i].Endings[j] == k + 1){
+                            if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 0){
+                                context.fillStyle = '#A00000'
+                            }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
+                                context.fillStyle = '#A0A000'
+                            }else{
+                                context.fillStyle = '#00A000'
+                            }
+                            if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Secret){
+                                context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
+                                context.fill();
+                                context.strokeStyle = '#000000'
+                                context.lineWidth = h / 20;
+                                context.stroke()
+                                context.fillStyle = '#000000'
+                            }
+                        }
+                    }
+                    context.font = 'bold 70pt Menlo'
+                    context.textBaseline = 'middle'
+                    context.textAlign = 'center'
+                    context.fillText(k + 1, (k % w1) * (w + 100) + 50 + w / 2, Math.floor(k / w1) * (h + 100) + 50 + h / 2)
+                }
+
+                // console.log('<img src="' + canvas.toBuffer() + '" />')
+                fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
+
+
+                const embeded = new Discord.MessageEmbed()
+                    .setColor(`#${color.red + color.green}00`)
+                    .setTitle("Tölfræðin þín er:")
+                    .setAuthor(msg.member.displayName, msg.author.avatarURL())
+                    .addFields([
+                        {name: "Góðar endingar:", value: stats.good, inline: true},
+                        {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
+                        {name: "Vondar endingar:", value: stats.bad, inline: true},
+                        {name: "Secret endingar:", value: stats.sc, inline: false}
+                    ])
+                    .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
+            
+                msg.channel.send("", {
+                    embed: embeded.setImage("attachment://map.png"),
+                    files: [{
+                        attachment: 'img\\map.png',
+                        name: 'map.png'
+                    }]
+                })
                 return;
             }
         }

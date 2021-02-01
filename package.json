@@ -10,6 +10,7 @@
   "author": "James",
   "license": "ISC",
   "dependencies": {
+    "canvas": "^2.6.1",
     "cheerio": "^1.0.0-rc.3",
     "discord-battleship": "^1.0.4",
     "discord.js": "^12.5.1",
