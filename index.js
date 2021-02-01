@@ -39,7 +39,12 @@ const EndingsList = [
     {Number: 19, Type: 0},
     {Number: 20, Type: 0},
     {Number: 21, Type: 2},
-    {Number: 22, Type: 1}
+    {Number: 22, Type: 1},
+    {Number: 23, Type: 2},
+    {Number: 24, Type: 0},
+    {Number: 27, Type: 1},
+    {Number: 28, Type: 2},
+    {Number: 29, Type: 0}
 ]
 
 bot.on('ready', () => {
