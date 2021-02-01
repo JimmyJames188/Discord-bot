@@ -745,11 +745,15 @@ bot.on('message', msg=>{
                     color.green = "0" * (2 - color.green.length) + color.green
                 }
 
-
+                
+                let u = msg.member
+                if(!u){
+                    u = msg.author
+                }
                 const embeded = new Discord.MessageEmbed()
                     .setColor(`#${color.red + color.green}00`)
                     .setTitle("Tölfræðin þín er:")
-                    .setAuthor(msg.member.displayName, msg.author.avatarURL())
+                    .setAuthor(u.displayName, msg.author.avatarURL())
                     .addFields([
                         {name: "Góðar endingar:", value: stats.good, inline: true},
                         {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
@@ -835,11 +839,15 @@ bot.on('message', msg=>{
                 // console.log('<img src="' + canvas.toBuffer() + '" />')
                 fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
 
-
+     
+                let u = msg.member
+                if(!u){
+                    u = msg.author
+                }
                 const embeded = new Discord.MessageEmbed()
                     .setColor(`#${color.red + color.green}00`)
                     .setTitle("Tölfræðin þín er:")
-                    .setAuthor(msg.member.displayName, msg.author.avatarURL())
+                    .setAuthor(u.displayName, msg.author.avatarURL())
                     .addFields([
                         {name: "Góðar endingar:", value: stats.good, inline: true},
                         {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
