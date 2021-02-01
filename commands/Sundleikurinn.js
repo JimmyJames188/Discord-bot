@@ -734,6 +734,125 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 }, delay)
             }, delay)
             break;
+
+        case 26:
+            channel.send("**Þið reynið að brjóta öll gler í laugardalslauginni til þess að komast út en ekkert þeirra brotnar! Þið finnið takkann í tæknibúrinu sem opnar þakið. ⁷Þið opnið það og klifrið út. Æ æ! Fólk í nágrenninu hefur hringt í lögregluna! Lögreglan heldur að þið séuð að brjótast inn í laugina. Hvað viltu gera?** \n 1. Hoppa ofan í laugina og reyna að finna felustað  \n 2. Gefast upp \n 3. Hlaupa upp á Hrafnistu og fela þig þar")
+            
+            collector.on('collect', m =>{
+                
+                switch(m.content){
+                    case '1':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 28, PlayerData)
+                        break;
+                    
+                    case '2':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 29, PlayerData)
+                        break;
+                    
+                    case '3':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 27, PlayerData)
+                        break;
+
+                    default:
+                        channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 3__`)
+
+                }
+
+            })
+            break;
+
+        case 27:
+            channel.send("**Þið hoppið niður af laugardalslauginni og lendið í runna fyrir aftan laugina. Þið hlaupið! Þið felið ykkur á Hrafnistu í tvo daga og farið svo heim - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+    
+                PlayerData.Endings.Endings.push(15)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                  });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+    
+            }else{
+    
+                for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                       if(PlayerData.Endings.Endings[i] == 15){
+                         return;
+                    }
+                }
+    
+                PlayerData.Endings.Endings.push(15)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endingu n. 15 í fyrsta skipti!**")
+    
+            }
+            break;
+
+        case 28:
+            channel.send("**Þið hoppið ofaní laugina og ætlið að synda upp að bakkanum en þið takið eftir hlera á botninum í lauginni! Þið opnið hann og farið inn. Inni er falið herbergi þar sem það er heill stafli af gulli og peningum! Þetta er eins og að koma inn í peningageyminn hans Jóakims Aðalandar! Þú skiptir ágóðanum með félaganum þínum og þið verðið rosalega ríkir! - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+    
+                PlayerData.Endings.Endings.push(16)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                  });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+    
+            }else{
+    
+                for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                       if(PlayerData.Endings.Endings[i] == 16){
+                         return;
+                    }
+                }
+    
+                PlayerData.Endings.Endings.push(16)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endingu n. 16 í fyrsta skipti!**")
+    
+            }
+            break;
+
+        case 29:
+            channel.send("**Þið gefist upp og farið í fangelsi í tvö ár - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+    
+                PlayerData.Endings.Endings.push(17)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                  });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+    
+            }else{
+    
+                for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                       if(PlayerData.Endings.Endings[i] == 17){
+                         return;
+                    }
+                }
+    
+                PlayerData.Endings.Endings.push(17)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endingu n. 17 í fyrsta skipti!**")
+    
+            }
+            break;
         
     }
 }
