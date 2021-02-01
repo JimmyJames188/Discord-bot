@@ -329,35 +329,35 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             }
             break;
         
-            case 13:
-                channel.send("**Þú ferð heim og ekkert sérstakt gerist - Endir**")
-                if(PlayerData.Endings.Endings.length == 0){
+        case 13:
+            channel.send("**Þú ferð heim og ekkert sérstakt gerist - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+
+                PlayerData.Endings.Endings.push(6)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+
+            }else{
     
-                    PlayerData.Endings.Endings.push(6)
-                    fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
-                        if (err){console.error(err); return 0}; 
-                        console.log("New ending has been added to user");
-                    });
-                    channel.send("**Til hamingju með að klára fyrstu endinguna!**")
-                    return;
-    
-                }else{
-    
-                    for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
-                        if(PlayerData.Endings.Endings[i] == 6){
-                            return;
-                        }
+                for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                    if(PlayerData.Endings.Endings[i] == 6){
+                        return;
                     }
-    
-                    PlayerData.Endings.Endings.push(6)
-                    fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
-                        if (err){console.error(err); return 0}; 
-                        console.log("New ending has been added to user");
-                    });
-                    channel.send("**Til hamingju með að klára endinguna n. 6 í fyrsta skipti!**")
-    
                 }
-                break;
+    
+                PlayerData.Endings.Endings.push(6)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endinguna n. 6 í fyrsta skipti!**")
+
+            }
+            break;
 
         case 14:
             channel.send("**Þú biður þá um að fara. Oh oh! Þeir eru ekki ánægðir! Hvað viltu gera?** \n 1. Fara í slag til þess að vinna pottinn  \n 2. Hlaupa í burtu \n 3. Reyna að róa þá \n 4. Reyna að fá þá út úr pottinum til þess að ýta þeim ofaní sundlauginna")
@@ -855,6 +855,36 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     console.log("New ending has been added to user");
                 });
                 channel.send("**Til hamingju með að klára endingu n. 17 í fyrsta skipti!**")
+    
+            }
+            break;
+
+        case 30:
+            channel.send("**Þið ákvarðið að bíða til morguns með að reyna að komast út því að þið vitið að allar útidyrahurðir séu lokaðar. Þið farið niður í þreksalinn til þess að ná í dýnurnar þar og farið með þær undir áhorfendapallana. Þið sofið þar. Þið vaknið við óhljóðin í hana! Þú fattar að þú sért niðurkomin/n í miðjan húsdýragarðinn! Starfsfólkið neitar að hleypa þér út þannig að þú lifir restina af lífinu þínu hjá selunum - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+        
+                PlayerData.Endings.Endings.push(19)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                  });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+    
+            }else{
+    
+                    for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                       if(PlayerData.Endings.Endings[i] == 19){
+                         return;
+                    }
+                }
+        
+                PlayerData.Endings.Endings.push(18)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endingu n. 18 í fyrsta skipti!**")
     
             }
             break;
