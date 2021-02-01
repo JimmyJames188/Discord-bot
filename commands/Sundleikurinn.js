@@ -253,6 +253,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                         
                         case '2':
                             collector.stop()
+                            exports.Sundleikurinn(m.member, m.channel, 13, PlayerData)
                             break;
 
                         default:
