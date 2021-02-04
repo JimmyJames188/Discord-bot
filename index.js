@@ -30,7 +30,7 @@ const sl = require('./commands/Sundleikurinn.js')
 // Types: 0. Bad, 1. Neutral, 2. Good
 const EndingsList = [
     {},
-    {Number: 5, Type: 0, Secret: false}, //  1
+    {Number: 5, Type: 0, Secret: false}, //     1
     {Number: 7, Type: 2, Secret: false}, //  2
     {Number: 8, Type: 0, Secret: false}, //  3
     {Number: 9, Type: 1, Secret: false}, //  4
