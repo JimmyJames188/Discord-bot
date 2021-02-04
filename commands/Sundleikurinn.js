@@ -380,7 +380,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                         exports.Sundleikurinn(m.member, m.channel, 37, PlayerData)
                         break;
                     
-                    case '3':
+                    case '4':
                         collector.stop()
                         //exports.Sundleikurinn(m.member, m.channel, 14, PlayerData)
                         break;
