@@ -30,26 +30,28 @@ const sl = require('./commands/Sundleikurinn.js')
 // Types: 0. Bad, 1. Neutral, 2. Good
 const EndingsList = [
     {},
-    {Number: 5, Type: 0, Secret: false}, // 1
-    {Number: 7, Type: 2, Secret: false}, // 2
-    {Number: 8, Type: 0, Secret: false}, // 3
-    {Number: 9, Type: 1, Secret: false}, // 4
-    {Number: 12, Type: 0, Secret: false}, //5
-    {Number: 13, Type: 1, Secret: false}, //6
-    {Number: 17, Type: 0, Secret: true}, // 7
-    {Number: 18, Type: 1, Secret: true}, // 1
-    {Number: 19, Type: 0, Secret: false}, //9
-    {Number: 20, Type: 0, Secret: false}, //10
-    {Number: 21, Type: 2, Secret: false}, //11
-    {Number: 22, Type: 1, Secret: true},  //12
-    {Number: 23, Type: 2, Secret: false}, //13
-    {Number: 24, Type: 0, Secret: false}, //14
-    {Number: 27, Type: 1, Secret: false}, //15
-    {Number: 28, Type: 2, Secret: false}, //16
-    {Number: 29, Type: 0, Secret: false}, //17
-    {Number: 30, Type: 0, Secret: false}, //18
-    {Number: 31, Type: 2, Secret: true}, // 19
-    {Number: 33, Type: 2, Secret: false} //  20
+    {Number: 5, Type: 0, Secret: false}, //  1
+    {Number: 7, Type: 2, Secret: false}, //  2
+    {Number: 8, Type: 0, Secret: false}, //  3
+    {Number: 9, Type: 1, Secret: false}, //  4
+    {Number: 12, Type: 0, Secret: false}, // 5
+    {Number: 13, Type: 1, Secret: false}, // 6
+    {Number: 17, Type: 0, Secret: true}, //  7
+    {Number: 18, Type: 1, Secret: true}, //  1
+    {Number: 19, Type: 0, Secret: false}, // 9
+    {Number: 20, Type: 0, Secret: false}, // 10
+    {Number: 21, Type: 2, Secret: false}, // 11
+    {Number: 22, Type: 1, Secret: true},  // 12
+    {Number: 23, Type: 2, Secret: false}, // 13
+    {Number: 24, Type: 0, Secret: false}, // 14
+    {Number: 27, Type: 1, Secret: false}, // 15
+    {Number: 28, Type: 2, Secret: false}, // 16
+    {Number: 29, Type: 0, Secret: false}, // 17
+    {Number: 30, Type: 0, Secret: false}, // 18
+    {Number: 31, Type: 2, Secret: true}, //  19
+    {Number: 33, Type: 2, Secret: false}, // 20
+    {Number: 35, Type: 2, Secret: false}, // 21
+    {Number: 36, Type: 0, Secret: false} //  22
 ]
 
 cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {

@@ -924,7 +924,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 32:
-            channel.send("**Þú snýrð þér við og hleypur! Vinurinn þinn gerir hið sama. Hvað viltu gera?**")
+            channel.send("**Þú snýrð þér við og hleypur! Vinurinn þinn gerir hið sama. Hvað viltu gera?** \n 1. Hlaupa út um innganginn \n 2. Reyna fela þig eitthvernsstaðar")
             
             collector.on('collect', m =>{
                 
@@ -936,7 +936,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     
                     case '2':
                         collector.stop()
-                        //exports.Sundleikurinn(m.member, m.channel, 34, PlayerData)
+                        exports.Sundleikurinn(m.member, m.channel, 34, PlayerData)
                         break;
                     
 
@@ -979,7 +979,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 34:
-            channel.send("**Hvar viltu fela þig?**")
+            channel.send("**Hvar viltu fela þig?** \n 1. Í tæknibúrinu \n 2. Í skáp niðri í klefanu")
             
             collector.on('collect', m =>{
                 
