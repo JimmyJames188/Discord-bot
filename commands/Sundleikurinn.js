@@ -931,7 +931,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        //exports.Sundleikurinn(m.member, m.channel, 33, PlayerData)
+                        exports.Sundleikurinn(m.member, m.channel, 33, PlayerData)
                         break;
                     
                     case '2':
@@ -974,6 +974,91 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     console.log("New ending has been added to user");
                 });
                 channel.send("**Til hamingju með að klára endingu n. 20 í fyrsta skipti!**")
+    
+            }
+            break;
+
+        case 34:
+            channel.send("**Hvar viltu fela þig?**")
+            
+            collector.on('collect', m =>{
+                
+                switch(m.content){
+                    case '1':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 35, PlayerData)
+                        break;
+                    
+                    case '2':
+                        collector.stop()
+                        exports.Sundleikurinn(m.member, m.channel, 36, PlayerData)
+                        break;
+                    
+
+                    default:
+                        channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 3__`)
+
+                }
+
+            })
+            break;
+
+        case 35:
+            channel.send("**Þú hleypur inn í tæknibúrið! Oh oh! Þú rakst í takkann sem kveikir á eldflaugunum undir lauginni sem sendir laugardalslaugina til mars! - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+        
+                PlayerData.Endings.Endings.push(21)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                  });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+    
+            }else{
+    
+                    for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                       if(PlayerData.Endings.Endings[i] == 21){
+                         return;
+                    }
+                }
+        
+                PlayerData.Endings.Endings.push(21)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endingu n. 21 í fyrsta skipti!**")
+    
+            }
+            break;
+
+        case 36:
+            channel.send("**Þú hleypur inn í klefann og finnur stóran skáp. Þú kemur þér fyrir og lokar skápnum! Oh oh! Ármenningarnir læstu skápnum! Þeir fara síðan með lykilinn í pottinn og hanga þar. Þú sveltur í hel - Endir**")
+            if(PlayerData.Endings.Endings.length == 0){
+        
+                PlayerData.Endings.Endings.push(22)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                  });
+                channel.send("**Til hamingju með að klára fyrstu endinguna!**")
+                return;
+    
+            }else{
+    
+                    for (let i = 0; i < PlayerData.Endings.Endings.length; i++) {
+                       if(PlayerData.Endings.Endings[i] == 22){
+                         return;
+                    }
+                }
+        
+                PlayerData.Endings.Endings.push(22)
+                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
+                    if (err){console.error(err); return 0}; 
+                    console.log("New ending has been added to user");
+                });
+                channel.send("**Til hamingju með að klára endingu n. 22 í fyrsta skipti!**")
     
             }
             break;
