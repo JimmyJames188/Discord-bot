@@ -53,7 +53,8 @@ const EndingsList = [
     {Number: 35, Type: 2, Secret: false}, // 21
     {Number: 36, Type: 0, Secret: false}, // 22
     {Number: 38, Type: 2, Secret: false}, // 23
-    {Number: 39, Type: 0, Secret: false} //  24
+    {Number: 39, Type: 0, Secret: false}, //  24
+    {Number: 40, Type: 2, Secret: false} // 25
 ]
 
 cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
