@@ -708,6 +708,114 @@ exports.run = async (bot, message, args, tools) => {
 
 /**
  * 
+ * @param {Discord.TextChannel} channel
+ */
+function PrintAll(channel){
+    let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
+    for (let i = 1; i < EndingsList.length; i++) {
+        if(EndingsList[i].Type == 0){
+            stats.bad++;
+        }else if(EndingsList[i].Type == 1){
+            stats.neutral++;
+        }else{
+            stats.good++;
+        }
+        if(EndingsList[i].Secret){
+            stats.sc++;
+        }
+    }
+
+    stats.sum = stats.good + stats.bad
+    let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
+    if(color.red.length < 2){
+        color.red = "0" * (2 - color.green.length) + color.red
+    }
+    if(color.green.length < 2){
+        color.green = "0" * (2 - color.green.length) + color.green
+    }
+
+    
+    const w = 125
+    const h = 200
+    const w1 = Math.floor(Math.sqrt(EndingsList.length - 1)) * 2
+    const width = (w + 100) * w1
+    const height = Math.ceil((EndingsList.length - 1) / w1) * (h + 100)
+
+    const canvas = cvs.createCanvas(width, height)
+    const context = canvas.getContext('2d')
+    const ClippingCanvas = cvs.createCanvas(width, height)
+    const ClippingContext = ClippingCanvas.getContext('2d')
+    let procent = 1;
+    
+    Count = new Array(EndingsList.length).fill(0);
+    for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
+        let Endings = sl.SundleikurinnData.userData.Endings[i].Endings
+        for(let j = 0; j < Endings.length; j++){
+            Count[Endings[j]]++
+        }
+    }
+    for (let i = 0; i < EndingsList.length - 1; i++) {
+        
+        
+        procent = Count[i + 1] / sl.SundleikurinnData.userData.Endings.length;
+        ClippingContext.rect((i % w1) * (w + 100) + 50, Math.floor(i / w1) * (h + 100) + h * (1 - procent) + 50, w, h * procent)
+        context.fillStyle = '#000000'
+        context.roundRect((i % w1) * (w + 100) + 50, Math.floor(i / w1) * (h + 100) + 50, w, h, 20)
+        context.fill();
+
+        
+        if(EndingsList[i + 1].Type == 0){
+            context.fillStyle = '#A00000'
+        }else if(EndingsList[i + 1].Type == 1){
+            context.fillStyle = '#A0A000'
+        }else{
+            context.fillStyle = '#00A000'
+        }
+        if(EndingsList[i + 1].Secret){
+            context.roundRect((i % w1) * (w + 100) + 50, Math.floor(i / w1) * (h + 100) + 50, w, h, 20)
+            context.fill();
+            context.strokeStyle = '#000000'
+            context.lineWidth = h / 20;
+            context.stroke()
+            context.fillStyle = '#000000'
+        }
+        context.font = 'bold 70pt Menlo'
+        context.textBaseline = 'middle'
+        context.textAlign = 'center'
+        context.fillText(i + 1, (i % w1) * (w + 100) + 50 + w / 2, Math.floor(i / w1) * (h + 100) + 50 + h / 2)
+    }
+
+
+    // console.log('<img src="' + canvas.toBuffer() + '" />')
+    ClippingContext.clip()
+    ClippingContext.drawImage(canvas, 0, 0)
+
+    fs.writeFile("img/allmap.png", ClippingCanvas.toBuffer(), () => {})
+
+    const embeded = new Discord.MessageEmbed()
+        .setColor(`#${color.red + color.green}00`)
+        .setTitle("Tölfræðin alla er:")
+        .setAuthor("Everyone", bot.user.avatarURL())
+        .addFields([
+            {name: "Góðar endingar:", value: stats.good, inline: true},
+            {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
+            {name: "Vondar endingar:", value: stats.bad, inline: true},
+            {name: "Secret endingar:", value: stats.sc, inline: false}
+        ])
+        .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
+
+    channel.send("", {
+        embed: embeded.setImage("attachment://allmap.png"),
+        files: [{
+            attachment: 'img\\allmap.png',
+            name: 'allmap.png'
+        }]
+    })
+    return;
+}
+
+/**
+ * 
  * @param {Discord.Message} msg 
  * @param {Number[]} Endings
  * @param {Discord.User} user
@@ -748,12 +856,12 @@ function PrintStats(msg, Endings, user, member){
     const context = canvas.getContext('2d')
 
     for (let k = 0; k < EndingsList.length - 1; k++) {
+        
         context.fillStyle = '#000000'
         context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
         context.fill();
 
         
-        context.fillStyle = '#000000'
         for (let j = 0; j < Endings.length; j++) {
             if(Endings[j] == k + 1){
                 if(EndingsList[Endings[j]].Type == 0){
@@ -778,6 +886,7 @@ function PrintStats(msg, Endings, user, member){
         context.textAlign = 'center'
         context.fillText(k + 1, (k % w1) * (w + 100) + 50 + w / 2, Math.floor(k / w1) * (h + 100) + 50 + h / 2)
     }
+
 
     // console.log('<img src="' + canvas.toBuffer() + '" />')
     fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
@@ -842,6 +951,9 @@ bot.on('message', async msg => {
             }
         })
 
+    }else if(msg.content == "!stats all"){
+        PrintAll(msg.channel)
+
     }else if(msg.content.substring(0, 6) === "!stats"){
         let user = msg.content.split(" ")
         let member;
@@ -849,8 +961,9 @@ bot.on('message', async msg => {
             user = user[1]
             if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
                 try{
-                    user = await bot.users.fetch(user.substring(2, user.length - 1))
+                    user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
                 }catch (e){
+                    console.log(msg.content)
                     msg.channel.send("Could not find user")
                     return
                 }
@@ -881,6 +994,7 @@ bot.on('message', async msg => {
         for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
             if(sl.SundleikurinnData.userData.Endings[i].User == user){
                 PrintStats(msg, sl.SundleikurinnData.userData.Endings[i].Endings, user, member)
+                return
             }
         }
         msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
