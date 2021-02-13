@@ -89,7 +89,7 @@ bot.on('ready', () => {
             Endings: BotEndings,
             User: bot.user
         }
-        console.log(data)
+        //console.log(data)
         sl.SundleikurinnData.userData.Endings = data
     })
 })
