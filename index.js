@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 
 
 
+const Drive = require('./Storage/Drive.js')
+
 const urban = require("relevant-urban")
 
 const cvs = require('canvas')
@@ -25,6 +27,12 @@ var servers = {};
 const fs = require('fs');
 
 const sl = require('./commands/Sundleikurinn.js')
+
+
+let JamesBot = new Drive.Project("credentials.json", async JamesBot => {
+    let Endings = await JamesBot.getFile('1CxeqpkqA238s1WYz83n88NK-GdwgIgtU')
+    console.log(Endings)
+})
 
 
 // Types: 0. Bad, 1. Neutral, 2. Good
