@@ -123,7 +123,13 @@ bot.on("message", async (message) => {
 
 
 bot.on('ready', () => {
-    console.log('This bot is online! ' + version);
+    if(Drive.WaitingForInput){
+        Drive.WaitingForInputCallback(() => {
+            console.log('This bot is online! ' + version);
+        })
+    }else{
+        console.log('This bot is online! ' + version);
+    }
 });
 
 bot.login(token);

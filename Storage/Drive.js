@@ -1,6 +1,16 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const colors = require('colors');
+
+let InputCallback = () => {};
+exports.WaitingForInput = false;
+/**
+ * @param {Function} callback 
+ */
+exports.WaitingForInputCallback = function(callback){
+    InputCallback = callback;
+};
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
@@ -106,12 +116,15 @@ function getAccessToken(oAuth2Client, callback) {
         access_type: 'offline',
         scope: SCOPES,
     });
-    console.log('Authorize this app by visiting this url:', authUrl);
+    exports.WaitingForInput = true;
+    console.log('Authorize this app by visiting this url:\n' + authUrl.green) + '\n\n';
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
     });
     rl.question('Enter the code from that page here: ', (code) => {
+        InputCallback()
+        exports.WaitingForInput = false;
         rl.close();
         oAuth2Client.getToken(code, (err, token) => {
         if (err) return console.error('Error retrieving access token', err);
