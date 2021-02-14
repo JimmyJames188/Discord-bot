@@ -12,10 +12,12 @@
   "dependencies": {
     "canvas": "^2.6.1",
     "cheerio": "^1.0.0-rc.3",
+    "colors": "^1.4.0",
     "discord-battleship": "^1.0.4",
     "discord.js": "^12.5.1",
     "discord.js-commando": "^0.10.0",
     "ffmpeg": "0.0.4",
+    "googleapis": "^39.2.0",
     "nodemon": "^2.0.7",
     "opusscript": "0.0.7",
     "relevant-urban": "^2.0.0",

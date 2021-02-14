@@ -9,6 +9,9 @@ const delay = 1000
 exports.SundleikurinnData = {
     userData: {
         Endings: undefined
+    },
+    botData: {
+        Endings: undefined
     }
 }
 

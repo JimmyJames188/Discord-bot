@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 
 
 
+const Drive = require('./Storage/Drive.js')
+
 const urban = require("relevant-urban")
 
 const cvs = require('canvas')
@@ -27,17 +29,23 @@ const fs = require('fs');
 const sl = require('./commands/Sundleikurinn.js')
 
 
+let JamesBot = new Drive.Project("credentials.json", async JamesBot => {
+    let Endings = await JamesBot.getFile('1CxeqpkqA238s1WYz83n88NK-GdwgIgtU')
+    console.log(Endings)
+})
+
+
 // Types: 0. Bad, 1. Neutral, 2. Good
 const EndingsList = [
     {},
-    {Number: 5, Type: 0, Secret: false}, //     1
+    {Number: 5, Type: 0, Secret: false}, //  1
     {Number: 7, Type: 2, Secret: false}, //  2
     {Number: 8, Type: 0, Secret: false}, //  3
     {Number: 9, Type: 1, Secret: false}, //  4
     {Number: 12, Type: 0, Secret: false}, // 5
     {Number: 13, Type: 1, Secret: false}, // 6
     {Number: 17, Type: 0, Secret: true}, //  7
-    {Number: 18, Type: 1, Secret: true}, //  1
+    {Number: 18, Type: 1, Secret: true}, //  8
     {Number: 19, Type: 0, Secret: false}, // 9
     {Number: 20, Type: 0, Secret: false}, // 10
     {Number: 21, Type: 2, Secret: false}, // 11
@@ -53,8 +61,8 @@ const EndingsList = [
     {Number: 35, Type: 2, Secret: false}, // 21
     {Number: 36, Type: 0, Secret: false}, // 22
     {Number: 38, Type: 2, Secret: false}, // 23
-    {Number: 39, Type: 0, Secret: false}, //  24
-    {Number: 40, Type: 2, Secret: false} // 25
+    {Number: 39, Type: 0, Secret: false}, // 24
+    {Number: 40, Type: 2, Secret: false} //  25
 ]
 
 cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
@@ -70,6 +78,11 @@ cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height
     return this;
 }
 
+let BotEndings = [];
+for (let i = 1; i < EndingsList.length; i++) {
+    BotEndings.push(i)
+}
+
 bot.on('ready', () => {
     fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", async (err, data) => {
         if (err){console.error(err); return 0};
@@ -78,7 +91,13 @@ bot.on('ready', () => {
         for(let i = 0; i < data.length; i++){
             data[i].User = await bot.users.fetch(data[i].UserId)
         }
-        console.log(data)
+
+        sl.SundleikurinnData.botData.Endings = {
+            UserId: bot.user.id,
+            Endings: BotEndings,
+            User: bot.user
+        }
+        //console.log(data)
         sl.SundleikurinnData.userData.Endings = data
     })
 })
@@ -104,7 +123,13 @@ bot.on("message", async (message) => {
 
 
 bot.on('ready', () => {
-    console.log('This bot is online! ' + version);
+    if(Drive.WaitingForInput){
+        Drive.WaitingForInputCallback(() => {
+            console.log('This bot is online! ' + version);
+        })
+    }else{
+        console.log('This bot is online! ' + version);
+    }
 });
 
 bot.login(token);
@@ -506,6 +531,7 @@ var volume = 1;
 console.log("brodcast start")
 const pasw = Math.floor(Math.random() * 8999999 + 1000000)
 var ffmpeg = require('ffmpeg');
+const { error } = require("console");
 
 
 
@@ -698,8 +724,223 @@ exports.run = async (bot, message, args, tools) => {
 }
 
 
+/**
+ * 
+ * @param {Discord.TextChannel} channel
+ */
+function PrintAll(channel){
+    let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
+    for (let i = 1; i < EndingsList.length; i++) {
+        if(EndingsList[i].Type == 0){
+            stats.bad++;
+        }else if(EndingsList[i].Type == 1){
+            stats.neutral++;
+        }else{
+            stats.good++;
+        }
+        if(EndingsList[i].Secret){
+            stats.sc++;
+        }
+    }
 
-bot.on('message', msg=>{
+    stats.sum = stats.good + stats.bad
+    let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
+    if(color.red.length < 2){
+        color.red = "0" * (2 - color.green.length) + color.red
+    }
+    if(color.green.length < 2){
+        color.green = "0" * (2 - color.green.length) + color.green
+    }
+
+    
+    const w = 125
+    const h = 200
+    const w1 = Math.floor(Math.sqrt(EndingsList.length - 1)) * 2
+    const width = (w + 100) * w1
+    const height = Math.ceil((EndingsList.length - 1) / w1) * (h + 100)
+
+    const canvas = cvs.createCanvas(width, height)
+    const context = canvas.getContext('2d')
+    const ClippingCanvas = cvs.createCanvas(width, height)
+    const ClippingContext = ClippingCanvas.getContext('2d')
+    let procent = 1;
+    
+    Count = new Array(EndingsList.length).fill(0);
+    for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
+        let Endings = sl.SundleikurinnData.userData.Endings[i].Endings
+        for(let j = 0; j < Endings.length; j++){
+            Count[Endings[j]]++
+        }
+    }
+    for (let i = 0; i < EndingsList.length - 1; i++) {
+        
+        
+        procent = Count[i + 1] / sl.SundleikurinnData.userData.Endings.length;
+        ClippingContext.rect((i % w1) * (w + 100) + 50, Math.floor(i / w1) * (h + 100) + h * (1 - procent) + 50, w, h * procent)
+        context.fillStyle = '#000000'
+        context.roundRect((i % w1) * (w + 100) + 50, Math.floor(i / w1) * (h + 100) + 50, w, h, 20)
+        context.fill();
+
+        
+        if(EndingsList[i + 1].Type == 0){
+            context.fillStyle = '#A00000'
+        }else if(EndingsList[i + 1].Type == 1){
+            context.fillStyle = '#A0A000'
+        }else{
+            context.fillStyle = '#00A000'
+        }
+        if(EndingsList[i + 1].Secret){
+            context.roundRect((i % w1) * (w + 100) + 50, Math.floor(i / w1) * (h + 100) + 50, w, h, 20)
+            context.fill();
+            context.strokeStyle = '#000000'
+            context.lineWidth = h / 20;
+            context.stroke()
+            context.fillStyle = '#000000'
+        }
+        context.font = 'bold 70pt Menlo'
+        context.textBaseline = 'middle'
+        context.textAlign = 'center'
+        context.fillText(i + 1, (i % w1) * (w + 100) + 50 + w / 2, Math.floor(i / w1) * (h + 100) + 50 + h / 2)
+    }
+
+
+    // console.log('<img src="' + canvas.toBuffer() + '" />')
+    ClippingContext.clip()
+    ClippingContext.drawImage(canvas, 0, 0)
+
+    fs.writeFile("img/allmap.png", ClippingCanvas.toBuffer(), () => {})
+
+    const embeded = new Discord.MessageEmbed()
+        .setColor(`#${color.red + color.green}00`)
+        .setTitle("Tölfræðin alla er:")
+        .setAuthor("Everyone", bot.user.avatarURL())
+        .addFields([
+            {name: "Góðar endingar:", value: stats.good, inline: true},
+            {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
+            {name: "Vondar endingar:", value: stats.bad, inline: true},
+            {name: "Secret endingar:", value: stats.sc, inline: false}
+        ])
+        .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
+
+    channel.send("", {
+        embed: embeded.setImage("attachment://allmap.png"),
+        files: [{
+            attachment: 'img\\allmap.png',
+            name: 'allmap.png'
+        }]
+    })
+    return;
+}
+
+/**
+ * 
+ * @param {Discord.Message} msg 
+ * @param {Number[]} Endings
+ * @param {Discord.User} user
+ * @param {Discord.Member} member
+ */
+function PrintStats(msg, Endings, user, member){
+    let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
+    for (let j = 0; j < Endings.length; j++) {
+        if(EndingsList[Endings[j]].Type == 0){
+            stats.bad++;
+        }else if(EndingsList[Endings[j]].Type == 1){
+            stats.neutral++;
+        }else{
+            stats.good++;
+        }
+        if(EndingsList[Endings[j]].Secret){
+            stats.sc++;
+        }
+    }
+
+    stats.sum = stats.good + stats.bad
+    let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
+    if(color.red.length < 2){
+        color.red = "0" * (2 - color.green.length) + color.red
+    }
+    if(color.green.length < 2){
+        color.green = "0" * (2 - color.green.length) + color.green
+    }
+
+    
+    const w = 125
+    const h = 200
+    const w1 = Math.floor(Math.sqrt(EndingsList.length - 1)) * 2
+    const width = (w + 100) * w1
+    const height = Math.ceil((EndingsList.length - 1) / w1) * (h + 100)
+
+    const canvas = cvs.createCanvas(width, height)
+    const context = canvas.getContext('2d')
+
+    for (let k = 0; k < EndingsList.length - 1; k++) {
+        
+        context.fillStyle = '#000000'
+        context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
+        context.fill();
+
+        
+        for (let j = 0; j < Endings.length; j++) {
+            if(Endings[j] == k + 1){
+                if(EndingsList[Endings[j]].Type == 0){
+                    context.fillStyle = '#A00000'
+                }else if(EndingsList[Endings[j]].Type == 1){
+                    context.fillStyle = '#A0A000'
+                }else{
+                    context.fillStyle = '#00A000'
+                }
+                if(EndingsList[Endings[j]].Secret){
+                    context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
+                    context.fill();
+                    context.strokeStyle = '#000000'
+                    context.lineWidth = h / 20;
+                    context.stroke()
+                    context.fillStyle = '#000000'
+                }
+            }
+        }
+        context.font = 'bold 70pt Menlo'
+        context.textBaseline = 'middle'
+        context.textAlign = 'center'
+        context.fillText(k + 1, (k % w1) * (w + 100) + 50 + w / 2, Math.floor(k / w1) * (h + 100) + 50 + h / 2)
+    }
+
+
+    // console.log('<img src="' + canvas.toBuffer() + '" />')
+    fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
+
+    
+    function name(member) {
+        if(member.displayName){
+            return member.displayName
+        }
+        return member.username
+    }
+
+    const embeded = new Discord.MessageEmbed()
+        .setColor(`#${color.red + color.green}00`)
+        .setTitle("Tölfræðin þín er:")
+        .setAuthor(name(member), user.avatarURL())
+        .addFields([
+            {name: "Góðar endingar:", value: stats.good, inline: true},
+            {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
+            {name: "Vondar endingar:", value: stats.bad, inline: true},
+            {name: "Secret endingar:", value: stats.sc, inline: false}
+        ])
+        .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
+
+    msg.channel.send("", {
+        embed: embeded.setImage("attachment://map.png"),
+        files: [{
+            attachment: 'img\\map.png',
+            name: 'map.png'
+        }]
+    })
+    return;
+
+}
+
+bot.on('message', async msg => {
     // if(msg.author.id == '691972281840304129')return;
     if(msg.content === "!game"){
         msg.channel.send('Ertu viss um að þú viljir spila "Sundleikurinn"?');
@@ -728,152 +969,50 @@ bot.on('message', msg=>{
             }
         })
 
-    }else if(msg.content === "!stats"){
-        let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
+    }else if(msg.content == "!stats all"){
+        PrintAll(msg.channel)
 
-        for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
-            if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
-                for (let j = 0; j < sl.SundleikurinnData.userData.Endings[i].Endings.length; j++) {
-                    if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 0){
-                        stats.bad++;
-                    }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
-                        stats.neutral++;
-                    }else{
-                        stats.good++;
-                    }
-                    if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Secret){
-                        stats.sc++;
-                    }
+    }else if(msg.content.substring(0, 6) === "!stats"){
+        let user = msg.content.split(" ")
+        let member;
+        if(user.length > 1){
+            user = user[1]
+            if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
+                try{
+                    user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
+                }catch (e){
+                    console.log(msg.content)
+                    msg.channel.send("Could not find user")
+                    return
                 }
-
-                stats.sum = stats.good + stats.bad
-                let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
-                if(color.red.length < 2){
-                    color.red = "0" * (2 - color.green.length) + color.red
-                }
-                if(color.green.length < 2){
-                    color.green = "0" * (2 - color.green.length) + color.green
-                }
-
                 
-                let u = msg.member
-                if(!u){
-                    u = msg.author
+                if(msg.guild){
+                    try{
+                        member = await msg.guild.members.fetch(user.id);
+                    }catch (e){
+                        member = user;
+                    }
                 }
-                const embeded = new Discord.MessageEmbed()
-                    .setColor(`#${color.red + color.green}00`)
-                    .setTitle("Tölfræðin þín er:")
-                    .setAuthor(u.displayName, msg.author.avatarURL())
-                    .addFields([
-                        {name: "Góðar endingar:", value: stats.good, inline: true},
-                        {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
-                        {name: "Vondar endingar:", value: stats.bad, inline: true},
-                        {name: "Secret endingar:", value: stats.sc, inline: false}
-                    ])
-                    .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
-            
-                msg.channel.send(embeded)
-                return;
+            }else{
+                msg.channel.send(user + " is not a valid ping")
+                return
             }
+        }else{  
+            member = msg.member
+            if(!member){
+                member = msg.author
+            }
+            user = msg.author
         }
-        msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
-    }else if(msg.content === "!stats map"){
-        let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
 
+        if(user == bot.user){
+            PrintStats(msg, sl.SundleikurinnData.botData.Endings.Endings, user, member)
+            return;
+        }
         for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
-            if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
-                for (let j = 0; j < sl.SundleikurinnData.userData.Endings[i].Endings.length; j++) {
-                    if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 0){
-                        stats.bad++;
-                    }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
-                        stats.neutral++;
-                    }else{
-                        stats.good++;
-                    }
-                    if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Secret){
-                        stats.sc++;
-                    }
-                }
-
-                stats.sum = stats.good + stats.bad
-                let color = {red: Math.round((stats.bad / Math.max(stats.bad, stats.good)) * 255).toString(16), green: Math.round((stats.good / Math.max(stats.bad, stats.good)) * 255).toString(16)}
-                if(color.red.length < 2){
-                    color.red = "0" * (2 - color.green.length) + color.red
-                }
-                if(color.green.length < 2){
-                    color.green = "0" * (2 - color.green.length) + color.green
-                }
-
-                
-                const w = 125
-                const h = 200
-                const w1 = Math.floor(Math.sqrt(EndingsList.length - 1)) * 2
-                const width = (w + 100) * w1
-                const height = Math.ceil((EndingsList.length - 1) / w1) * (h + 100)
-
-                const canvas = cvs.createCanvas(width, height)
-                const context = canvas.getContext('2d')
-
-                for (let k = 0; k < EndingsList.length - 1; k++) {
-                    context.fillStyle = '#000000'
-                    context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
-                    context.fill();
-
-                    
-                    context.fillStyle = '#000000'
-                    for (let j = 0; j < sl.SundleikurinnData.userData.Endings[i].Endings.length; j++) {
-                        if(sl.SundleikurinnData.userData.Endings[i].Endings[j] == k + 1){
-                            if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 0){
-                                context.fillStyle = '#A00000'
-                            }else if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Type == 1){
-                                context.fillStyle = '#A0A000'
-                            }else{
-                                context.fillStyle = '#00A000'
-                            }
-                            if(EndingsList[sl.SundleikurinnData.userData.Endings[i].Endings[j]].Secret){
-                                context.roundRect((k % w1) * (w + 100) + 50, Math.floor(k / w1) * (h + 100) + 50, w, h, 20)
-                                context.fill();
-                                context.strokeStyle = '#000000'
-                                context.lineWidth = h / 20;
-                                context.stroke()
-                                context.fillStyle = '#000000'
-                            }
-                        }
-                    }
-                    context.font = 'bold 70pt Menlo'
-                    context.textBaseline = 'middle'
-                    context.textAlign = 'center'
-                    context.fillText(k + 1, (k % w1) * (w + 100) + 50 + w / 2, Math.floor(k / w1) * (h + 100) + 50 + h / 2)
-                }
-
-                // console.log('<img src="' + canvas.toBuffer() + '" />')
-                fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
-
-     
-                let u = msg.member
-                if(!u){
-                    u = msg.author
-                }
-                const embeded = new Discord.MessageEmbed()
-                    .setColor(`#${color.red + color.green}00`)
-                    .setTitle("Tölfræðin þín er:")
-                    .setAuthor(u.displayName, msg.author.avatarURL())
-                    .addFields([
-                        {name: "Góðar endingar:", value: stats.good, inline: true},
-                        {name: "Hlutlausar endingar:", value: stats.neutral, inline: true},
-                        {name: "Vondar endingar:", value: stats.bad, inline: true},
-                        {name: "Secret endingar:", value: stats.sc, inline: false}
-                    ])
-                    .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
-            
-                msg.channel.send("", {
-                    embed: embeded.setImage("attachment://map.png"),
-                    files: [{
-                        attachment: 'img\\map.png',
-                        name: 'map.png'
-                    }]
-                })
-                return;
+            if(sl.SundleikurinnData.userData.Endings[i].User == user){
+                PrintStats(msg, sl.SundleikurinnData.userData.Endings[i].Endings, user, member)
+                return
             }
         }
         msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
