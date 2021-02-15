@@ -162,15 +162,9 @@ bot.on('ready', () => {
 });
 
 bot.on("guildMemberAdd", member => {
-  member.send(
-    "Hey here´s some good advice: Don't be racist \n \n \n For further info please type in chat !racist-info"
-  )
-
-})
-
-
-
-bot.on("guildMemberAdd", member => {
+    member.send(
+        "Hey here´s some good advice: Don't be racist \n \n \n For further info please type in chat !racist-info"
+    )
 
     var role = member.guild.roles.resolve("727092499822411816"); 
     member.roles.add(role);
