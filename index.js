@@ -2,7 +2,11 @@ const Discord = require("discord.js");
 
 
 
+const {google} = require('googleapis');
+
 const Drive = require('./Storage/Drive.js')
+
+const readline = require('readline');
 
 const urban = require("relevant-urban")
 
@@ -29,9 +33,14 @@ const fs = require('fs');
 const sl = require('./commands/Sundleikurinn.js')
 
 
+let randomstring = "";
+for (let i = 0; i < 100000; i++) {
+    randomstring = randomstring + Math.floor(Math.random() * 10).toString();
+}
 let JamesBot = new Drive.Project("credentials.json", async JamesBot => {
     let Endings = await JamesBot.getFile('1CxeqpkqA238s1WYz83n88NK-GdwgIgtU')
-    console.log(Endings)
+    await JamesBot.editFile('1CxeqpkqA238s1WYz83n88NK-GdwgIgtU', randomstring)
+    // console.log(Endings)
 })
 
 
@@ -85,12 +94,19 @@ for (let i = 1; i < EndingsList.length; i++) {
 
 bot.on('ready', () => {
     fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", async (err, data) => {
+        process.stdout.write("Getting player data for sundleykurinn".green + " - " + "[..........] 0%".red)
         if (err){console.error(err); return 0};
         data = JSON.parse(data)
 
         for(let i = 0; i < data.length; i++){
+            readline.clearLine(process.stdout, 0);
+            readline.cursorTo(process.stdout, 0);
+            process.stdout.write("Getting player data for sundleykurinn".green + " - " + `[${"|".repeat(Math.floor(10 * i / (data.length - 1))) + ".".repeat(Math.ceil(10 - 10 * i / (data.length - 1)))}] ${i / (data.length - 1) * 100}%`.red);
             data[i].User = await bot.users.fetch(data[i].UserId)
         }
+        readline.clearLine(process.stdout, 0);
+        readline.cursorTo(process.stdout, 0);
+        console.log("Getting player data for sundleykurinn".green + " - " + "Finished".green)
 
         sl.SundleikurinnData.botData.Endings = {
             UserId: bot.user.id,

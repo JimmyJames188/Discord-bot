@@ -81,6 +81,10 @@ class Project{
     async getFile(ID){
         return await exports.getFile(this.auth, ID)
     }
+
+    async editFile(ID, content){
+        return await exports.editFile(this.auth, ID, content)
+    }
 }
 exports.Project = Project;
 
@@ -197,3 +201,31 @@ async function getFile(auth, fileId) {
     return res.data
 }
 exports.getFile = getFile;
+
+/**
+ * 
+ * @param {google.auth.OAuth2} auth 
+ * @param {String} fileId 
+ * @param {String} content 
+ */
+async function editFile(auth, fileId, content) {
+    const drive = google.drive({version: 'v3', auth});
+    const res = await drive.files.update({
+        fileId,
+        media: {
+            body: content
+        }
+    },
+    {   
+        onUploadProgress: evt => {
+            console.log("onUploadProgress", evt);
+            const progress = (evt.bytesRead / fileSize) * 100;
+            readline.clearLine(process.stdout, 0);
+            readline.cursorTo(process.stdout, 0);
+            process.stdout.write(`${Math.round(progress).toString().yellow}% complete`);
+        }   
+    })
+
+    return res.data
+}
+exports.editFile = editFile;
