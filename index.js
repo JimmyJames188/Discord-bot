@@ -32,6 +32,15 @@ const fs = require('fs');
 
 const sl = require('./commands/Sundleikurinn.js')
 
+//voice chat
+var dispatcher = false;
+const broadcast = bot.voice.createBroadcast();
+var volume = 1;
+console.log("brodcast start")
+const pasw = Math.floor(Math.random() * 8999999 + 1000000)
+var ffmpeg = require('ffmpeg');
+const { error } = require("console");
+
 
 let randomstring = "";
 for (let i = 0; i < 100000; i++) {
@@ -141,14 +150,16 @@ bot.on("message", async (message) => {
 bot.on('ready', () => {
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
-            console.log('This bot is online! ' + version);
+            readline.clearLine(process.stdout, 0);
+            readline.cursorTo(process.stdout, 0);
+            console.log("Bot login".green + " - " + (`finished, version ` + version).green);
         })
     }else{
-        console.log('This bot is online! ' + version);
+        readline.clearLine(process.stdout, 0);
+        readline.cursorTo(process.stdout, 0);
+        console.log("Bot login".green + " - " + (`finished, version ` + version).green);
     }
 });
-
-bot.login(token);
 
 bot.on("guildMemberAdd", member => {
   member.send(
@@ -280,12 +291,11 @@ bot.on("message", async message => {
     if (foundInText) {
         message.channel.send("Hver sagði þetta!?");
     }
-})
 
-bot.on("message", async message => {
-    let blacklisted = ["IS JAMES BANANAMAN"];
 
-    let foundInText = false;
+    blacklisted = ["IS JAMES BANANAMAN"];
+
+    foundInText = false;
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
@@ -294,12 +304,11 @@ bot.on("message", async message => {
         message.react("👎");
         message.channel.send("NEIIII grrrr >:( \nÞÚ ert barasta bananman!!");
     }
-})
 
-bot.on("message", async message => {
-    let blacklisted = ['SH eru bestir', 'STEFFI ER OWNER', 'JAMES BAD'];
 
-    let foundInText = false;
+    blacklisted = ['SH eru bestir', 'STEFFI ER OWNER', 'JAMES BAD'];
+
+    foundInText = false;
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
@@ -307,12 +316,11 @@ bot.on("message", async message => {
     if (foundInText) {
         message.react("👎");
     }
-})
 
-bot.on("message", async message => {
-    let blacklisted = ['ÞORSTEINN BAD', 'JAMES FOR OWNER', "I'M HOME"];
 
-    let foundInText = false;
+    blacklisted = ['ÞORSTEINN BAD', 'JAMES FOR OWNER', "I'M HOME"];
+
+    foundInText = false;
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
@@ -320,11 +328,8 @@ bot.on("message", async message => {
     if (foundInText) {
         message.react("👍");
     }
-})
 
 
-
-bot.on("message", message => {
     if (message.content.startsWith("!kick")) {
       const member = message.mentions.members.first()
       if (!member) {
@@ -357,9 +362,7 @@ bot.on("message", message => {
         .then(() => message.reply(`${member.user.tag} was kicked.`))
         .catch(error => message.reply(`Sorry, an error occured.`))
     }
-})
 
-bot.on('message', message => {
 
     let args = message.content.substring(PREFIX.length).split(" ");
 
@@ -414,34 +417,19 @@ function image(message){
 
 
 
-var dispatcher = false;
-const broadcast = bot.voice.createBroadcast();
-var volume = 1;
-console.log("brodcast start")
-const pasw = Math.floor(Math.random() * 8999999 + 1000000)
-var ffmpeg = require('ffmpeg');
-const { error } = require("console");
 
-
+//voice chat
 
 bot.on("message", msg => {
     if (msg.content.toLowerCase() === ".pause") {
         if(dispatcher != false){
             dispatcher.pause();
         }
-    }
-});
-
-bot.on("message", msg => {
-    if (msg.content.toLowerCase() === ".resume") {
+    }else if (msg.content.toLowerCase() === ".resume") {
         if(dispatcher != false){
             dispatcher.resume();
         }
-    }
-});
-
-bot.on("message", msg => {
-    if (msg.content.substring(0, 7).toLowerCase() === ".volume") {
+    }else if (msg.content.substring(0, 7).toLowerCase() === ".volume") {
         // console.log(msg.content.substring(8, 15) );
         if(msg.content.substring(8, 15) === pasw.toString()){
             volume1 = msg.content.substring(15) / 100;
@@ -470,19 +458,11 @@ bot.on("message", msg => {
                 msg.reply("The value is to big!");
             }
         }
-    }
-});
-
-bot.on("message", msg => {
-    if (msg.content.toLowerCase() === ".stop") {
+    }else if (msg.content.toLowerCase() === ".stop") {
         for (const connection of bot.voice.connections.values()) {
             connection.play("");
         }
-    }
-});
-
-bot.on("message", msg => {
-    if (msg.content.toLowerCase() === ".join") {
+    }else if (msg.content.toLowerCase() === ".join") {
 
         // console.log(msg.member);
 
@@ -497,11 +477,7 @@ bot.on("message", msg => {
         }else{
             msg.reply("You must to be in a voice channel to use this command!")
         }
-    }
-})
-
-bot.on("message", msg => {
-    if (msg.content.toLowerCase() === ".leave") {
+    }else if (msg.content.toLowerCase() === ".leave") {
 
         // console.log(msg.guild.voice);
 
@@ -512,11 +488,7 @@ bot.on("message", msg => {
         }else{
             msg.reply("Bot must to be in a voice channel to use this command!")
         }
-    }
-})
-
-bot.on("message", msg => {
-    if (msg.content.substring(0, 5).toLowerCase() === ".play") {
+    }else if (msg.content.substring(0, 5).toLowerCase() === ".play") {
         // console.log(client.voice.connections.values());
         console.log(msg.content.substring(5));
         const song = msg.content.substring(5);
@@ -540,15 +512,6 @@ bot.on("message", msg => {
 var facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
 var fact = Math.floor(Math.random() * facts.length);
 
-bot.on('message', msg=>{
-    if(msg.content === "!facts"){
-        var fact = Math.floor(Math.random() * facts.length);
-        msg.reply(facts[fact] + " " + facts[Math.floor(Math.random() * facts.length)])
-        
-
-    }
-})
-
 
 var bananas = ["Hinn heilaga Gumma guð", "Hinn heilaga Gumma sund", "Hinn heilaga prest Snæ", "Hinn heilaga Teit flugsunds eingil", "Hinn heilaga Gumma Krist"];
 var banana = Math.floor(Math.random() * bananas.length);
@@ -559,11 +522,10 @@ bot.on('message', msg=>{
         msg.reply(bananas[banana])
         
 
-    }
-})
-
-bot.on('message', msg=>{
-    if(msg.content === "kirill spírill"){
+    }else if(msg.content === "!facts"){
+        var fact = Math.floor(Math.random() * facts.length);
+        msg.reply(facts[fact] + " " + facts[Math.floor(Math.random() * facts.length)])
+    }else if(msg.content === "kirill spírill"){
         exports.run = async (bot, message, args, tools) => {
 
             if (!args[0]) return message.channel.send('***Please specify some text!***');
@@ -907,3 +869,8 @@ bot.on('message', async msg => {
         msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
     }
 })
+
+
+bot.login(token);
+process.stdout.write("Bot login".green + " - " + `[..........] 0%`.red);
+
