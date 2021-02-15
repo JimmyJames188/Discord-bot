@@ -14,6 +14,10 @@ const cvs = require('canvas')
 
 const cheerio = require('cheerio');
 
+const ffmpeg = require('ffmpeg');
+
+const { error } = require("console");
+
 const request = require('request');
 
 const ytdl = require("ytdl-core");
@@ -38,8 +42,6 @@ const broadcast = bot.voice.createBroadcast();
 var volume = 1;
 console.log("brodcast start")
 const pasw = Math.floor(Math.random() * 8999999 + 1000000)
-var ffmpeg = require('ffmpeg');
-const { error } = require("console");
 
 
 let randomstring = "";
