@@ -166,7 +166,11 @@ bot.on("guildMemberAdd", member => {
  
 })
 
-
+bot.on('message', msg=> {
+    if (msg.content === "Blubadub") {
+        msg.channel.send(3+3)
+    }
+})
 
 
 
