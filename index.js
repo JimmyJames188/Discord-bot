@@ -204,9 +204,7 @@ bot.on('message', msg=> {
         msg.reply("It's nice to be here!");
     }else if(msg.content === "@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum?"){
         msg.reply('AUÐVITAÐ HVERSLAGS SPURNING ER ÞETTA EIGINLEGA!!');
-    }else if(msg.content === "Þorsteinn er dauður!"){
-        msg.reply('Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD');
-    }else if(msg.content === "Stefán er dauður!"){
+    }else if(msg.content === "Þorsteinn er dauður!" || msg.content === "Stefán er dauður!"){
         msg.reply('Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD');
     }else if(msg.content === "clapping"){
         msg.reply('Bruh it´s claping \n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING');
