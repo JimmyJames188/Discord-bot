@@ -26,6 +26,7 @@ This bot was createt by [James](https://github.com/JimmyJames188) for private us
 * 🅱️ruh || Bruh || bruh => Bruh
 * Hvaða botti ætlar barasta ekki að læra að reikna? => Ég
 * HVER ER BIG SMORT HÉR? => NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!
+* Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 * =>   
 `not finished yet`
 
