@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const Discord = require("discord.js");
 
-const Drive = require("D:\\Users\\Kirill\\Code\\James\\Discord-bot\\Storage\\Drive.js")
+const Drive = require("..\\Storage\\Drive.js")
 
 
 const delay = 1000
