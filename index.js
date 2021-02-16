@@ -36,6 +36,11 @@ const fs = require('fs');
 
 const sl = require('./commands/Sundleikurinn.js')
 
+
+let RawSundleykurinnData;
+let JamesBot;
+const EndingsId = '1CxeqpkqA238s1WYz83n88NK-GdwgIgtU';
+
 //voice chat
 var dispatcher = false;
 const broadcast = bot.voice.createBroadcast();
@@ -44,15 +49,10 @@ console.log("brodcast start")
 const pasw = Math.floor(Math.random() * 8999999 + 1000000)
 
 
-let randomstring = "";
-for (let i = 0; i < 100000; i++) {
-    randomstring = randomstring + Math.floor(Math.random() * 10).toString();
-}
-let JamesBot = new Drive.Project("credentials.json", async JamesBot => {
-    let Endings = await JamesBot.getFile('1CxeqpkqA238s1WYz83n88NK-GdwgIgtU')
-    await JamesBot.editFile('1CxeqpkqA238s1WYz83n88NK-GdwgIgtU', randomstring)
-    // console.log(Endings)
-})
+// let randomstring = "";
+// for (let i = 0; i < 100000; i++) {
+//     randomstring = randomstring + Math.floor(Math.random() * 10).toString();
+// }
 
 
 // Types: 0. Bad, 1. Neutral, 2. Good
@@ -103,31 +103,27 @@ for (let i = 1; i < EndingsList.length; i++) {
     BotEndings.push(i)
 }
 
-bot.on('ready', () => {
-    fs.readFile("Storage\\Sundleikurinn\\userData\\Endings.json", async (err, data) => {
-        process.stdout.write("Getting player data for sundleykurinn".green + " - " + "[..........] 0%".red)
-        if (err){console.error(err); return 0};
-        data = JSON.parse(data)
+async function getSundleikurinnPlayerData(data){
+    process.stdout.write("Getting player data for sundleykurinn".green + " - " + "[..........] 0%".red)
 
-        for(let i = 0; i < data.length; i++){
-            readline.clearLine(process.stdout, 0);
-            readline.cursorTo(process.stdout, 0);
-            process.stdout.write("Getting player data for sundleykurinn".green + " - " + `[${"|".repeat(Math.floor(10 * i / (data.length - 1))) + ".".repeat(Math.ceil(10 - 10 * i / (data.length - 1)))}] ${i / (data.length - 1) * 100}%`.red);
-            data[i].User = await bot.users.fetch(data[i].UserId)
-        }
+    for(let i = 0; i < data.length; i++){
         readline.clearLine(process.stdout, 0);
         readline.cursorTo(process.stdout, 0);
-        console.log("Getting player data for sundleykurinn".green + " - " + "Finished".green)
+        process.stdout.write("Getting player data for sundleykurinn".green + " - " + `[${"|".repeat(Math.floor(10 * i / (data.length - 1))) + ".".repeat(Math.ceil(10 - 10 * i / (data.length - 1)))}] ${i / (data.length - 1) * 100}%`.red);
+        data[i].User = await bot.users.fetch(data[i].UserId)
+    }
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0);
+    console.log("Getting player data for sundleykurinn".green + " - " + "Finished".green)
 
-        sl.SundleikurinnData.botData.Endings = {
-            UserId: bot.user.id,
-            Endings: BotEndings,
-            User: bot.user
-        }
-        //console.log(data)
-        sl.SundleikurinnData.userData.Endings = data
-    })
-})
+    sl.SundleikurinnData.botData.Endings = {
+        UserId: bot.user.id,
+        Endings: BotEndings,
+        User: bot.user
+    }
+    //console.log(data)
+    sl.SundleikurinnData.userData.Endings = data
+}
 
 
 
@@ -161,6 +157,15 @@ bot.on('ready', () => {
         readline.cursorTo(process.stdout, 0);
         console.log("Bot login".green + " - " + (`finished, version ` + version).green);
     }
+    getSundleikurinnPlayerData(RawSundleykurinnData)
+    JamesBot.onChanges(EndingsId, data => {
+        if(!sl.SundleikurinnData.updatedDrive){
+            console.log("The file changet, updating local database:")
+            getSundleikurinnPlayerData(data)
+        }else{
+            sl.SundleikurinnData.updatedDrive = true;
+        }
+    }, undefined, 10000)
 });
 
 bot.on("guildMemberAdd", member => {
@@ -190,7 +195,7 @@ bot.on('message', msg=> {
         msg.reply('Heilagi Gummi! Lífið og heilsan er helgidómur, sem þú hefur gefið okkur, því er allt heilagt sem viðheldur lífinu. Gef okkur því visku til að njóta matar og drykkjar með fögnuði og þakklátum huga og gæta jafnframt hófs. Blessaðu líf okkar og starf og gef okkur náð og þrótttil að vera trúir þjónar á akri þínum. Send snauðum og sjúkum hjálp og syrgjendum huggun. Blessaðu og helgaðu lífið sérhverja stund í Gumma krists heilaga nafni. A M E N');
     }else if(msg.content === "!ProfilePicture"){
         msg.reply('<${message.author.displayAvatarURL({ format: "png", dynamic: true })}>');
-    }else if(message.content === "Lights out!"){
+    }else if(msg.content === "Lights out!"){
         var botping = Math.round(bot.ws.ping)
         message.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
     }else if(msg.content === "F"){
@@ -644,7 +649,7 @@ function PrintAll(channel){
             context.stroke()
             context.fillStyle = '#000000'
         }
-        context.font = 'bold 70pt Menlo'
+        context.font = 'bold 70pt Calibri'
         context.textBaseline = 'middle'
         context.textAlign = 'center'
         context.fillText(i + 1, (i % w1) * (w + 100) + 50 + w / 2, Math.floor(i / w1) * (h + 100) + 50 + h / 2)
@@ -746,7 +751,7 @@ function PrintStats(msg, Endings, user, member){
                 }
             }
         }
-        context.font = 'bold 70pt Menlo'
+        context.font = 'bold 70pt Calibri'
         context.textBaseline = 'middle'
         context.textAlign = 'center'
         context.fillText(k + 1, (k % w1) * (w + 100) + 50 + w / 2, Math.floor(k / w1) * (h + 100) + 50 + h / 2)
@@ -867,6 +872,9 @@ bot.on('message', async msg => {
 })
 
 
-bot.login(token);
-process.stdout.write("Bot login".green + " - " + `[..........] 0%`.red);
+JamesBot = new Drive.Project("credentials.json", async JamesBot => {
+    RawSundleykurinnData = await JamesBot.getFile(EndingsId)
+    bot.login(token);
+    process.stdout.write("Bot login".green + " - " + `[..........] 0%`.red);
+})
 
