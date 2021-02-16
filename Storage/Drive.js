@@ -2,7 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const colors = require('colors');
-const deepEqual = require('D:\\Users\\Kirill\\Code\\James\\Discord-bot\\commands\\deepEqual.js')
+const deepEqual = require('C:/Users/james/Desktop/Discord Bot/commands/deepEqual.js')
 
 let InputCallback = () => {};
 exports.WaitingForInput = false;
