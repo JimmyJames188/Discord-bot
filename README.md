@@ -29,7 +29,11 @@ This bot was createt by [James](https://github.com/JimmyJames188) for private us
 * =>   
 `not finished yet`
 
+### Reacrions
+* 
+
 ### Other commands
 * !help => Usfull commands
 * !ProfilePicture => Returnes your profile picture
 * !events => Telles you about events
+* !kick `user` => kickes user (idk if it works)
