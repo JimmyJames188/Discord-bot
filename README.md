@@ -1,5 +1,5 @@
 # James's bot
-This bot was createt by [James](https://github.com/JimmyJames188) for private use on discord servers.
+This bot was created by [James](https://github.com/JimmyJames188) for private use on discord servers.
 
 ## Commands
 ### Text reply
@@ -31,6 +31,6 @@ This bot was createt by [James](https://github.com/JimmyJames188) for private us
 `not finished yet`
 
 ### Other commands
-* !help => Usfull commands
-* !ProfilePicture => Returnes your profile picture
-* !events => Telles you about events
+* !help => Usefull commands
+* !ProfilePicture => Returns your profile picture
+* !events => Tells you about events
