@@ -181,61 +181,91 @@ bot.on("guildMemberAdd", member => {
 bot.on('message', msg=> {
     if (msg.content === "Blubadub") {
         msg.channel.send(3+3)
+   
     }else if (msg.content === "Ey whats my mental age bot?") {
         msg.channel.send("You're mentally: " + Math.floor(Math.random() * 100 + 1) + "")
+   
     }else if(msg.content === "Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás"){
         msg.reply("Svo verði ósk þín. Besti bottin á þessari discord rás er James's Good Advice Bot");
+   
     }else if(msg.content === "Snær er ekki skemtilegur"){
         msg.reply('NEI!!!');
+   
     }else if(msg.content === "!racist-info"){
         msg.reply('https://youtu.be/USE86UbsV8c');
+   
     }else if(msg.content === "!nice"){
         msg.reply('https://youtu.be/ffQmb-cNFuk');
+   
     }else if(msg.content === "Jæja þá skulum við fara með bæn"){
         msg.reply('Heilagi Gummi! Lífið og heilsan er helgidómur, sem þú hefur gefið okkur, því er allt heilagt sem viðheldur lífinu. Gef okkur því visku til að njóta matar og drykkjar með fögnuði og þakklátum huga og gæta jafnframt hófs. Blessaðu líf okkar og starf og gef okkur náð og þrótttil að vera trúir þjónar á akri þínum. Send snauðum og sjúkum hjálp og syrgjendum huggun. Blessaðu og helgaðu lífið sérhverja stund í Gumma krists heilaga nafni. A M E N');
+   
     }else if(msg.content === "!ProfilePicture"){
         msg.reply(`<${msg.author.displayAvatarURL({ format: "png", dynamic: true })}>`);
+   
     }else if(msg.content === "Lights out!"){
         var botping = Math.round(bot.ws.ping)
         message.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
+   
     }else if(msg.content === "F"){
         msg.reply('F');
+   
     }else if(msg.content === "Welcome to the channel!"){
         msg.reply("It's nice to be here!");
+   
     }else if(msg.content === "@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum?"){
         msg.reply('AUÐVITAÐ HVERSLAGS SPURNING ER ÞETTA EIGINLEGA!!');
+   
     }else if(msg.content === "Þorsteinn er dauður!" || msg.content === "Stefán er dauður!"){
         msg.reply('Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD');
+   
     }else if(msg.content === "clapping"){
         msg.reply('Bruh it´s claping \n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING');
+   
     }else if(msg.content === "Kirill hakkaði botinn minn! Hvað á ég að gera!?"){
         msg.reply('https://www.youtube.com/watch?v=Nt2246e0f6I');
+   
     }else if(msg.content === "no"){
         msg.reply("Yes");
+   
     }else if(msg.content === "ding dong"){
         msg.reply("Your opinion is wrong");
-    // }else if(msg.content.toUpperCase() === "YES"){
-    //     msg.reply('YES YES YES YES YES YES YES YES');
+    
+    }else if(msg.content.toUpperCase() === "YES"){
+         msg.reply('YES YES YES YES YES YES YES YES');
+   
     }else if(msg.content === "Kirill hakkaði tölvuna mína! Hvað á ég að gera!?"){
         msg.reply('https://www.youtube.com/watch?v=Nt2246e0f6I');
+    
     }else if(msg.content === "Ég fékk heimavinnu í dag hvað á ég að gera?"){
         msg.reply('Kveiktu í landakotsskóla!');
+    
     }else if(msg.content === "!events"){
         msg.reply('\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)');
+    
     }else if(msg.content === "Hey besti botti ertu vakandi?"){
         msg.reply("Nei");
+    
     }else if(msg.content === "🅱️ruh"){
         msg.reply("Bruh");
+    
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
+    
     }else if(msg.content === "!help"){
         msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
+    
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
         msg.reply('NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!');
+    
     }else if(msg.content === "Bruh"){
         msg.reply('Bruh');
+    
     }else if(msg.content === "bruh"){
         msg.reply('bruh');
+
+    }else if(msg.content === "Mamman þín"){
+        msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
     }
 })
 
