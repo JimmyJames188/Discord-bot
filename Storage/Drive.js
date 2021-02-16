@@ -279,10 +279,12 @@ exports.editFile = editFile;
 function onChanges(auth, fileId, callback, data = undefined, refreshTime = 20000){
     setTimeout(async() => {
         const filedata = await exports.getFile(auth, fileId);
+        // console.log(filedata)
+        // console.log(data)
         if(data){
             if(!deepEqual.deepEquel(data, filedata)){
-                callback()
                 data = filedata;
+                callback(await exports.getFile(auth, fileId))
             }
             exports.onChanges(auth, fileId, callback, data, refreshTime)
             

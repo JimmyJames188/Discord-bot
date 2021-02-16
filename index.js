@@ -150,12 +150,12 @@ bot.on('ready', () => {
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
             readline.cursorTo(process.stdout, 0);
-            console.log("Bot login".green + " - " + (`finished, version ` + version).green);
+            console.log("Bot login".green + " - " + (`Finished, version ` + version).green);
         })
     }else{
         readline.clearLine(process.stdout, 0);
         readline.cursorTo(process.stdout, 0);
-        console.log("Bot login".green + " - " + (`finished, version ` + version).green);
+        console.log("Bot login".green + " - " + (`Finished, version ` + version).green);
     }
     getSundleikurinnPlayerData(RawSundleykurinnData)
     JamesBot.onChanges(EndingsId, data => {
@@ -811,12 +811,18 @@ bot.on('message', async msg => {
                         return;
                     }
                 }
-
+                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[..........] 0%".red)
+                
                 sl.SundleikurinnData.userData.Endings.push({UserId: msg.author.id, User: msg.author, Endings: []})
-                fs.writeFile("Storage\\Sundleikurinn\\userData\\Endings.json", JSON.stringify(sl.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '), function (err) {
-                    if (err){console.error(err); return 0}; 
-                    console.log("New user has been added to Sundleikurinn");
-                });
+                readline.clearLine(process.stdout, 0);
+                readline.cursorTo(process.stdout, 0);
+                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[|||||.....] 50%".red)
+
+                JamesBot.editFile(EndingsId, JSON.stringify(sl.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '));
+                readline.clearLine(process.stdout, 0);
+                readline.cursorTo(process.stdout, 0);
+                console.log("Adding new user to sundleykurinn".green + " - " + "Finished".green);
+
                 sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
             }
         })
