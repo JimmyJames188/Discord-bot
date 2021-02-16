@@ -27,14 +27,22 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Hvaða botti ætlar barasta ekki að læra að reikna? => Ég
 * HVER ER BIG SMORT HÉR? => NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!
 * Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+* KÚKABOTTI => Hver sagði þetta!?
+* IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!!
 * =>   
 `not finished yet`
 
 ### Reacrions
-* 
+| 👎                    | 👍                |
+| --------------------- | ----------------- |
+| IS JAMES BANANAMAN    | ÞORSTEINN BAD     |
+| SH eru bestir         | JAMES FOR OWNER   |
+| STEFFI ER OWNER       | I'M HOME          |
+| JAMES BAD             |                   |
 
 ### Other commands
 * !help => Usefull commands
 * !ProfilePicture => Returns your profile picture
 * !events => Tells you about events
 * !kick `user` => kickes user (idk if it works)
+* !image => gives image of a banana
