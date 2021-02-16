@@ -31,5 +31,5 @@ This bot was createt by [James](https://github.com/JimmyJames188) for private us
 
 ### Other commands
 * !help => Usfull commands
-* !ProfilePicture => Returnes our profile picture
+* !ProfilePicture => Returnes your profile picture
 * !events => Telles you about events

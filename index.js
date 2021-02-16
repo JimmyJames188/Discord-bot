@@ -194,7 +194,7 @@ bot.on('message', msg=> {
     }else if(msg.content === "Jæja þá skulum við fara með bæn"){
         msg.reply('Heilagi Gummi! Lífið og heilsan er helgidómur, sem þú hefur gefið okkur, því er allt heilagt sem viðheldur lífinu. Gef okkur því visku til að njóta matar og drykkjar með fögnuði og þakklátum huga og gæta jafnframt hófs. Blessaðu líf okkar og starf og gef okkur náð og þrótttil að vera trúir þjónar á akri þínum. Send snauðum og sjúkum hjálp og syrgjendum huggun. Blessaðu og helgaðu lífið sérhverja stund í Gumma krists heilaga nafni. A M E N');
     }else if(msg.content === "!ProfilePicture"){
-        msg.reply('<${message.author.displayAvatarURL({ format: "png", dynamic: true })}>');
+        msg.reply(`<${msg.author.displayAvatarURL({ format: "png", dynamic: true })}>`);
     }else if(msg.content === "Lights out!"){
         var botping = Math.round(bot.ws.ping)
         message.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
