@@ -2,6 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const colors = require('colors');
+const deepEqual = require('D:\\Users\\Kirill\\Code\\James\\Discord-bot\\commands\\deepEqual.js')
 
 let InputCallback = () => {};
 exports.WaitingForInput = false;
@@ -84,6 +85,20 @@ class Project{
 
     async editFile(ID, content){
         return await exports.editFile(this.auth, ID, content)
+    }
+    
+    // onFileEdit(ID, callback){
+    //     exports.onFileEdit(this.auth, ID, callback)
+    // }
+    /**
+     * 
+     * @param {String} fileId 
+     * @param {Function} callback 
+     * @param {*} data  
+     * @param {Number} refreshTime  Time between checks in ms
+     */
+    onChanges(fileId, callback, data = undefined, refreshTime = 20000){
+        exports.onChanges(this.auth, fileId, callback, data, refreshTime)
     }
 }
 exports.Project = Project;
@@ -229,3 +244,52 @@ async function editFile(auth, fileId, content) {
     return res.data
 }
 exports.editFile = editFile;
+
+// async function onFileEdit(auth, fileId, callback) {
+//     const drive = google.drive({version: 'v3', auth});
+//     drive.files.watch({fileId, requestBody: 
+//         {
+//             "kind": "api#channel",
+//             "id": fileId,
+//             "resourceId": string,
+//             "resourceUri": string,
+//             "token": string,
+//             "expiration": long,
+//             "type": string,
+//             "address": string,
+//             "payload": boolean
+//         }
+//     }, (err, response) => {
+//         if (err) {
+//           console.log(`Drive API returned ${err}`)
+//         }
+//         callback(response)
+//     });
+// }
+// exports.onFileEdit = onFileEdit;
+
+/**
+ * 
+ * @param {google.auth.OAuth2} auth 
+ * @param {String} fileId 
+ * @param {Function} callback 
+ * @param {*} data  
+ * @param {Number} refreshTime  Time between checks in ms
+ */
+function onChanges(auth, fileId, callback, data = undefined, refreshTime = 20000){
+    setTimeout(async() => {
+        const filedata = await exports.getFile(auth, fileId);
+        if(data){
+            if(!deepEqual.deepEquel(data, filedata)){
+                callback()
+                data = filedata;
+            }
+            exports.onChanges(auth, fileId, callback, data, refreshTime)
+            
+        }else{
+            data = filedata
+            exports.onChanges(auth, fileId, callback, data, refreshTime)
+        }
+    }, refreshTime)
+}
+exports.onChanges = onChanges
