@@ -40,9 +40,20 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 | STEFFI ER OWNER       | I'M HOME          |
 | JAMES BAD             |                   |
 
+### Voice chat commands
+* .join => Joins the voice chat
+* .play `link to a youtube video` => Plays the audio of the youtoube video
+* .leave => Leaves the voice chat
+* .stop => Stopes the current song that is playing
+* .pause => Pauses the current song that is playing
+* .resume => Resumes the current song that is playing
+* .volume `0 - 200` => Changes volume
+
 ### Other commands
 * !help => Usefull commands
 * !ProfilePicture => Returns your profile picture
 * !events => Tells you about events
 * !kick `user` => kickes user (idk if it works)
 * !image => gives image of a banana
+
+<!-- END OF COMMANDS -->
