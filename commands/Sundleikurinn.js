@@ -6,7 +6,7 @@ const Drive = require("..\\Storage\\Drive.js")
 const delay = 1000
 const EndingsId = '1CxeqpkqA238s1WYz83n88NK-GdwgIgtU';
 
-JamesBot = new Drive.Project("credentials.json", async JamesBot => {
+let JamesBot = new Drive.Project("credentials.json", async JamesBot => {
 })
 
 
