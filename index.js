@@ -265,32 +265,50 @@ bot.on('message', msg=> {
 
             let rightSpace = false;
             readme = readme.toString().split('\r\n')
-            let commands = "";
+            let command = "";
             let info = "";
             let type = "";
+            n = 0;
             
+            //v1 - https://github.com/JimmyJames188/Discord-bot/commit/5931ae3ef640eadcd02287e81f3d80f4374d4abe
+            //v2 - current version
             for (let i = 0; i < readme.length; i++) {
                 const line = readme[i];
                 if(rightSpace){
                     if(line.startsWith("<!-- END OF COMMANDS -->")){
+                        if(n % 2){
+                            embeded.addFields([
+                                {name: "\u200B", value: "\u200B", inline: false},
+                                {name: command, value: "\u200B", inline: true},
+                                {name: info, value: "\u200B", inline: true}
+                            ])
+                        }
                         rightSpace = false
                     }else if(line.startsWith('###') || line.startsWith('<!-- break -->')){
                         embeded.addFields([
-                            {name: type, value: commands.substring(0, commands.length - 1).replace("||", "\\|\\|"), inline: true},
-                            {name: "Info", value: info.substring(0, info.length - 1), inline: true},
-                            {name: "\u200B", value: "\u200B", inline: false}
+                            {name: "\u200B", value: "\u200B", inline: false},
+                            {name: type, value: "\u200B", inline: true},
+                            {name: "Info", value: "\u200B", inline: true}
                         ])
-                        commands = "";
-                        info = "";
 
                         if(line.startsWith('<!-- break -->')){
-                            type = "----"
+                            //type = "----"
                         }else{
                             type = line.substring(3)
                         }
                     }else if(line != ''){
-                        commands = commands +  line.split(' => ')[0].substring(1) + "\n"
-                        info = info +  line.split(' => ')[1] + "\n"
+                        if(n % 2 == 0){
+                            command = readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|")
+                            info = readme[i].split(' => ')[1]
+                            console.log(i + command)
+                        }else{
+                            embeded.addFields([
+                                {name: "\u200B", value: "\u200B", inline: false},
+                                {name: command, value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                                {name: info, value: readme[i].split(' => ')[1], inline: true}
+                            ])
+                        }
+                        n++
                     }
 
                 }else if(line.startsWith("## Commands")){
