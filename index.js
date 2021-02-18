@@ -255,20 +255,20 @@ bot.on('message', msg=> {
     }else if(msg.content === "!help"){
         //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
         fs.readFile('README.md', (err, readme) => {
-            const embeded = new Discord.MessageEmbed()
+            const embeded = [new Discord.MessageEmbed()
                 .setColor('#CC0000')
                 .setTitle("Commands")
                 .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
                 .setAuthor(bot.user.username, bot.user.avatarURL())
                 .setDescription('This are comands for this bot!')
-                .setFooter("Takk fyrir að nota bottan!", bot.user.avatarURL());
+                .setFooter("Takk fyrir að nota bottan!", bot.user.avatarURL())];
 
             let rightSpace = false;
             readme = readme.toString().split('\r\n')
             let command = "";
             let info = "";
             let type = "";
-            n = 0;
+            let n = 0;
             
             //v1 - https://github.com/JimmyJames188/Discord-bot/commit/5931ae3ef640eadcd02287e81f3d80f4374d4abe
             //v2 - current version
@@ -276,38 +276,40 @@ bot.on('message', msg=> {
                 const line = readme[i];
                 if(rightSpace){
                     if(line.startsWith("<!-- END OF COMMANDS -->")){
-                        if(n % 2){
-                            embeded.addFields([
-                                {name: "\u200B", value: "\u200B", inline: false},
-                                {name: command, value: "\u200B", inline: true},
-                                {name: info, value: "\u200B", inline: true}
-                            ])
-                        }
                         rightSpace = false
-                    }else if(line.startsWith('###') || line.startsWith('<!-- break -->')){
-                        embeded.addFields([
-                            {name: "\u200B", value: "\u200B", inline: false},
-                            {name: type, value: "\u200B", inline: true},
-                            {name: "Info", value: "\u200B", inline: true}
-                        ])
+                    }else if(line.startsWith('###') || n == 8){
+                        embeded.push(new Discord.MessageEmbed()
+                            .setColor('#CC0000')
+                            .setTitle("Commands")
+                            .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
+                            .setAuthor(bot.user.username, bot.user.avatarURL())
+                            .setDescription('This are comands for this bot!')
+                            .setFooter("Takk fyrir að nota bottan!", bot.user.avatarURL()))
 
-                        if(line.startsWith('<!-- break -->')){
-                            //type = "----"
+                        if(n = 8){
+                            if(line != '' && !line.startsWith('<!-- break -->')){
+                                embeded[embeded.length - 1].addFields([
+                                    {name: "\u200B", value: "\u200B", inline: false},
+                                    {name: type, value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                                    {name: "info", value: readme[i].split(' => ')[1], inline: true}
+                                ])
+                                n = 1;
+                            }else{
+                                n = 0
+                            }
                         }else{
                             type = line.substring(3)
                         }
-                    }else if(line != ''){
-                        if(n % 2 == 0){
-                            command = readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|")
-                            info = readme[i].split(' => ')[1]
-                            console.log(i + command)
-                        }else{
-                            embeded.addFields([
-                                {name: "\u200B", value: "\u200B", inline: false},
-                                {name: command, value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
-                                {name: info, value: readme[i].split(' => ')[1], inline: true}
-                            ])
-                        }
+                    }else if(line != '' && !line.startsWith('<!-- break -->')){
+                        console.log(i)
+                        console.log(line)
+                        console.log(readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"))
+                        console.log(readme[i].split(' => ')[1])
+                        embeded[embeded.length - 1].addFields([
+                            {name: "\u200B", value: "\u200B", inline: false},
+                            {name: type, value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                            {name: "info", value: readme[i].split(' => ')[1], inline: true}
+                        ])
                         n++
                     }
 
@@ -319,7 +321,9 @@ bot.on('message', msg=> {
                 
             }
 
-            msg.channel.send(embeded)
+            for (let i = 0; i < embeded.length; i++) {
+                msg.channel.send(embeded[i])
+            }
         })
         
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
