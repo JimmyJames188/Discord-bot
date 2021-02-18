@@ -51,7 +51,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * .volume `0 - 200` => Changes volume
 
 ### Other commands
-* !help => Usefull commands
+* !help => All commands
 * !ProfilePicture => Returns your profile picture
 * !events => Tells you about events
 * !kick `user` => kickes user (idk if it works)
