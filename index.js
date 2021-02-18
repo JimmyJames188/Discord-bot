@@ -253,8 +253,57 @@ bot.on('message', msg=> {
         msg.reply("Ég!");
     
     }else if(msg.content === "!help"){
-        msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
-    
+        //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
+        fs.readFile('README.md', (err, readme) => {
+            const embeded = new Discord.MessageEmbed()
+                .setColor('#CC0000')
+                .setTitle("Commands")
+                .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
+                .setAuthor(bot.user.username, bot.user.avatarURL())
+                .setDescription('This are comands for this bot!')
+                .setFooter("Takk fyrir að nota bottan!", bot.user.avatarURL());
+
+            let rightSpace = false;
+            readme = readme.toString().split('\r\n')
+            let commands = "";
+            let info = "";
+            let type = "";
+            
+            for (let i = 0; i < readme.length; i++) {
+                const line = readme[i];
+                if(rightSpace){
+                    if(line.startsWith("<!-- END OF COMMANDS -->")){
+                        rightSpace = false
+                    }else if(line.startsWith('###') || line.startsWith('<!-- break -->')){
+                        embeded.addFields([
+                            {name: type, value: commands.substring(0, commands.length - 1).replace("||", "\\|\\|"), inline: true},
+                            {name: "Info", value: info.substring(0, info.length - 1), inline: true},
+                            {name: "\u200A", value: "\u200A", inline: false}
+                        ])
+                        commands = "";
+                        info = "";
+
+                        if(line.startsWith('<!-- break -->')){
+                            type = "----"
+                        }else{
+                            type = line.substring(3)
+                        }
+                    }else if(line != ''){
+                        commands = commands +  line.split(' => ')[0].substring(1) + "\n"
+                        info = info +  line.split(' => ')[1] + "\n"
+                    }
+
+                }else if(line.startsWith("## Commands")){
+                    rightSpace = true
+                    i++
+                    type = readme[i].substring(3)
+                }
+                
+            }
+
+            msg.channel.send(embeded)
+        })
+        
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
         msg.reply('NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!');
     
