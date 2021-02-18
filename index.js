@@ -278,7 +278,7 @@ bot.on('message', msg=> {
                         embeded.addFields([
                             {name: type, value: commands.substring(0, commands.length - 1).replace("||", "\\|\\|"), inline: true},
                             {name: "Info", value: info.substring(0, info.length - 1), inline: true},
-                            {name: "\u200A", value: "\u200A", inline: false}
+                            {name: "\u200B", value: "\u200B", inline: false}
                         ])
                         commands = "";
                         info = "";
