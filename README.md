@@ -30,7 +30,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 * KÚKABOTTI => Hver sagði þetta!?
 * IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!!
-* .=>.   
+* . => .   
 `not finished yet`
 
 ### Reacrions
