@@ -13,13 +13,14 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Lights out! => And away we go! \nI had a reaction time of `Response time`ms.
 * F => F
 * Welcome to the channel! => It's nice to be here!
+<!-- break -->
 * @James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? => AUÐVITAÐ HVERSLAGS SPURNING ER ÞETTA EIGINLEGA!!
 * Þorsteinn er dauður! => Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD
 * Stefán er dauður! => Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD
 * Bruh it´s claping   CLAPING   CLAPING   CLAPING   CLAPING   CLAPING    CLAPING   CLAPING   CLAPING   CLAPING    CLAPING   CLAPING   CLAPING => clapping
 * Kirill hakkaði botinn minn! Hvað á ég að gera!? => [https://www.youtube.com/watch?v=Nt2246e0f6I](https://www.youtube.com/watch?v=Nt2246e0f6I)
 * no => Yes
-* ding dong => Your opinion is wron
+* ding dong => Your opinion is wrong
 * Kirill hakkaði tölvuna mína! Hvað á ég að gera!? => [https://www.youtube.com/watch?v=Nt2246e0f6I](https://www.youtube.com/watch?v=Nt2246e0f6I)
 * Ég fékk heimavinnu í dag hvað á ég að gera? => Kveiktu í landakotsskóla!
 * Hey besti botti ertu vakandi? => Nei
@@ -29,7 +30,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 * KÚKABOTTI => Hver sagði þetta!?
 * IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!!
-* =>   
+* . => .   
 `not finished yet`
 
 ### Reacrions
@@ -40,9 +41,20 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 | STEFFI ER OWNER       | I'M HOME          |
 | JAMES BAD             |                   |
 
+### Voice chat commands
+* .join => Joins the voice chat
+* .play `link to a youtube video` => Plays the audio of the youtoube video
+* .leave => Leaves the voice chat
+* .stop => Stopes the current song that is playing
+* .pause => Pauses the current song that is playing
+* .resume => Resumes the current song that is playing
+* .volume `0 - 200` => Changes volume
+
 ### Other commands
 * !help => Usefull commands
 * !ProfilePicture => Returns your profile picture
 * !events => Tells you about events
 * !kick `user` => kickes user (idk if it works)
 * !image => gives image of a banana
+
+<!-- END OF COMMANDS -->
