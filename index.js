@@ -265,49 +265,66 @@ bot.on('message', msg=> {
 
             let rightSpace = false;
             readme = readme.toString().split('\r\n')
-            let command = "";
-            let info = "";
+            let command = [];
+            let reaction = [];
             let type = "";
             let n = 0;
             
             //v1 - https://github.com/JimmyJames188/Discord-bot/commit/5931ae3ef640eadcd02287e81f3d80f4374d4abe
             //v2 - current version
             for (let i = 0; i < readme.length; i++) {
-                const line = readme[i];
+                let line = readme[i];
                 if(rightSpace){
                     if(line.startsWith("<!-- END OF COMMANDS -->")){
                         rightSpace = false
                     }else if(line.startsWith('###') || n == 8){
+                        if(type == " Reacrions"){
+                            for (let j = 0; j < reaction.length; j++) {
+                                embeded[embeded.length - 1].addField(
+                                    reaction[j], command[j], true
+                                )
+                            }
+                        }
+                        if(line.startsWith('###')){
+                            type = line.substring(3)
+                        }
                         embeded.push(new Discord.MessageEmbed()
                             .setColor('#CC0000')
-                            .setTitle("Commands")
-                            .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
-                            .setAuthor(bot.user.username, bot.user.avatarURL())
-                            .setDescription('This are comands for this bot!')
-                            .setFooter("Takk fyrir að nota bottan!", bot.user.avatarURL()))
+                            .setTitle(type)
+                            .setAuthor(bot.user.username, bot.user.avatarURL()))
 
                         if(n = 8){
-                            if(line != '' && !line.startsWith('<!-- break -->')){
+                            if(line != '' && !line.startsWith('<!-- break -->') && !line.startsWith('###')){
                                 embeded[embeded.length - 1].addFields([
                                     {name: "\u200B", value: "\u200B", inline: false},
-                                    {name: type, value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                                    {name: "command", value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
                                     {name: "info", value: readme[i].split(' => ')[1], inline: true}
                                 ])
                                 n = 1;
                             }else{
                                 n = 0
                             }
-                        }else{
-                            type = line.substring(3)
                         }
+                    }else if(type == " Reacrions"){
+                        if(readme[i - 1].startsWith('###')){
+                            line = line.split("|")
+                            for (let j = 1; j < line.length - 1; j++) {
+                                reaction.push(line[j].replace(" ", ""))
+                            }
+                            command = new Array(line.length - 2).fill("")
+                        }else if(!line.includes("-")){ 
+                            line = line.split("|")
+                            for (let j = 1; j < line.length - 1; j++) {
+                                command[j - 1] = command[j - 1] + line[j] + '\n'
+                            }
+                        }
+                        console.log(reaction)
+                        console.log(command[0])
+
                     }else if(line != '' && !line.startsWith('<!-- break -->')){
-                        console.log(i)
-                        console.log(line)
-                        console.log(readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"))
-                        console.log(readme[i].split(' => ')[1])
                         embeded[embeded.length - 1].addFields([
                             {name: "\u200B", value: "\u200B", inline: false},
-                            {name: type, value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                            {name: "command", value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
                             {name: "info", value: readme[i].split(' => ')[1], inline: true}
                         ])
                         n++
