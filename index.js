@@ -4,6 +4,8 @@ const Discord = require("discord.js");
 
 const {google} = require('googleapis');
 
+var crypto = require('crypto');
+
 const Drive = require('./Storage/Drive.js')
 
 const readline = require('readline');
@@ -690,12 +692,18 @@ var fact = Math.floor(Math.random() * facts.length);
 
 
 var bananas = ["Hinn heilaga Gumma guð", "Hinn heilaga Gumma sund", "Hinn heilaga prest Snæ", "Hinn heilaga Teit flugsunds eingil", "Hinn heilaga Gumma Krist"];
-var banana = Math.floor(Math.random() * bananas.length);
 
 bot.on('message', msg=>{
     if(msg.content === "Ó góði botti hvern eigum við að biðja í dag?"){
-        var banana = Math.floor(Math.random() * bananas.length);
-        msg.reply(bananas[banana])
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
+        const banana = Math.abs(crypto.createHash('sha256').update(today).digest('bace64').readInt8() % bananas.length);   
+        console.log(banana)
+        msg.reply(`\nÍ dag þann __${today}__ ætlum við að biðja til **${'`' + bananas[banana] + '`'}**`)
         
 
     }else if(msg.content === "!facts"){
