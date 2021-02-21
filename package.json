@@ -23,7 +23,7 @@
     "opusscript": "0.0.7",
     "relevant-urban": "^2.0.0",
     "request": "^2.88.2",
-    "ytdl-core": "^3.4.1"
+    "ytdl-core": "^3.4.2"
   },
   "devDependencies": {},
   "description": ""
