@@ -30,6 +30,8 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 * KÚKABOTTI => Hver sagði þetta!?
 * IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!!
+* Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
+* kirill spírill => `IDK`
 * . => .   
 `not finished yet`
 
@@ -54,7 +56,8 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * !help => All commands
 * !ProfilePicture => Returns your profile picture
 * !events => Tells you about events
-* !kick `user` => kickes user (idk if it works)
-* !image => gives image of a banana
+* !kick `user` => Kickes user (idk if it works)
+* !image => Gives image of a banana
+* !facts => Gives facts
 
 <!-- END OF COMMANDS -->
