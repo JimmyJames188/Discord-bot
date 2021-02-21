@@ -254,14 +254,8 @@ bot.on('message', msg=> {
     
     }else if(msg.content.startsWith("!help")){
         //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
-        fs.readFile('README.md', (err, readme) => {
-            const embeded = [new Discord.MessageEmbed()
-                .setColor('#CC0000')
-                .setTitle("Commands")
-                .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
-                .setAuthor(bot.user.username, bot.user.avatarURL())
-                .setDescription('This are comands for this bot!')
-                .setFooter("Takk fyrir að nota bottan!", bot.user.avatarURL())];
+        fs.readFile('README.md', async (err, readme) => {
+            const embeded = [];
 
             let rightSpace = false;
             readme = readme.toString().split('\r\n')
@@ -269,6 +263,7 @@ bot.on('message', msg=> {
             let reaction = [];
             let type = "";
             let n = 0;
+            let description = "This are commands for this bot.\nHere is list for chapters:";
             
             //v1 - https://github.com/JimmyJames188/Discord-bot/commit/5931ae3ef640eadcd02287e81f3d80f4374d4abe
             //v2 - current version
@@ -287,11 +282,15 @@ bot.on('message', msg=> {
                         }
                         if(line.startsWith('###')){
                             type = line.substring(3)
+                            description = description + "\n" + (embeded.length + 1) + " - " + type;
                         }
                         embeded.push(new Discord.MessageEmbed()
                             .setColor('#CC0000')
                             .setTitle(type)
-                            .setAuthor(bot.user.username, bot.user.avatarURL()))
+                            .setAuthor(bot.user.username, bot.user.avatarURL())
+                            .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
+                            .setFooter("Page " + (embeded.length + 1), bot.user.avatarURL()))
+                    
 
                         if(n = 8){
                             if(line != '' && !line.startsWith('<!-- break -->') && !line.startsWith('###')){
@@ -330,32 +329,77 @@ bot.on('message', msg=> {
 
                 }else if(line.startsWith("## Commands")){
                     rightSpace = true
-                    i++
-                    type = readme[i].substring(3)
+                    type = readme[i + 1].substring(3)
                 }
                 
             }
             
-            // for (let i = 0; i < embeded.length; i++) {
-            //     msg.channel.send(embeded[i])
-            // }
+            description = description + "\n\nTo open chapter you can send command !help `the number of the page`"
+            for (let i = 0; i < embeded.length; i++) {
+                embeded[i].setDescription(description)
+            }
 
-            var page = msg.content.split(" ");
+            let message;
+            let page = msg.content.split(" ");
             if(page.length > 1){
                 page = page[1]
                 page = parseInt(page)
-                if(typeof page == "number"){
+                if(!Number.isNaN(page)){
                     if(page > 0 && page <= embeded.length){
-                        msg.channel.send(embeded[page])
+                        message = await msg.channel.send(embeded[page - 1])
                     }else{
                         msg.channel.send("Invalid number")
+                        return
                     }
                 }else{
                     msg.channel.send(msg.content.split(" ")[1] + " is not a number")
+                    return
                 }
             }else{
-                msg.channel.send(embeded[0])
+                message = await msg.channel.send(embeded[0])
+                page = 1;
             }
+        
+            if(page != 1){
+                message.react("◀")
+            }
+            if(page != embeded.length){
+                message.react("▶")
+            }
+
+            let reaction_collector = message.createReactionCollector((r, user) => (r.emoji.name == "◀" || r.emoji.name == "▶") && !user.bot)
+            reaction_collector.on('collect', async (r, user) => {
+                if(r.emoji.name == "◀" && page != 1){
+                    page--;
+                    message.edit(embeded[page - 1])
+
+                    if(page == 1){
+                        r.users.remove(bot.user)
+                    }else if(page == embeded.length - 1){
+                        message.react("▶")
+                    }
+                }else if(r.emoji.name == "▶" && page != embeded.length){
+                    page++;
+                    message.edit(embeded[page - 1])
+
+                    if(page == 2){
+                        await r.users.remove(user)
+                        await r.users.remove(bot.user)
+                        message.react("◀")
+                        message.react("▶")
+                        return
+                    }else if(page == embeded.length){
+                        r.users.remove(bot.user)
+                    }
+                }
+                r.users.remove(user)
+            })
+
+            let collector = message.channel.createMessageCollector(m => m.content.startsWith("!help"))
+            collector.on('collect', () => {
+                message.delete()
+                collector.stop()
+            })
         })
         
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
