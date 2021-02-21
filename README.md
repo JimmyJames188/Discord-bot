@@ -52,6 +52,11 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * .resume => Resumes the current song that is playing
 * .volume `0 - 200` => Changes volume
 
+### Sundleikurinn chat commands
+* !game => starts new game
+* !stats `ping (optional) (if the bot is pingd sends statistics as if all endins were complited)` => Sends statistics
+* !stats all => Sends avarige statistics for everyone
+
 ### Other commands
 * !help => All commands
 * !ProfilePicture => Returns your profile picture
