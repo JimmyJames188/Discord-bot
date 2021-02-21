@@ -252,7 +252,7 @@ bot.on('message', msg=> {
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
     
-    }else if(msg.content === "!help"){
+    }else if(msg.content.startsWith("!help")){
         //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
         fs.readFile('README.md', (err, readme) => {
             const embeded = [new Discord.MessageEmbed()
@@ -318,8 +318,6 @@ bot.on('message', msg=> {
                                 command[j - 1] = command[j - 1] + line[j] + '\n'
                             }
                         }
-                        console.log(reaction)
-                        console.log(command[0])
 
                     }else if(line != '' && !line.startsWith('<!-- break -->')){
                         embeded[embeded.length - 1].addFields([
@@ -337,9 +335,26 @@ bot.on('message', msg=> {
                 }
                 
             }
+            
+            // for (let i = 0; i < embeded.length; i++) {
+            //     msg.channel.send(embeded[i])
+            // }
 
-            for (let i = 0; i < embeded.length; i++) {
-                msg.channel.send(embeded[i])
+            var page = msg.content.split(" ");
+            if(page.length > 1){
+                page = page[1]
+                page = parseInt(page)
+                if(typeof page == "number"){
+                    if(page > 0 && page <= embeded.length){
+                        msg.channel.send(embeded[page])
+                    }else{
+                        msg.channel.send("Invalid number")
+                    }
+                }else{
+                    msg.channel.send(msg.content.split(" ")[1] + " is not a number")
+                }
+            }else{
+                msg.channel.send(embeded[0])
             }
         })
         
