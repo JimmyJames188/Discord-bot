@@ -205,7 +205,7 @@ bot.on('message', msg=> {
    
     }else if(msg.content === "Lights out!"){
         var botping = Math.round(bot.ws.ping)
-        message.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
+        msg.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
    
     }else if(msg.content === "F"){
         msg.reply('F');
