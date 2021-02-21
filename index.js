@@ -703,7 +703,7 @@ bot.on('message', msg=>{
         today = dd + '/' + mm + '/' + yyyy;
         const banana = Math.abs(crypto.createHash('sha256').update(today).digest('bace64').readInt8() % bananas.length);   
         console.log(banana)
-        msg.reply(`\nÍ dag þann __${today}__ ætlum við að biðja til **${'`' + bananas[banana] + '`'}**`)
+        msg.reply(`\nÍ dag þann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
         
 
     }else if(msg.content === "!facts"){
