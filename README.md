@@ -32,8 +32,6 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!!
 * Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
 * kirill spírill => `IDK`
-* . => .   
-`not finished yet`
 
 ### Reacrions
 | 👎                    | 👍                |
