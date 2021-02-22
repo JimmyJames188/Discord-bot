@@ -276,7 +276,7 @@ bot.on('message', msg=> {
                 if(rightSpace){
                     if(line.startsWith("<!-- END OF COMMANDS -->")){
                         rightSpace = false
-                    }else if(line.startsWith('###') || n == 8){
+                    }else if(line.startsWith('###') || (n == 8 && line != '')){
                         if(type == " Reacrions"){
                             for (let j = 0; j < reaction.length; j++) {
                                 embeded[embeded.length - 1].addField(
