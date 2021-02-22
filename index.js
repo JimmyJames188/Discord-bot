@@ -418,7 +418,7 @@ bot.on('message', msg=> {
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
     }else if(msg.content.startsWith("!encrypt")){
-        if(msg.content.split('"') < 4){
+        if(msg.content.split('"').length < 4){
             msg.channel.send("Wrong arguments")
         }else{
             key = msg.content.split('"')[1]
@@ -430,7 +430,7 @@ bot.on('message', msg=> {
             }
         }
     }else if(msg.content.startsWith("!decrypt")){
-        if(msg.content.split('"') < 4){
+        if(msg.content.split('"').length < 4){
             msg.channel.send("Wrong arguments")
         }else{
             key = msg.content.split('"')[1]
