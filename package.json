@@ -10,6 +10,7 @@
   "author": "James",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/opus": "^0.4.0",
     "canvas": "^2.6.1",
     "cheerio": "^1.0.0-rc.3",
     "colors": "^1.4.0",
@@ -18,6 +19,7 @@
     "discord.js": "^12.5.1",
     "discord.js-commando": "^0.10.0",
     "ffmpeg": "0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
     "googleapis": "^39.2.0",
     "nodemon": "^2.0.7",
     "opusscript": "0.0.7",
