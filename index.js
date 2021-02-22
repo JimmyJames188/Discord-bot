@@ -8,6 +8,8 @@ var crypto = require('crypto');
 
 const Drive = require('./Storage/Drive.js')
 
+const Feistel_Cipher = require('./commands/Feistel_Cipher.js')
+
 const readline = require('readline');
 
 const urban = require("relevant-urban")
@@ -415,6 +417,30 @@ bot.on('message', msg=> {
 
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+    }else if(msg.content.startsWith("!encrypt")){
+        if(msg.content.split('"') < 4){
+            msg.channel.send("Wrong arguments")
+        }else{
+            key = msg.content.split('"')[1]
+            content = msg.content.split('"')[3]
+            if(key.length < 10){
+                msg.channel.send("The key needs to be at least 10 characters")
+            }else{
+                msg.channel.send(Feistel_Cipher.encrypt(content, key))
+            }
+        }
+    }else if(msg.content.startsWith("!decrypt")){
+        if(msg.content.split('"') < 4){
+            msg.channel.send("Wrong arguments")
+        }else{
+            key = msg.content.split('"')[1]
+            content = msg.content.split('"')[3]
+            if(key.length < 10){
+                msg.channel.send("The key needs to be at least 10 characters")
+            }else{
+                msg.channel.send(Feistel_Cipher.decrypt(content, key))
+            }
+        }
     }
 })
 
@@ -701,7 +727,7 @@ bot.on('message', msg=>{
         var yyyy = today.getFullYear();
 
         today = dd + '/' + mm + '/' + yyyy;
-        const banana = Math.abs(crypto.createHash('sha256').update(today).digest('bace64').readInt8() % bananas.length);   
+        const banana = Math.abs(crypto.createHash('sha256').update(today).digest().readInt8() % bananas.length);   
         console.log(banana)
         msg.reply(`\nÍ dag þann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
         
