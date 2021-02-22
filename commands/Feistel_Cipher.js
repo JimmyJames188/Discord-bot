@@ -13,7 +13,12 @@ function encrypt(content, key, rounds = 10){
     let string1 = Buffer.from(content.substring(0, string_size), 'utf-8')
     let string2 = Buffer.from(content.substring(string_size), 'utf-8')
     for(var i = 0; i < rounds; i++){
-        const keyx = key.substring(keyx_length * i, keyx_length * (i + 1));
+        var keyx;
+        if(i == rounds - 1){
+            keyx = key.substring(keyx_length * i);
+        }else{
+            keyx = key.substring(keyx_length * i, keyx_length * (i + 1));
+        }
         
         const string11 = string2;
         const string21 = XOR_Buffer(string1, crypto.createHash('sha256').update(string2.toString('hex') + keyx).digest());
