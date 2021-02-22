@@ -444,6 +444,12 @@ bot.on('message', msg=> {
     }
 })
 
+bot.on('message', msg=>{
+        if (msg.content.includes('changeNick')) {
+        if (!msg.guild.me.hasPermission('MANAGE_NICKNAMES')) return msg.channel.send('I don\'t have permission to change your nickname!');
+        msg.member.setNickname(msg.content.replace('changeNick ', ''));
+    }   
+});
 
 bot.on('message', msg=>{
     if(msg.content === "G"){
