@@ -17,7 +17,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * @James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? => AUÐVITAÐ HVERSLAGS SPURNING ER ÞETTA EIGINLEGA!!
 * Þorsteinn er dauður! => Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD
 * Stefán er dauður! => Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD
-* Bruh it´s claping   CLAPING   CLAPING   CLAPING   CLAPING   CLAPING    CLAPING   CLAPING   CLAPING   CLAPING    CLAPING   CLAPING   CLAPING => clapping
+* clapping => Bruh it´s claping   CLAPING   CLAPING   CLAPING   CLAPING   CLAPING    CLAPING   CLAPING   CLAPING   CLAPING    CLAPING   CLAPING   CLAPING
 * Kirill hakkaði botinn minn! Hvað á ég að gera!? => [https://www.youtube.com/watch?v=Nt2246e0f6I](https://www.youtube.com/watch?v=Nt2246e0f6I)
 * no => Yes
 * ding dong => Your opinion is wrong

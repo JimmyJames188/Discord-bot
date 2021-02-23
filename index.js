@@ -234,6 +234,9 @@ bot.on('message', msg=> {
    
     }else if(msg.content === "ding dong"){
         msg.reply("Your opinion is wrong");
+
+    }else if (msg.content === `I forgot the server name!`) {
+	msg.channel.send(`Aha! James's good advice bot is here to save the day! This server's name is: **${msg.guild.name}**`);
     
     }else if(msg.content.toUpperCase() === "YES"){
          msg.reply('YES YES YES YES YES YES YES YES');
