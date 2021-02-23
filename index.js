@@ -738,6 +738,14 @@ bot.on('message', msg=>{
         msg.reply(`\nÍ dag þann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
         
 
+    }else if(msg.content.startsWith("Ó góði botti hvern eigum við að biðja þann")){
+
+        today = msg.content.substring(43).replace('?',"").replace(' ',"");
+        const banana = Math.abs(crypto.createHash('sha256').update(today).digest().readInt8() % bananas.length);   
+        console.log(banana)
+        msg.reply(`\nÞann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
+        
+
     }else if(msg.content === "!facts"){
         var fact = Math.floor(Math.random() * facts.length);
         msg.reply(facts[fact] + " " + facts[Math.floor(Math.random() * facts.length)])
