@@ -3,7 +3,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 
 ## Commands
 ### Text reply
-* Blubadub => 6
+Blubadub => 6
 * Ey whats my mental age bot? => You're mentally: `Random number`
 * Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás => Svo verði ósk þín. Besti bottin á þessari discord rás er James's Good Advice Bot
 * Snær er ekki skemtilegur => NEI!!!
@@ -13,7 +13,6 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Lights out! => And away we go! \nI had a reaction time of `Response time`ms.
 * F => F
 * Welcome to the channel! => It's nice to be here!
-<!-- break -->
 * @James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? => AUÐVITAÐ HVERSLAGS SPURNING ER ÞETTA EIGINLEGA!!
 * Þorsteinn er dauður! => Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD
 * Stefán er dauður! => Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD
@@ -33,7 +32,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * delete => deletes message 
 * Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
-* kirill spírill => `IDK`
+* kirill spírill => `IDK``
 
 ### Reacrions
 | 👎                    | 👍                |
