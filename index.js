@@ -684,7 +684,7 @@ bot.on("message", msg => {
             msg.member.voice.channel.join()
                 .then(connection => {
                     msg.reply("succsesfully joined!");
-                    console.log("bot joind the voice channel");
+                    console.log("bot joined the voice channel");
                 });
 
         }else{
