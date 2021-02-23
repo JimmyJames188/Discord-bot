@@ -255,6 +255,9 @@ bot.on('message', msg=> {
     
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
+
+    }else if (msg.content.startsWith("Bye")) {
+      msg.delete(); 
     
     }else if(msg.content.startsWith("!help")){
         //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
