@@ -462,7 +462,9 @@ bot.on('message', msg=> {
             msg.channel.send('Error')
         }
 
-        msg.channel.send(Math.round(Math.abs(crypto.createHash('sha256').update(input[0] + input[1]).digest().readInt8() / 255 * 100)).toString() + ' af 100')
+        msg.channel.send(Math.round(Math.abs(crypto.createHash('sha256').update(input[0] + input[1]).digest().readInt8() * 2 / 255 * 100)).toString() + ' af 100')
+        // console.log(crypto.createHash('sha256').update(input[0] + input[1]).digest())
+        // console.log(crypto.createHash('sha256').update(input[0] + input[1]).digest().readInt8())
     }
 })
 
