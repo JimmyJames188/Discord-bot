@@ -4,6 +4,8 @@ const Discord = require("discord.js");
 
 const {google} = require('googleapis');
 
+const {Notification} = require('./commands/notification.js')
+
 var crypto = require('crypto');
 
 const Drive = require('./Storage/Drive.js')
@@ -452,6 +454,22 @@ bot.on('message', msg=> {
                 msg.channel.send(Feistel_Cipher.decrypt(content, key))
             }
         }
+    }else if(msg.content.startsWith('Ó góði botti, hvaða einkunn fékk ')){
+        var input = msg.content.split('<')
+        if(input.length != 2){
+            msg.channel.send('Error')
+        }
+
+        input = input[1].split('>')
+        input[0] = input[0].replace(/[<@!>]/g, '')
+
+        if(input.length != 2){
+            msg.channel.send('Error')
+        }
+
+        msg.channel.send(Math.round(Math.abs(crypto.createHash('sha256').update(input[0] + input[1]).digest().readInt8() * 2 / 255 * 100)).toString() + ' af 100')
+        // console.log(crypto.createHash('sha256').update(input[0] + input[1]).digest())
+        // console.log(crypto.createHash('sha256').update(input[0] + input[1]).digest().readInt8())
     }
 })
 
