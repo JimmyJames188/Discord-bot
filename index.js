@@ -178,6 +178,8 @@ bot.on("guildMemberAdd", member => {
     )
 
     var role = member.guild.roles.resolve("727092499822411816"); 
+    var duDe = member.guild.roles.resolve("");
+
     member.roles.add(role);
  
 })
@@ -213,6 +215,9 @@ bot.on('message', msg=> {
    
     }else if(msg.content === "F"){
         msg.reply('F');
+
+    }else if (msg.content === `${PREFIX}MemberCount`) {
+	msg.channel.send(`Total members: ${msg.guild.memberCount}`);
    
     }else if(msg.content === "Welcome to the channel!"){
         msg.reply("It's nice to be here!");
