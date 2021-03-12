@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 
 const {google} = require('googleapis');
 
-const {Notification} = require('./commands/notification.js')
+// const {Notification} = require('./commands/notification.js')
 
 var crypto = require('crypto');
 
@@ -27,6 +27,10 @@ const { error } = require("console");
 const request = require('request');
 
 const ytdl = require("ytdl-core");
+
+const ytSearch = require('yt-search');
+
+const Playjs = require("./commands/Play.js")
 
 const bot = new Discord.Client();
 
@@ -137,6 +141,7 @@ async function getSundleikurinnPlayerData(data){
 
 
 const { DiscordBattleShip } = require("discord-battleship");
+const { executionAsyncResource } = require("async_hooks");
 
 const BattleShip = new DiscordBattleShip({ 
     embedColor: "RED",
@@ -1139,7 +1144,29 @@ JamesBot = new Drive.Project("credentials.json", async JamesBot => {
 
 
 
+bot.commands = new Discord.Collection();
 
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+
+    bot.commands.set(command.name, command);
+}
+
+
+bot.on('message', message => {
+    if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+
+    const args = message.content.slice(PREFIX.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+    if (command === 'clear') {
+        Playjs.execute(message, args);
+    } else if (command === 'play') {
+        Playjs.execute(message, args);
+    } else if (command === 'leave') {
+        Playjs.execute(message, args);
+    }
+});
 
 
 
