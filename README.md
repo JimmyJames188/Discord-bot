@@ -34,7 +34,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
 * kirill spírill => `IDK``
 
-### Reacrions
+### Reactions
 | 👎                    | 👍                |
 | --------------------- | ----------------- |
 | IS JAMES BANANAMAN    | ÞORSTEINN BAD     |
