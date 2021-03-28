@@ -287,8 +287,8 @@ bot.on('message', async msg=> {
     }else if(msg.content === "no"){
         msg.reply("Yes");
 
-    }else if(message.content === '!ServerCount') {
-        message.channel.send(`Im in ${bot.guilds.cache.array().length} servers!`);
+    }else if(msg.content === '!ServerCount') {
+        msg.channel.send(`Im in ${bot.guilds.cache.array().length} servers!`);
    
     }else if(msg.content === "ding dong"){
         msg.reply("Your opinion is wrong");
