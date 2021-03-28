@@ -83,6 +83,10 @@ class Project{
         return await exports.getFile(this.auth, ID)
     }
 
+    async exportFile(ID, type){
+        return await exports.exportFile(this.auth, ID, type)
+    }
+
     async editFile(ID, content){
         return await exports.editFile(this.auth, ID, content)
     }
@@ -216,6 +220,16 @@ async function getFile(auth, fileId) {
     return res.data
 }
 exports.getFile = getFile;
+
+async function exportFile(auth, fileId, type) {
+    const drive = google.drive({version: 'v3', auth});
+    const res = await drive.files.export({fileId, mimeType: type}).catch(e => {
+        console.log(e)
+    });
+
+    return res.data
+}
+exports.exportFile = exportFile;
 
 /**
  * 
