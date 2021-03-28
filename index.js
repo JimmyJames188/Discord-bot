@@ -10,6 +10,8 @@ var crypto = require('crypto');
 
 const Drive = require('./Storage/Drive.js')
 
+const slash_com = require('./commands/slash-com.js')
+
 const Feistel_Cipher = require('./commands/Feistel_Cipher.js')
 
 const readline = require('readline');
@@ -159,6 +161,7 @@ bot.on("message", async (message) => {
 
 
 bot.on('ready', () => {
+    slash_com.send_commands(bot)
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
