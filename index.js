@@ -46,6 +46,8 @@ const fs = require('fs');
 
 const sl = require('./commands/Sundleikurinn.js')
 
+const skuld = '1JxSZiunPLPOJdZCMLtHxuhpu2Wh7ohwBfW9aq0Pq6hw';
+
 
 let RawSundleykurinnData;
 let JamesBot;
@@ -191,10 +193,48 @@ bot.on("guildMemberAdd", member => {
  
 })
 
-bot.on('message', msg=> {
+bot.on('message', async msg=> {
     if (msg.content === "Blubadub") {
         msg.channel.send(3+3)
    
+    }else if (msg.content.startsWith("/gskuld")) {
+        let user = msg.content.split(" ")
+        if(user.length > 1){
+            user = user[1]
+            if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
+                try{
+                    user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
+                }catch (e){
+                    console.log(msg.content)
+                    msg.channel.send("Could not find user")
+                    return
+                }
+            }else{
+                msg.channel.send(user + " is not a valid ping")
+                return
+            }
+        }else{
+            user = msg.author
+        }
+
+
+
+        let gskuld = await JamesBot.exportFile(skuld, 'text/csv')
+        gskuld = gskuld.split('\r\n')
+        gskuld.forEach((v, i) => {gskuld[i] = v.split(",")});
+        let skuldugur = true;
+
+
+        for (let i = 3; i < gskuld.length; i++) {
+            const element = gskuld[i];
+            if(element[0] == user.id){
+                msg.channel.send(user.toString() + element[1].replace('/skuld', element[2]).replace('/bab', element[3]).replace('/af', element[4]))
+                skuldugur = false;
+            }
+        }
+        if(skuldugur){
+            msg.channel.send("Engin skuld fanst hjá " + user.toString())
+        }
     }else if (msg.content === "Ey whats my mental age bot?") {
         msg.channel.send("You're mentally: " + Math.floor(Math.random() * 100 + 1) + "")
    
