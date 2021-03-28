@@ -66,5 +66,6 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * !encrypt "`key`" "`message`" => Returnes encrypted message
 * !decrypt "`key`" "`encrypted message`" => Returnes message
 * /gskuld `user` => Sais what `user` ownes the Gjöfull
+* !ServerCount => Sends number of servers the bot is in
 
 <!-- END OF COMMANDS -->

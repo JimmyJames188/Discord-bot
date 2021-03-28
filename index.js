@@ -176,7 +176,7 @@ bot.on('ready', () => {
     getSundleikurinnPlayerData(RawSundleykurinnData)
     JamesBot.onChanges(EndingsId, data => {
         if(!sl.SundleikurinnData.updatedDrive){
-            console.log("The file changet, updating local database:")
+            console.log("The file changed, updating local database:")
             getSundleikurinnPlayerData(data)
         }else{
             sl.SundleikurinnData.updatedDrive = true;
@@ -286,6 +286,9 @@ bot.on('message', async msg=> {
    
     }else if(msg.content === "no"){
         msg.reply("Yes");
+
+    }else if(message.content === '!ServerCount') {
+        message.channel.send(`Im in ${bot.guilds.cache.array().length} servers!`);
    
     }else if(msg.content === "ding dong"){
         msg.reply("Your opinion is wrong");
@@ -665,7 +668,7 @@ bot.on("message", async message => {
 function image(message){
 
     var options = {
-        url: "http://results.dogpile.com/serp?qc=images&q=" + "banani",
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "Attack on titan meme",
         method: "GET",
         headers: {
             "Accept": "text/html",
@@ -1210,6 +1213,3 @@ bot.on('message', message => {
         Playjs.execute(message, args);
     }
 });
-
-
-
