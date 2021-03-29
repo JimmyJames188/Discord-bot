@@ -949,7 +949,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     
 
                     default:
-                        channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 3__`)
+                        channel.send(`__${m.content} er ekki valmöguleiki. Veldu tölu frá 1 - 2__`)
 
                 }
 
