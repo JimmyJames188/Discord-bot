@@ -593,7 +593,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 21:
-            channel.send("**Hvorugur ykkar deyr en " + (30 - Armn) + " ármenningar/ur deyja/deir þannig að þið vinnið. Þið komist í pottinn og slakið á. Þið íhugið lífið ykkar og talið um hvað þið ætlið að fá ykkur í kvöldmat - Endir**")
+            channel.send("**Hvorugur ykkar deyr en " + (30 - Armn) + " ármenningar/ur deyja/deyr þannig að þið vinnið. Þið komist í pottinn og slakið á. Þið íhugið lífið ykkar og talið um hvað þið ætlið að fá ykkur í kvöldmat - Endir**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(11)
