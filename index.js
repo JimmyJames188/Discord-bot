@@ -145,28 +145,20 @@ async function getSundleikurinnPlayerData(data){
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
 
-async function gskuld(data, user, member){
-    
-    // let user = msg.content.split(" ")
-    // if(user.length > 1){
-    //     user = user[1]
-    //     if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
-    //         try{
-    //             user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
-    //         }catch (e){
-    //             console.log(msg.content)
-    //             msg.channel.send("Could not find user")
-    //             return
-    //         }
-    //     }else{
-    //         msg.channel.send(user + " is not a valid ping")
-    //         return
-    //     }
-    // }else{
-    //     user = msg.author
-    // }
-
-    user = await bot.users.fetch(user.id)
+async function gskuld(data, user){
+    let userfound = false;
+    if(data.options){
+        for (let i = 0; i < data.options.length; i++) {
+            const option = data.options[i];
+            if(option.name == 'user'){
+                user = await bot.users.fetch(option.value);
+                userfound = true;
+            }
+        }
+    }
+    if(!userfound){
+        user = await bot.users.fetch(user.id)
+    }
 
 
 

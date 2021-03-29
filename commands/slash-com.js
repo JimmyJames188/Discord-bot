@@ -1,14 +1,19 @@
 const Discord = require('discord.js');
 json = {
     name: "gskuld",
-    description: "Get or edit permissions for a user or a role",
-    options: []
+    description: "How much do you own to the Gjöfull",
+    options: [{
+        "name": "user",
+        "description": "User to check",
+        "type": 6, 
+        "required": false
+    }]
 }
 
 /**
  * 
  * @param {Discord.Client} client 
- * @param {{gskuld: (data: {}, user: Discord.User, member: Discord.GuildMember) => Promise<String>}} commands
+ * @param {{gskuld: (data: {}, user: Discord.User) => Promise<String>}} commands
  */
 function send_commands(client, commands){
 
@@ -19,19 +24,19 @@ function send_commands(client, commands){
                 client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                     type: 4,
                     data: {
-                        content: await commands.gskuld(interaction.data, interaction.member.user, interaction.member)
+                        content: await commands.gskuld(interaction.data, interaction.member.user)
                     }
                 }})
             }else {
                 client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                     type: 4,
                     data: {
-                        content: await commands.gskuld(interaction.data, interaction.user, undefined)
+                        content: await commands.gskuld(interaction.data, interaction.user)
                     }
                 }})
             }
         }  
-        // console.log(interaction);
+        // console.log(interaction.data);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }
