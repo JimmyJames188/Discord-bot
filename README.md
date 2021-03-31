@@ -29,7 +29,6 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 * KÚKABOTTI => Hver sagði þetta!?
 * IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!! 
-* delete => deletes message 
 * Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
 * kirill spírill => `IDK`
@@ -67,5 +66,6 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * /decrypt "`key`" "`encrypted message`" => Returnes message
 * /gskuld `user` => Sais what `user` ownes the Gjöfull
 * /servercount => Sends number of servers the bot is in
+* !delete => deletes message 
 
 <!-- END OF COMMANDS -->

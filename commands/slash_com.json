@@ -83,5 +83,10 @@
                 "type": 1
             }]
         }]
+    },
+    {
+        "name": "profile_picture",
+        "description": "Returns your profile picture",
+        "options": []
     }
 ]

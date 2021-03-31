@@ -529,7 +529,7 @@ bot.on("message", async (message) => {
 });
 
 bot.on('ready', () => {
-    // slash_com.send_commands_guild(bot, '701873712370286722');
+     slash_com.send_commands_guild(bot, '701873712370286722');
     // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com})
@@ -590,9 +590,6 @@ bot.on('message', async msg=> {
     }else if(msg.content === "Jæja þá skulum við fara með bæn"){
         msg.reply('Heilagi Gummi! Lífið og heilsan er helgidómur, sem þú hefur gefið okkur, því er allt heilagt sem viðheldur lífinu. Gef okkur því visku til að njóta matar og drykkjar með fögnuði og þakklátum huga og gæta jafnframt hófs. Blessaðu líf okkar og starf og gef okkur náð og þrótttil að vera trúir þjónar á akri þínum. Send snauðum og sjúkum hjálp og syrgjendum huggun. Blessaðu og helgaðu lífið sérhverja stund í Gumma krists heilaga nafni. A M E N');
    
-    }else if(msg.content === "!ProfilePicture"){
-        msg.reply(`<${msg.author.displayAvatarURL({ format: "png", dynamic: true })}>`);
-   
     }else if(msg.content === "Lights out!"){
         var botping = Math.round(bot.ws.ping)
         msg.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
@@ -648,7 +645,7 @@ bot.on('message', async msg=> {
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
 
-    }else if (msg.content.startsWith("Bye")) {
+    }else if (msg.content.startsWith("!delete")) {
       msg.delete(); 
     
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
