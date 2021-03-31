@@ -36,8 +36,6 @@ const Playjs = require("./commands/Play.js")
 
 const bot = new Discord.Client();
 
-const token = 'NzAxNDM1OTM5MTY3MjcyOTYx.XqsAOQ.jVBb1AmeN72eFmZjOHqJaWgrYmM';
-
 const PREFIX = '!';
 
 var version = '1.2';
@@ -45,6 +43,8 @@ var version = '1.2';
 var servers = {};
 
 const fs = require('fs');
+
+const token = JSON.parse(fs.readFileSync("bot_Token.json"));
 
 const sl = require('./commands/Sundleikurinn.js')
 
