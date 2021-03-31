@@ -46,7 +46,7 @@ exports.delete_commands_guild = delete_commands_guild;
  * @param {Discord.Client} client 
  */
 async function delete_commands_all(client){
-    const commands_ = await client.api.applications(client.user.id).guilds(guild_id).commands.get()
+    const commands_ = await client.api.applications(client.user.id).commands.get()
     commands_.forEach(command_ => {
         client.api.applications(client.user.id).commands(command_.id).delete()
     });
@@ -56,10 +56,11 @@ exports.delete_commands_all = delete_commands_all;
 /**
  * 
  * @param {Discord.Client} client 
- * @param {{gskuld:     (data: {}, user: Discord.User) => Promise<String>
- *          encrypt:    (data: {}) => String
- *          decrypt:    (data: {}) => String
- *          help:       (data: {}, channel: String) => void
+ * @param {{gskuld:             (data: {}, user: Discord.User) => Promise<String>
+ *          encrypt:            (data: {}) => String
+ *          decrypt:            (data: {}) => String
+ *          help:               (data: {}, channel: String) => void
+ *          sundleikurinn_com:  (data: {}, channel_id: String, guild_id: String, user: Discord.User, member?: Discord.GuildMember) => Promise<String>
  *        }} commands
  */
 function command_reply(client, commands){
@@ -102,15 +103,31 @@ function command_reply(client, commands){
                 }
             }})
         }else if(interaction.data.name == 'help') {
-            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
                     content: `-help-`
                 }
             }})
-            new Discord.WebhookClient(client.user.id, interaction.token).send(commands.help(interaction.data, interaction.channel_id))
+            commands.help(interaction.data, interaction.channel_id)
+        }else if(interaction.data.name == 'sundleikurinn') {
+            if(interaction.member){
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: await commands.sundleikurinn_com(interaction.data, interaction.channel_id, interaction.guild_id, interaction.member.user, interaction.member)
+                    }
+                }})
+            }else {
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: await commands.sundleikurinn_com(interaction.data, interaction.channel_id, interaction.guild_id, interaction.user)
+                    }
+                }})
+            }
         }
-        console.log(interaction.data);
+        // console.log(interaction.data.options);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }

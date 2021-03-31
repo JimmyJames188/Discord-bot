@@ -53,5 +53,35 @@
             "type": 4, 
             "required": false
         }]
+    },
+    {
+        "name": "sundleikurinn",
+        "description": "Commands for the sundlekurinn",
+        "options": [{
+            "name": "play",
+            "description": "Play the game",
+            "type": 1
+        },
+        {
+            "name": "stats",
+            "description": "Get statistics",
+            "type": 2, 
+            "options": [{
+                "name": "player",
+                "description": "Statistics of a player",
+                "type": 1,
+                "options": [{
+                    "name": "player",
+                    "description": "Player of the game",
+                    "type": 6, 
+                    "required": false
+                }]
+            },
+            {
+                "name": "all",
+                "description": "Avarige statistics for everyone",
+                "type": 1
+            }]
+        }]
     }
 ]

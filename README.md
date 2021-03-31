@@ -52,9 +52,9 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * .volume `0 - 200` => Changes volume
 
 ### Sundleikurinn commands
-* !game => starts new game
-* !stats `ping (optional) (if the bot is pingd sends statistics as if all endins were complited)` => Sends statistics
-* !stats all => Sends avarige statistics for everyone
+* /sundleikurinn play  => starts new game
+* /sundleikurinn stats player `player (optional) (if the bot is chosen sends statistics as if all endins were complited)` => Sends statistics
+* /sundleikurinn stats all => Sends avarige statistics for everyone
 
 ### Other commands
 * /help => All commands
