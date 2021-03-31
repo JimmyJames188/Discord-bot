@@ -43,5 +43,15 @@
         "name": "servercount",
         "description": "Sends number of servers the bot is in",
         "options": []
+    },
+    {
+        "name": "help",
+        "description": "Shows all commands",
+        "options": [{
+            "name": "page",
+            "description": "page",
+            "type": 4, 
+            "required": false
+        }]
     }
 ]

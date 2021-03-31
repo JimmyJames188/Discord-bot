@@ -57,7 +57,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * !stats all => Sends avarige statistics for everyone
 
 ### Other commands
-* !help => All commands
+* /help => All commands
 * !ProfilePicture => Returns your profile picture
 * !events => Tells you about events
 * !kick `user` => Kickes user (idk if it works)

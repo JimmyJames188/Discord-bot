@@ -59,6 +59,7 @@ exports.delete_commands_all = delete_commands_all;
  * @param {{gskuld:     (data: {}, user: Discord.User) => Promise<String>
  *          encrypt:    (data: {}) => String
  *          decrypt:    (data: {}) => String
+ *          help:       (data: {}, channel: String) => void
  *        }} commands
  */
 function command_reply(client, commands){
@@ -93,15 +94,23 @@ function command_reply(client, commands){
                     content: commands.decrypt(interaction.data)
                 }
             }})
-        } else if(interaction.data.name == 'servercount') {
+        }else if(interaction.data.name == 'servercount') {
             client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
                     content: `Im in ${client.guilds.cache.array().length} servers!`
                 }
             }})
+        }else if(interaction.data.name == 'help') {
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: `-help-`
+                }
+            }})
+            new Discord.WebhookClient(client.user.id, interaction.token).send(commands.help(interaction.data, interaction.channel_id))
         }
-        // console.log(interaction.data);
+        console.log(interaction.data);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }

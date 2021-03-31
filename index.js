@@ -234,6 +234,182 @@ function decrypt(data){
 
 
 
+/**
+ * 
+ * @param {{options: {value:String, name: String, type: number}[]}} data 
+ * @param {String} channel_
+ */
+async function help(data, channel_){
+    const channel = await bot.channels.fetch(channel_);
+    //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
+    fs.readFile('README.md', async (err, readme) => {
+        const embeded = [];
+
+        let rightSpace = false;
+        readme = readme.toString().split('\r\n')
+        let command = [];
+        let reaction = [];
+        let type = "";
+        let n = 0;
+        let description = "This are commands for this bot.\nHere is list for chapters:";
+        
+        //v1 - https://github.com/JimmyJames188/Discord-bot/commit/5931ae3ef640eadcd02287e81f3d80f4374d4abe
+        //v2 - current version
+        for (let i = 0; i < readme.length; i++) {
+            let line = readme[i];
+            if(rightSpace){
+                if(line.startsWith("<!-- END OF COMMANDS -->")){
+                    rightSpace = false
+                }else if(line.startsWith('###') || (n == 8 && line != '')){
+                    if(type == " Reactions"){
+                        for (let j = 0; j < reaction.length; j++) {
+                            embeded[embeded.length - 1].addField(
+                                reaction[j], command[j], true
+                            )
+                        }
+                    }
+                    if(line.startsWith('###')){
+                        type = line.substring(3)
+                        description = description + "\n" + (embeded.length + 1) + " - " + type;
+                    }
+                    embeded.push(new Discord.MessageEmbed()
+                        .setColor('#CC0000')
+                        .setTitle(type)
+                        .setAuthor(bot.user.username, bot.user.avatarURL())
+                        .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
+                        .setFooter("Page " + (embeded.length + 1), bot.user.avatarURL()))
+                
+
+                    if(n = 8){
+                        if(line != '' && !line.startsWith('<!-- break -->') && !line.startsWith('###')){
+                            embeded[embeded.length - 1].addFields([
+                                {name: "\u200B", value: "\u200B", inline: false},
+                                {name: "command", value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                                {name: "info", value: readme[i].split(' => ')[1], inline: true}
+                            ])
+                            n = 1;
+                        }else{
+                            n = 0
+                        }
+                    }
+                }else if(type == " Reactions"){
+                    if(readme[i - 1].startsWith('###')){
+                        line = line.split("|")
+                        for (let j = 1; j < line.length - 1; j++) {
+                            reaction.push(line[j].replace(" ", ""))
+                        }
+                        command = new Array(line.length - 2).fill("")
+                    }else if(!line.includes("-")){ 
+                        line = line.split("|")
+                        for (let j = 1; j < line.length - 1; j++) {
+                            command[j - 1] = command[j - 1] + line[j] + '\n'
+                        }
+                    }
+
+                }else if(line != '' && !line.startsWith('<!-- break -->')){
+                    embeded[embeded.length - 1].addFields([
+                        {name: "\u200B", value: "\u200B", inline: false},
+                        {name: "command", value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
+                        {name: "info", value: readme[i].split(' => ')[1], inline: true}
+                    ])
+                    n++
+                }
+
+            }else if(line.startsWith("## Commands")){
+                rightSpace = true
+                type = readme[i + 1].substring(3)
+            }
+            
+        }
+        
+        description = description + "\n\nTo open chapter you can send command **!help `the number of the page`**"
+        for (let i = 0; i < embeded.length; i++) {
+            embeded[i].setDescription(description)
+        }
+
+        let message;
+        let page;
+        if(data.options){
+            data.options.forEach(opt => {
+                if(opt.name == "page"){
+                    page = opt.value;
+                }
+            });
+            if(page > 0 && page <= embeded.length){
+                message = await channel.send(embeded[page - 1])
+            }else{
+                channel.send("Invalid number")
+                return
+            }
+        }else{
+            message = await channel.send(embeded[0])
+            page = 1;
+        }
+
+        if(page != 1){
+            message.react("◀")
+        }
+        if(page != embeded.length){
+            message.react("▶")
+        }
+
+        let reaction_collector = message.createReactionCollector((r, user) => (r.emoji.name == "◀" || r.emoji.name == "▶") && !user.bot)
+        reaction_collector.on('collect', async (r, user) => {
+            if(r.emoji.name == "◀" && page != 1){
+                page--;
+                message.edit(embeded[page - 1])
+
+                if(page == 1){
+                    r.users.remove(bot.user)
+                }else if(page == embeded.length - 1){
+                    message.react("▶")
+                }
+            }else if(r.emoji.name == "▶" && page != embeded.length){
+                page++;
+                message.edit(embeded[page - 1])
+
+                if(page == 2){
+                    await r.users.remove(user)
+                    await r.users.remove(bot.user)
+                    message.react("◀")
+                    message.react("▶")
+                    return
+                }else if(page == embeded.length){
+                    r.users.remove(bot.user)
+                }
+            }
+            r.users.remove(user)
+        })
+
+        let collector = message.channel.createMessageCollector(m => m.content == '-help-')
+        collector.on('collect', () => {
+            message.delete()
+            collector.stop()
+        })
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //  Event
 //----------------------------------------------------------------------------------------------------------
@@ -256,7 +432,7 @@ bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
     // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
@@ -292,6 +468,7 @@ bot.on("guildMemberAdd", member => {
 })
 
 bot.on('message', async msg=> {
+    // console.log(msg)
     if (msg.content === "Blubadub") {
         msg.channel.send(3+3)
    
@@ -374,156 +551,6 @@ bot.on('message', async msg=> {
     }else if (msg.content.startsWith("Bye")) {
       msg.delete(); 
     
-    }else if(msg.content.startsWith("!help")){
-        //msg.reply("\nUseful commands: \n \n!events \nHey besti botti ertu vakandi? \n!commands \n \n \nFun stuff: \n!image = finds a image  \nÉg fékk heimavinnu í dag hvað á ég að gera? \nKirill hakkaði botinn minn! Hvað á ég að gera!? \nKirill hakkaði tölvuna mína! Hvað á ég að gera!? \nÉg fékk heimavinnu í dag hvað á ég að gera?  \nStefán er dauður!  \n@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum? \nJæja þá skulum við fara með bæn  \nSnær er ekki skemtilegur  \nÓ góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás ");
-        fs.readFile('README.md', async (err, readme) => {
-            const embeded = [];
-
-            let rightSpace = false;
-            readme = readme.toString().split('\r\n')
-            let command = [];
-            let reaction = [];
-            let type = "";
-            let n = 0;
-            let description = "This are commands for this bot.\nHere is list for chapters:";
-            
-            //v1 - https://github.com/JimmyJames188/Discord-bot/commit/5931ae3ef640eadcd02287e81f3d80f4374d4abe
-            //v2 - current version
-            for (let i = 0; i < readme.length; i++) {
-                let line = readme[i];
-                if(rightSpace){
-                    if(line.startsWith("<!-- END OF COMMANDS -->")){
-                        rightSpace = false
-                    }else if(line.startsWith('###') || (n == 8 && line != '')){
-                        if(type == " Reacrions"){
-                            for (let j = 0; j < reaction.length; j++) {
-                                embeded[embeded.length - 1].addField(
-                                    reaction[j], command[j], true
-                                )
-                            }
-                        }
-                        if(line.startsWith('###')){
-                            type = line.substring(3)
-                            description = description + "\n" + (embeded.length + 1) + " - " + type;
-                        }
-                        embeded.push(new Discord.MessageEmbed()
-                            .setColor('#CC0000')
-                            .setTitle(type)
-                            .setAuthor(bot.user.username, bot.user.avatarURL())
-                            .setURL('https://github.com/JimmyJames188/Discord-bot#commands')
-                            .setFooter("Page " + (embeded.length + 1), bot.user.avatarURL()))
-                    
-
-                        if(n = 8){
-                            if(line != '' && !line.startsWith('<!-- break -->') && !line.startsWith('###')){
-                                embeded[embeded.length - 1].addFields([
-                                    {name: "\u200B", value: "\u200B", inline: false},
-                                    {name: "command", value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
-                                    {name: "info", value: readme[i].split(' => ')[1], inline: true}
-                                ])
-                                n = 1;
-                            }else{
-                                n = 0
-                            }
-                        }
-                    }else if(type == " Reacrions"){
-                        if(readme[i - 1].startsWith('###')){
-                            line = line.split("|")
-                            for (let j = 1; j < line.length - 1; j++) {
-                                reaction.push(line[j].replace(" ", ""))
-                            }
-                            command = new Array(line.length - 2).fill("")
-                        }else if(!line.includes("-")){ 
-                            line = line.split("|")
-                            for (let j = 1; j < line.length - 1; j++) {
-                                command[j - 1] = command[j - 1] + line[j] + '\n'
-                            }
-                        }
-
-                    }else if(line != '' && !line.startsWith('<!-- break -->')){
-                        embeded[embeded.length - 1].addFields([
-                            {name: "\u200B", value: "\u200B", inline: false},
-                            {name: "command", value: readme[i].split(' => ')[0].substring(1).replace("||", "\\|\\|"), inline: true},
-                            {name: "info", value: readme[i].split(' => ')[1], inline: true}
-                        ])
-                        n++
-                    }
-
-                }else if(line.startsWith("## Commands")){
-                    rightSpace = true
-                    type = readme[i + 1].substring(3)
-                }
-                
-            }
-            
-            description = description + "\n\nTo open chapter you can send command **!help `the number of the page`**"
-            for (let i = 0; i < embeded.length; i++) {
-                embeded[i].setDescription(description)
-            }
-
-            let message;
-            let page = msg.content.split(" ");
-            if(page.length > 1){
-                page = page[1]
-                page = parseInt(page)
-                if(!Number.isNaN(page)){
-                    if(page > 0 && page <= embeded.length){
-                        message = await msg.channel.send(embeded[page - 1])
-                    }else{
-                        msg.channel.send("Invalid number")
-                        return
-                    }
-                }else{
-                    msg.channel.send(msg.content.split(" ")[1] + " is not a number")
-                    return
-                }
-            }else{
-                message = await msg.channel.send(embeded[0])
-                page = 1;
-            }
-        
-            if(page != 1){
-                message.react("◀")
-            }
-            if(page != embeded.length){
-                message.react("▶")
-            }
-
-            let reaction_collector = message.createReactionCollector((r, user) => (r.emoji.name == "◀" || r.emoji.name == "▶") && !user.bot)
-            reaction_collector.on('collect', async (r, user) => {
-                if(r.emoji.name == "◀" && page != 1){
-                    page--;
-                    message.edit(embeded[page - 1])
-
-                    if(page == 1){
-                        r.users.remove(bot.user)
-                    }else if(page == embeded.length - 1){
-                        message.react("▶")
-                    }
-                }else if(r.emoji.name == "▶" && page != embeded.length){
-                    page++;
-                    message.edit(embeded[page - 1])
-
-                    if(page == 2){
-                        await r.users.remove(user)
-                        await r.users.remove(bot.user)
-                        message.react("◀")
-                        message.react("▶")
-                        return
-                    }else if(page == embeded.length){
-                        r.users.remove(bot.user)
-                    }
-                }
-                r.users.remove(user)
-            })
-
-            let collector = message.channel.createMessageCollector(m => m.content.startsWith("!help"))
-            collector.on('collect', () => {
-                message.delete()
-                collector.stop()
-            })
-        })
-        
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
         msg.reply('NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!');
     
