@@ -94,7 +94,7 @@ function command_reply(client, commands){
                     content: commands.decrypt(interaction.data)
                 }
             }})
-        }else if(interaction.data.name == 'servercount') {
+        }else if(interaction.data.name == 'server_count') {
             client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
@@ -109,7 +109,26 @@ function command_reply(client, commands){
                 }
             }})
             new Discord.WebhookClient(client.user.id, interaction.token).send(commands.help(interaction.data, interaction.channel_id))
+
+        }else if(interaction.data.name === "profile_picture"){
+            if(interaction.member){
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: (await client.users.fetch(interaction.member.user.id)).displayAvatarURL({ format: "png", dynamic: true })
+                    }
+                }})
+            }else {
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: (await client.users.fetch(interaction.user.id)).displayAvatarURL({ format: "png", dynamic: true })
+                    }
+                }})
+            }
+
         }
+
         console.log(interaction.data);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
