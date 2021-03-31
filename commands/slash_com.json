@@ -38,5 +38,10 @@
             "type": 3, 
             "required": true
         }]
+    },
+    {
+        "name": "servercount",
+        "description": "Sends number of servers the bot is in",
+        "options": []
     }
 ]

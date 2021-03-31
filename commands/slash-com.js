@@ -83,17 +83,24 @@ function command_reply(client, commands){
             client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
-                    content: commands.encrypt(interaction.data,)
+                    content: commands.encrypt(interaction.data)
                 }
             }})
         }else if(interaction.data.name == 'decrypt'){
             client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
-                    content: commands.decrypt(interaction.data,)
+                    content: commands.decrypt(interaction.data)
                 }
             }})
-        } 
+        } else if(interaction.data.name == 'servercount') {
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: `Im in ${client.guilds.cache.array().length} servers!`
+                }
+            }})
+        }
         // console.log(interaction.data);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })

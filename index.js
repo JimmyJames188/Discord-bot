@@ -254,7 +254,7 @@ bot.on("message", async (message) => {
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
-    slash_com.send_commands_all(bot);
+    // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com.command_reply(bot, {gskuld, encrypt, decrypt})
     if(Drive.WaitingForInput){
@@ -344,9 +344,6 @@ bot.on('message', async msg=> {
     }else if(msg.content === "no"){
         msg.reply("Yes");
 
-    }else if(msg.content === '!ServerCount') {
-        msg.channel.send(`Im in ${bot.guilds.cache.array().length} servers!`);
-   
     }else if(msg.content === "ding dong"){
         msg.reply("Your opinion is wrong");
 
