@@ -36,7 +36,7 @@ const Playjs = require("./commands/Play.js")
 
 const bot = new Discord.Client();
 
-const token = 'NzAxNDM1OTM5MTY3MjcyOTYx.XqsAOQ.jVBb1AmeN72eFmZjOHqJaWgrYmM';
+const token = '';
 
 const PREFIX = '!';
 
@@ -392,6 +392,111 @@ async function help(data, channel_){
 
 
 
+/**
+ * 
+ * @param   {{options: [
+ *              {name: "play", type: 1} | 
+ *              {name: "stats", type: 2, options: [
+ *                  {name: "player", type: 1, options?: [
+ *                      {value:String, name: "player", type: 6}
+ *                  ]} | 
+ *                  {name: "all", type: 1}
+ *              ]}
+ *          ]}} data 
+ * @param {Discord.User} user
+ * @param {String} channel_id
+ */
+async function sundleikurinn_com(data, channel_id, user, member = user){
+    user = await bot.users.fetch(user.id)
+    if(data.options[0].name === "play"){
+        msg.channel.send('Ertu viss um að þú viljir spila "Sundleikurinn"?');
+        
+        let collector = msg.channel.createMessageCollector(m => m.author == msg.author)
+        collector.on('collect', m =>{
+            
+            
+            if(m.content === 'Ja'){
+                collector.stop()
+                msg.channel.send('**Ok nú skulum við byrja**')
+
+                for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
+                    if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
+                        sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[i]})
+                        return;
+                    }
+                }
+                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[..........] 0%".red)
+                
+                sl.SundleikurinnData.userData.Endings.push({UserId: msg.author.id, User: msg.author, Endings: []})
+                readline.clearLine(process.stdout, 0);
+                readline.cursorTo(process.stdout, 0);
+                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[|||||.....] 50%".red)
+
+                JamesBot.editFile(EndingsId, JSON.stringify(sl.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '));
+                readline.clearLine(process.stdout, 0);
+                readline.cursorTo(process.stdout, 0);
+                console.log("Adding new user to sundleykurinn".green + " - " + "Finished".green);
+
+                sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
+            }
+        })
+
+    }else if(data.options[0].name == "stats"){
+        if(data.options[0].options[0].name == "all"){
+            PrintAll(await bot.channels.fetch(channel_id))
+            return "-stats-"
+
+        }else if(data.options[0].options[0].name === "player"){
+            let user = msg.content.split(" ")
+            let member;
+            if(user.length > 1){
+                user = user[1]
+                if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
+                    try{
+                        user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
+                    }catch (e){
+                        console.log(msg.content)
+                        msg.channel.send("Could not find user")
+                        return
+                    }
+                    
+                    if(msg.guild){
+                        try{
+                            member = await msg.guild.members.fetch(user.id);
+                        }catch (e){
+                            member = user;
+                        }
+                    }
+                }else{
+                    msg.channel.send(user + " is not a valid ping")
+                    return
+                }
+            }else{  
+                member = msg.member
+                if(!member){
+                    member = msg.author
+                }
+                user = msg.author
+            }
+
+            if(user == bot.user){
+                PrintStats(msg, sl.SundleikurinnData.botData.Endings.Endings, user, member)
+                return;
+            }
+            for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
+                if(sl.SundleikurinnData.userData.Endings[i].User == user){
+                    PrintStats(msg, sl.SundleikurinnData.userData.Endings[i].Endings, user, member)
+                    return
+                }
+            }
+            msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
+        }
+    }
+}
+
+
+
+
 
 
 
@@ -432,7 +537,7 @@ bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
     // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
@@ -940,7 +1045,7 @@ exports.run = async (bot, message, args, tools) => {
  * 
  * @param {Discord.TextChannel} channel
  */
-function PrintAll(channel){
+async function PrintAll(channel){
     let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
     for (let i = 1; i < EndingsList.length; i++) {
         if(EndingsList[i].Type == 0){
@@ -1151,91 +1256,6 @@ function PrintStats(msg, Endings, user, member){
     return;
 
 }
-
-bot.on('message', async msg => {
-    // if(msg.author.id == '691972281840304129')return;
-    if(msg.content === "!game"){
-        msg.channel.send('Ertu viss um að þú viljir spila "Sundleikurinn"?');
-        
-        let collector = msg.channel.createMessageCollector(m => m.author == msg.author)
-        collector.on('collect', m =>{
-            
-            
-            if(m.content === 'Ja'){
-                collector.stop()
-                msg.channel.send('**Ok nú skulum við byrja**')
-
-                for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
-                    if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
-                        sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[i]})
-                        return;
-                    }
-                }
-                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[..........] 0%".red)
-                
-                sl.SundleikurinnData.userData.Endings.push({UserId: msg.author.id, User: msg.author, Endings: []})
-                readline.clearLine(process.stdout, 0);
-                readline.cursorTo(process.stdout, 0);
-                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[|||||.....] 50%".red)
-
-                JamesBot.editFile(EndingsId, JSON.stringify(sl.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '));
-                readline.clearLine(process.stdout, 0);
-                readline.cursorTo(process.stdout, 0);
-                console.log("Adding new user to sundleykurinn".green + " - " + "Finished".green);
-
-                sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
-            }
-        })
-
-    }else if(msg.content == "!stats all"){
-        PrintAll(msg.channel)
-
-    }else if(msg.content.substring(0, 6) === "!stats"){
-        let user = msg.content.split(" ")
-        let member;
-        if(user.length > 1){
-            user = user[1]
-            if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
-                try{
-                    user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
-                }catch (e){
-                    console.log(msg.content)
-                    msg.channel.send("Could not find user")
-                    return
-                }
-                
-                if(msg.guild){
-                    try{
-                        member = await msg.guild.members.fetch(user.id);
-                    }catch (e){
-                        member = user;
-                    }
-                }
-            }else{
-                msg.channel.send(user + " is not a valid ping")
-                return
-            }
-        }else{  
-            member = msg.member
-            if(!member){
-                member = msg.author
-            }
-            user = msg.author
-        }
-
-        if(user == bot.user){
-            PrintStats(msg, sl.SundleikurinnData.botData.Endings.Endings, user, member)
-            return;
-        }
-        for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
-            if(sl.SundleikurinnData.userData.Endings[i].User == user){
-                PrintStats(msg, sl.SundleikurinnData.userData.Endings[i].Endings, user, member)
-                return
-            }
-        }
-        msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
-    }
-})
 
 
 JamesBot = new Drive.Project("credentials.json", async JamesBot => {
