@@ -57,7 +57,7 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 
 ### Other commands
 * /help => All commands
-* !ProfilePicture => Returns your profile picture
+* /profile_picture => Returns your profile picture
 * !events => Tells you about events
 * !kick `user` => Kickes user (idk if it works)
 * !image => Gives image of a banana
