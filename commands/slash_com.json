@@ -1,0 +1,42 @@
+[
+    {
+        "name": "gskuld",
+        "description": "How much do you own to the Gjöfull",
+        "options": [{
+            "name": "user",
+            "description": "User to check",
+            "type": 6, 
+            "required": false
+        }]
+    },
+    {
+        "name": "encrypt",
+        "description": "Encrypt your message",
+        "options": [{
+            "name": "key",
+            "description": "key used to encrypt the message (needs to be 10 characteres)",
+            "type": 3, 
+            "required": true
+        },{
+            "name": "message",
+            "description": "the message it self",
+            "type": 3, 
+            "required": true
+        }]
+    },
+    {
+        "name": "decrypt",
+        "description": "Decrypt your message",
+        "options": [{
+            "name": "key",
+            "description": "key used to decrypt the message (needs to be 10 characteres)",
+            "type": 3, 
+            "required": true
+        },{
+            "name": "message",
+            "description": "the message it self",
+            "type": 3, 
+            "required": true
+        }]
+    }
+]

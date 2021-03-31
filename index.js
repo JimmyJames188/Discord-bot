@@ -141,6 +141,11 @@ async function getSundleikurinnPlayerData(data){
 
 
 
+
+
+
+
+
 //  Comands
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
@@ -182,6 +187,52 @@ async function gskuld(data, user){
     }
 }
 
+/**
+ * 
+ * @param {{options: {value:String, name: String, type: number}[]}} data 
+ */
+function encrypt(data){
+    let key;
+    let content;
+    for (let i = 0; i < data.options.length; i++) {
+        const option = data.options[i];
+        if(option.name == 'key'){
+            key = option.value;
+        }else if(option.name == 'message'){
+            content = option.value;
+        }
+    }
+    if(key.length < 10){
+        return "The key needs to be at least 10 characters"
+    }else{
+        return Feistel_Cipher.encrypt(content, key)
+    }
+}
+
+/**
+ * 
+ * @param {{options: {value:String, name: String, type: number}[]}} data 
+ */
+function decrypt(data){
+    let key;
+    let content;
+    for (let i = 0; i < data.options.length; i++) {
+        const option = data.options[i];
+        if(option.name == 'key'){
+            key = option.value;
+        }else if(option.name == 'message'){
+            content = option.value;
+        }
+    }
+    if(key.length < 10){
+        return "The key needs to be at least 10 characters"
+    }else{
+        return Feistel_Cipher.decrypt(content, key)
+    }
+}
+
+
+
 
 
 //  Event
@@ -202,7 +253,10 @@ bot.on("message", async (message) => {
 });
 
 bot.on('ready', () => {
-    slash_com.send_commands(bot, {gskuld})
+    // slash_com.send_commands_guild(bot, '701873712370286722');
+    slash_com.send_commands_all(bot);
+    // slash_com.delete_commands_guild(bot, '701873712370286722')
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
@@ -484,30 +538,6 @@ bot.on('message', async msg=> {
 
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-    }else if(msg.content.startsWith("!encrypt")){
-        if(msg.content.split('"').length < 4){
-            msg.channel.send("Wrong arguments")
-        }else{
-            key = msg.content.split('"')[1]
-            content = msg.content.split('"')[3]
-            if(key.length < 10){
-                msg.channel.send("The key needs to be at least 10 characters")
-            }else{
-                msg.channel.send(Feistel_Cipher.encrypt(content, key))
-            }
-        }
-    }else if(msg.content.startsWith("!decrypt")){
-        if(msg.content.split('"').length < 4){
-            msg.channel.send("Wrong arguments")
-        }else{
-            key = msg.content.split('"')[1]
-            content = msg.content.split('"')[3]
-            if(key.length < 10){
-                msg.channel.send("The key needs to be at least 10 characters")
-            }else{
-                msg.channel.send(Feistel_Cipher.decrypt(content, key))
-            }
-        }
     }else if(msg.content.startsWith('Ó góði botti, hvaða einkunn fékk ')){
         var input = msg.content.split('<')
         if(input.length != 2){
