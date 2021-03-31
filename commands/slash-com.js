@@ -63,7 +63,9 @@ exports.delete_commands_all = delete_commands_all;
  *          decrypt:            (data: {}) => String
  *          help:               (data: {}, channel: String) => void
  *          sundleikurinn_com:  (data: {}, channel_id: String, guild_id: String, user: Discord.User, member?: Discord.GuildMember) => Promise<String>
- *        }} commands
+ *          image:              (callback: (image: string) => any)
+ *          kick_com:           (data: {}, guild_id?: String) => Promise<String>
+ *         }} commands
  */
 function command_reply(client, commands){
     client.ws.on('INTERACTION_CREATE', async interaction => { 
@@ -151,7 +153,7 @@ function command_reply(client, commands){
                     content:  '\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)'
                 }
             }})
-        }else if(interaction.data.name === "events"){
+        }else if(interaction.data.name === "facts"){
                     
             const fact1 = Math.floor(Math.random() * facts.length);
             const fact2 = Math.floor(Math.random() * facts.length);
@@ -159,6 +161,23 @@ function command_reply(client, commands){
                 type: 4,
                 data: {
                     content: facts[fact1] + " " + facts[fact2]
+                }
+            }})
+        }else if(interaction.data.name === "image"){
+            commands.image(image => {
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: image
+                    }
+                }})
+            })
+        }else if(interaction.data.name === "kick"){
+                    
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: await commands.kick_com(interaction.data, interaction.guild_id)
                 }
             }})
         }

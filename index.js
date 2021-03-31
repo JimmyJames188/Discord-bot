@@ -492,6 +492,75 @@ async function sundleikurinn_com(data, channel_id, guild_id, user, member = user
 
 
 
+/**
+ * 
+ * @param {(image: string) => any} callback 
+ */
+async function image(callback){
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "Attack on titan meme",
+        method: "GET",
+        headers: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+
+
+
+
+
+    request(options, function(error, response, responseBody) {
+        if (error) {
+            return;
+        }
+  
+ 
+        $ = cheerio.load(responseBody); 
+ 
+
+        var links = $(".image a.link");
+ 
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+        
+        console.log(urls);
+
+        if (!urls.length) {
+           
+            return;
+        }
+ 
+        // Send result
+        callback(urls[Math.floor(Math.random() * urls.length)]);
+    });
+}
+
+
+
+
+/**
+ * 
+ * @param {{options: [{value: String}]}} data 
+ * @param {String} guild_id 
+ */
+async function kick_com(data, guild_id = undefined){
+    if(!guild_id){
+        return "You are not in a server"
+    }
+    const member = await (await bot.guilds.fetch(guild_id)).members.fetch(data.options[0].value)
+    if (!member) {
+        return  `Who are you trying to kick? You must mention a user.`
+    }
+    if (!member.kickable) {
+        return `I can't kick this user. Sorry!`
+    }
+    await member.kick()
+    return `${member.user.tag} was thrown down a tree.`
+}
+
+
+
+
 
 
 
@@ -529,10 +598,10 @@ bot.on("message", async (message) => {
 });
 
 bot.on('ready', () => {
-     slash_com.send_commands_guild(bot, '701873712370286722');
+    slash_com.send_commands_guild(bot, '701873712370286722');
     // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
@@ -771,24 +840,7 @@ bot.on("message", async message => {
     }
 
 
-    if (message.content.startsWith("!kick")) {
-      const member = message.mentions.members.first()
-      if (!member) {
-        return message.reply(
-          `Who are you trying to kick? You must mention a user.`
-        )
-      }
-      if (!member.kickable) {
-        return message.reply(`I can't kick this user. Sorry!`)
-      }
-      return member
-        .kick()
-        .then(() => message.reply(`${member.user.tag} was thrown down a tree.`))
-        .catch(error => message.reply(`Sorry, an error occured.`))
-
-
-
-    }else if (message.content.startsWith("Ég")) {
+    if (message.content.startsWith("Ég")) {
         const member = message.mentions.members.first()
         if (!member) {
         return message.reply(
@@ -807,54 +859,8 @@ bot.on("message", async message => {
 
     let args = message.content.substring(PREFIX.length).split(" ");
 
-    switch (args[0]) {
-        case 'image':
-        image(message);
-
-        break;
-    }
 
 });
-
-function image(message){
-
-    var options = {
-        url: "http://results.dogpile.com/serp?qc=images&q=" + "Attack on titan meme",
-        method: "GET",
-        headers: {
-            "Accept": "text/html",
-            "User-Agent": "Chrome"
-        }
-    };
-
-
-
-
-
-    request(options, function(error, response, responseBody) {
-        if (error) {
-            return;
-        }
-  
- 
-        $ = cheerio.load(responseBody); 
- 
-
-        var links = $(".image a.link");
- 
-        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
-        
-        console.log(urls);
-
-        if (!urls.length) {
-           
-            return;
-        }
- 
-        // Send result
-        message.channel.send( urls[Math.floor(Math.random() * urls.length)]);
-    });
-}
 
 
 

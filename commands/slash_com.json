@@ -93,5 +93,25 @@
         "name": "events",
         "description": "Tells you about events",
         "options": []
+    },
+    {
+        "name": "facts",
+        "description": "Gives facts",
+        "options": []
+    },
+    {
+        "name": "image",
+        "description": "Sends aot meme",
+        "options": []
+    },
+    {
+        "name": "kick",
+        "description": "Kick someone",
+        "options": [{
+            "name": "user",
+            "description": "User to kick",
+            "type": 6, 
+            "required": true
+        }]
     }
 ]
