@@ -58,10 +58,10 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 ### Other commands
 * /help => All commands
 * /profile_picture => Returns your profile picture
-* !events => Tells you about events
+* /events => Tells you about events
 * !kick `user` => Kickes user (idk if it works)
 * !image => Gives image of a banana
-* !facts => Gives facts
+* /facts => Gives facts
 * /encrypt "`key`" "`message`" => Returnes encrypted message
 * /decrypt "`key`" "`encrypted message`" => Returnes message
 * /gskuld `user` => Sais what `user` ownes the Gjöfull

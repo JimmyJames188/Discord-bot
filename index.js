@@ -633,9 +633,6 @@ bot.on('message', async msg=> {
     }else if(msg.content === "Ég fékk heimavinnu í dag hvað á ég að gera?"){
         msg.reply('Kveiktu í landakotsskóla!');
     
-    }else if(msg.content === "!events"){
-        msg.reply('\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)');
-    
     }else if(msg.content === "Hey besti botti ertu vakandi?"){
         msg.reply("Nei");
     
@@ -646,7 +643,7 @@ bot.on('message', async msg=> {
         msg.reply("Ég!");
 
     }else if (msg.content.startsWith("!delete")) {
-      msg.delete(); 
+        msg.delete(); 
     
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
         msg.reply('NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!');
@@ -953,10 +950,6 @@ bot.on("message", msg => {
 
 
 
-var facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
-var fact = Math.floor(Math.random() * facts.length);
-
-
 var bananas = ["Hinn heilaga Gumma guð", "Hinn heilaga Gumma sund", "Hinn heilaga prest Snæ", "Hinn heilaga Teit flugsunds eingil", "Hinn heilaga Gumma Krist"];
 
 bot.on('message', msg=>{
@@ -980,9 +973,6 @@ bot.on('message', msg=>{
         msg.reply(`\nÞann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
         
 
-    }else if(msg.content === "!facts"){
-        var fact = Math.floor(Math.random() * facts.length);
-        msg.reply(facts[fact] + " " + facts[Math.floor(Math.random() * facts.length)])
     }else if(msg.content === "kirill spírill"){
         exports.run = async (bot, message, args, tools) => {
 

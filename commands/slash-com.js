@@ -3,6 +3,8 @@ const fs = require('fs')
 const json = JSON.parse(fs.readFileSync('commands/slash_com.json'))
 
 
+const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
+
 
 /**
  * 
@@ -142,8 +144,25 @@ function command_reply(client, commands){
                     }
                 }})
             }
-
+        }else if(interaction.data.name === "events"){
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content:  '\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)'
+                }
+            }})
+        }else if(interaction.data.name === "events"){
+                    
+            const fact1 = Math.floor(Math.random() * facts.length);
+            const fact2 = Math.floor(Math.random() * facts.length);
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: facts[fact1] + " " + facts[fact2]
+                }
+            }})
         }
+
         // console.log(interaction.data.options);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })

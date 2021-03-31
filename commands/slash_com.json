@@ -88,5 +88,10 @@
         "name": "profile_picture",
         "description": "Returns your profile picture",
         "options": []
+    },
+    {
+        "name": "events",
+        "description": "Tells you about events",
+        "options": []
     }
 ]
