@@ -29,7 +29,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * Mamman þín => OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 * KÚKABOTTI => Hver sagði þetta!?
 * IS JAMES BANANAMAN => NEIIII grrrr >:( ÞÚ ert barasta bananman!! 
-* delete => deletes message 
+* !delete => deletes message 
 * Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
 * kirill spírill => `IDK``

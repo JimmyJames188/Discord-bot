@@ -548,7 +548,7 @@ bot.on('message', async msg=> {
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
 
-    }else if (msg.content.startsWith("Bye")) {
+    }else if (msg.content.startsWith("!delete")) {
       msg.delete(); 
     
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
