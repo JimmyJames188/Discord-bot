@@ -1,5 +1,5 @@
 # James's bot
-This bot was created by [James](https://github.com/JimmyJames188) for private use on discord servers.
+This bot was originaly created by [James](https://github.com/JimmyJames188) for private use on discord servers. Later [Kirill](https://github.com/Kirill-iceland) contributed much content to the bot.
 
 ## Commands
 ### Text reply
@@ -32,7 +32,7 @@ This bot was created by [James](https://github.com/JimmyJames188) for private us
 * delete => deletes message 
 * Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
-* kirill spírill => `IDK``
+* kirill spírill => `IDK`
 
 ### Reactions
 | 👎                    | 👍                |
