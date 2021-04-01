@@ -3,7 +3,7 @@ const fs = require('fs')
 const json = JSON.parse(fs.readFileSync('commands/slash_com.json'))
 
 
-const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
+const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær", "Guð", "Bíbí", "Sundmaður", "Sundkona", "Sundþjálfari", "Júlíus", "Botti", "Hermann", "Ingi", "Halldór"];
 
 
 /**
@@ -203,6 +203,16 @@ function command_reply(client, commands){
                 }
             }})
 
+        }else if (interaction.data.name === "joke"){
+            const Joke = JSON.parse(fs.readFileSync("jokes.json"));
+            const randomJoke = Joke[Math.floor(Math.random() * (Joke.length - 0.1))];
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: (randomJoke)
+                }
+            }})
+           
         }else if (interaction.data.name = 'suggest'){
             sugestion_channel.send('Suggestion:\n' + interaction.data.options[0].value)
             if(interaction.member){

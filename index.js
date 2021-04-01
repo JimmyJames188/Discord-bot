@@ -636,6 +636,8 @@ bot.on("guildMemberAdd", member => {
  
 })
 
+
+
 bot.on('message', async msg=> {
     // console.log(msg)
     if (msg.content === "Blubadub") {

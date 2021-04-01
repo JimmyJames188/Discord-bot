@@ -125,6 +125,11 @@
         "options": []
     },
     {
+        "name": "joke",
+        "description": "Sends a random joke",
+        "options": []
+    },
+    {
         "name": "suggest",
         "description": "Suggest something",
         "options": [{
