@@ -599,8 +599,8 @@ bot.on("message", async (message) => {
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
-    // slash_com.send_commands_all(bot);
-    // slash_com.delete_commands_guild(bot, '701873712370286722')
+    slash_com.send_commands_all(bot);
+     slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
@@ -665,9 +665,6 @@ bot.on('message', async msg=> {
    
     }else if(msg.content === "F"){
         msg.reply('F');
-
-    }else if (msg.content === `${PREFIX}MemberCount`) {
-	msg.channel.send(`Total members: ${msg.guild.memberCount}`);
    
     }else if(msg.content === "Welcome to the channel!"){
         msg.reply("It's nice to be here!");

@@ -193,7 +193,15 @@ function command_reply(client, commands){
                 }
             }})
 
-        }
+        }else if (interaction.data.name === `member_count`) {
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: `Total members: ${(await client.guilds.fetch(interaction.guild_id)).memberCount}`
+                }
+            }})
+
+        }    
 
         // console.log(interaction.data.options);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')

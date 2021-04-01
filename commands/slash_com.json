@@ -118,5 +118,10 @@
         "name": "bot_uptime",
         "description": "Sends how long the bot has been online",
         "options": []
+    },
+    {
+        "name": "member_count",
+        "description": "How many members there are in the guild",
+        "options": []
     }
 ]
