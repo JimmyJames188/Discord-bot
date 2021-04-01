@@ -599,8 +599,8 @@ bot.on("message", async (message) => {
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
-    slash_com.send_commands_all(bot);
-     slash_com.delete_commands_guild(bot, '701873712370286722')
+    // slash_com.send_commands_all(bot);
+    // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
@@ -1268,19 +1268,5 @@ bot.on('message', message => {
         Playjs.execute(message, args);
     } else if (command === 'leave') {
         Playjs.execute(message, args);
-    }
-});
-
-
-
-bot.on('message', msg => {  
-    const args = msg.content.slice(PREFIX.length).split(' ');  
-    const command = args.shift().toLowerCase(); 
-    
-    
-    if (command === 'suggest'){  
-    const channel = msg.guild.channels.cache.find(ch => ch.id === '827213162213408802');
-    
-    channel.send('Suggestion:\n' + args.join(' ')) 
     }
 });

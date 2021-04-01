@@ -40,7 +40,7 @@
         }]
     },
     {
-        "name": "servercount",
+        "name": "server_count",
         "description": "Sends number of servers the bot is in",
         "options": []
     },
@@ -123,5 +123,15 @@
         "name": "member_count",
         "description": "How many members there are in the guild",
         "options": []
+    },
+    {
+        "name": "suggest",
+        "description": "Suggest something",
+        "options": [{
+            "name": "suggestion",
+            "description": "The suggestion",
+            "type": 3, 
+            "required": true
+        }]
     }
 ]

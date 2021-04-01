@@ -68,6 +68,8 @@ exports.delete_commands_all = delete_commands_all;
  *         }} commands
  */
 function command_reply(client, commands){
+    const sugestion_channel = client.channels.cache.find(ch => ch.id === '827213162213408802');
+
     client.ws.on('INTERACTION_CREATE', async interaction => { 
         if(interaction.data.name == 'gskuld'){
             if(interaction.member){
@@ -201,7 +203,24 @@ function command_reply(client, commands){
                 }
             }})
 
-        }    
+        }else if (interaction.data.name = 'suggest'){
+            sugestion_channel.send('Suggestion:\n' + interaction.data.options[0].value)
+            if(interaction.member){
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: `${(await client.users.fetch(interaction.member.user.id)).toString()} suggested ${interaction.data.options[0].value}`
+                    }
+                }})
+            }else{
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: `${(await client.users.fetch(interaction.user.id)).toString()} suggested ${interaction.data.options[0].value}`
+                    }
+                }})
+            }
+        }
 
         // console.log(interaction.data.options);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
