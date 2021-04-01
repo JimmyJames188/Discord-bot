@@ -3,7 +3,7 @@ const fs = require('fs')
 const json = JSON.parse(fs.readFileSync('commands/slash_com.json'))
 
 
-const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
+const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær", "Guð", "Bíbí", "Sundmaður", "Sundkona", "Sundþjálfari", "Júlíus", "Botti", "Hermann", "Ingi", "Halldór"];
 
 
 /**
