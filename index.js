@@ -599,8 +599,8 @@ bot.on("message", async (message) => {
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
-    slash_com.send_commands_all(bot);
-     slash_com.delete_commands_guild(bot, '701873712370286722')
+    // slash_com.send_commands_all(bot);
+    // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
