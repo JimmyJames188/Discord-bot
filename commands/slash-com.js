@@ -180,6 +180,19 @@ function command_reply(client, commands){
                     content: await commands.kick_com(interaction.data, interaction.guild_id)
                 }
             }})
+        }else if(interaction.data.name === "bot_uptime"){
+            let days = Math.floor(client.uptime / 86400000);
+            let hours = Math.floor(client.uptime / 3600000) % 24;
+            let minutes = Math.floor(client.uptime / 60000) % 60;
+            let seconds = Math.floor(client.uptime / 1000) % 60;
+
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: `__Uptime:__\n${days}d ${hours}h ${minutes}m ${seconds}s`
+                }
+            }})
+
         }
 
         // console.log(interaction.data.options);

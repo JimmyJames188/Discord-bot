@@ -66,8 +66,9 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * /decrypt "`key`" "`encrypted message`" => Returnes message
 * /gskuld `user` => Says what `user` owes the Gjöfull
 * /servercount => Sends number of servers the bot is in
-* !delete => deletes !delete message (utterly pointless)
 * !suggest => Sends a suggestion to channel called "Suggestions"
-* !BotUptime => How long the bot has been online
+* /bot_uptime => How long the bot has been online
+* !MemberCount => How many members in the server
+* !delete => deletes !delete message (utterly pointless)
 
 <!-- END OF COMMANDS -->
