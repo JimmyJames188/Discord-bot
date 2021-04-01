@@ -840,26 +840,6 @@ bot.on("message", async message => {
     }
 
 
-    if (message.content.startsWith("Ég")) {
-        const member = message.mentions.members.first()
-        if (!member) {
-        return message.reply(
-            `Who are you trying to kick? You must mention a user.`
-        )
-        }
-        if (!member.kickable) {
-        return message.reply(`I can't kick this user. Sorry!`)
-        }
-        return member
-        .kick()
-        .then(() => message.reply(`${member.user.tag} was kicked.`))
-        .catch(error => message.reply(`Sorry, an error occured.`))
-    }
-
-
-    let args = message.content.substring(PREFIX.length).split(" ");
-
-
 });
 
 
