@@ -113,5 +113,10 @@
             "type": 6, 
             "required": true
         }]
+    },
+    {
+        "name": "bot_uptime",
+        "description": "Sends how long the bot has been online",
+        "options": []
     }
 ]

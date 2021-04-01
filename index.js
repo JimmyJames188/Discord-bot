@@ -666,14 +666,6 @@ bot.on('message', async msg=> {
     }else if(msg.content === "F"){
         msg.reply('F');
 
-    }else if(msg.content === "!BotUptime"){
-        let days = Math.floor(bot.uptime / 86400000);
-        let hours = Math.floor(bot.uptime / 3600000) % 24;
-        let minutes = Math.floor(bot.uptime / 60000) % 60;
-        let seconds = Math.floor(bot.uptime / 1000) % 60;
-
-        msg.channel.send(`__Uptime:__\n${days}d ${hours}h ${minutes}m ${seconds}s`);
-
     }else if (msg.content === `${PREFIX}MemberCount`) {
 	msg.channel.send(`Total members: ${msg.guild.memberCount}`);
    
@@ -1310,7 +1302,7 @@ bot.on('message', msg => {
     
     
     if (command === 'suggest'){  
-    const channel = msg.guild.channels.cache.find(ch => ch.name === 'suggestions');
+    const channel = msg.guild.channels.cache.find(ch => ch.id === '827213162213408802');
     
     channel.send('Suggestion:\n' + args.join(' ')) 
     }
