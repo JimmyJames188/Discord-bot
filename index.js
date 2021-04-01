@@ -1296,14 +1296,14 @@ bot.on('message', message => {
 
 
 
-bot.on('message', msg => {    //This runs when a message is sent.
-    const args = msg.content.slice(PREFIX.length).split(' ');  //Get the arguments
-    const command = args.shift().toLowerCase();  //Making the command non case-sensitive
+bot.on('message', msg => {  
+    const args = msg.content.slice(PREFIX.length).split(' ');  
+    const command = args.shift().toLowerCase(); 
     
     
-    if (command === 'suggest'){   //if command is suggest
-    const channel = msg.guild.channels.cache.find(ch => ch.name === 'suggestions');  //finds the channel named suggestions 
+    if (command === 'suggest'){  
+    const channel = msg.guild.channels.cache.find(ch => ch.name === 'suggestions');
     
-    channel.send('Suggestion:\n '+ args.join(' '))  //Sends the arguments
-    }     //Closes the if (command === 'suggest'){ 
-    });   //Closes the client.on('message',msg => {
+    channel.send('Suggestion:\n' + args.join(' ')) 
+    }
+    }); 
