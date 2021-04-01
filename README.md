@@ -51,17 +51,17 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * .volume `0 - 200` => Changes volume
 
 ### Sundleikurinn commands
-* !game => starts new game
-* !stats `ping (optional) (if the bot is pingd sends statistics as if all endins were complited)` => Sends statistics
-* !stats all => Sends avarige statistics for everyone
+* /sundleikurinn play  => starts new game
+* /sundleikurinn stats player `player (optional) (if the bot is chosen sends statistics as if all endins were complited)` => Sends statistics
+* /sundleikurinn stats all => Sends avarige statistics for everyone
 
 ### Other commands
 * /help => All commands
-* !ProfilePicture => Returns your profile picture
-* !events => Tells you about events
-* !kick `user` => Kickes user (idk if it works)
-* !image => Gives image of a banana
-* !facts => Gives facts
+* /profile_picture => Returns your profile picture
+* /events => Tells you about events
+* /kick `user` => Kickes user
+* /image => Gives aot meme
+* /facts => Gives facts
 * /encrypt "`key`" "`message`" => Returnes encrypted message
 * /decrypt "`key`" "`encrypted message`" => Returnes message
 * /gskuld `user` => Sais what `user` ownes the Gjöfull

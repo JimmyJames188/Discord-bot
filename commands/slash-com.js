@@ -3,6 +3,8 @@ const fs = require('fs')
 const json = JSON.parse(fs.readFileSync('commands/slash_com.json'))
 
 
+const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
+
 
 /**
  * 
@@ -46,7 +48,7 @@ exports.delete_commands_guild = delete_commands_guild;
  * @param {Discord.Client} client 
  */
 async function delete_commands_all(client){
-    const commands_ = await client.api.applications(client.user.id).guilds(guild_id).commands.get()
+    const commands_ = await client.api.applications(client.user.id).commands.get()
     commands_.forEach(command_ => {
         client.api.applications(client.user.id).commands(command_.id).delete()
     });
@@ -56,11 +58,14 @@ exports.delete_commands_all = delete_commands_all;
 /**
  * 
  * @param {Discord.Client} client 
- * @param {{gskuld:     (data: {}, user: Discord.User) => Promise<String>
- *          encrypt:    (data: {}) => String
- *          decrypt:    (data: {}) => String
- *          help:       (data: {}, channel: String) => void
- *        }} commands
+ * @param {{gskuld:             (data: {}, user: Discord.User) => Promise<String>
+ *          encrypt:            (data: {}) => String
+ *          decrypt:            (data: {}) => String
+ *          help:               (data: {}, channel: String) => void
+ *          sundleikurinn_com:  (data: {}, channel_id: String, guild_id: String, user: Discord.User, member?: Discord.GuildMember) => Promise<String>
+ *          image:              (callback: (image: string) => any)
+ *          kick_com:           (data: {}, guild_id?: String) => Promise<String>
+ *         }} commands
  */
 function command_reply(client, commands){
     client.ws.on('INTERACTION_CREATE', async interaction => { 
@@ -102,14 +107,29 @@ function command_reply(client, commands){
                 }
             }})
         }else if(interaction.data.name == 'help') {
-            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
                     content: `-help-`
                 }
             }})
-            new Discord.WebhookClient(client.user.id, interaction.token).send(commands.help(interaction.data, interaction.channel_id))
-
+            commands.help(interaction.data, interaction.channel_id)
+        }else if(interaction.data.name == 'sundleikurinn') {
+            if(interaction.member){
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: await commands.sundleikurinn_com(interaction.data, interaction.channel_id, interaction.guild_id, interaction.member.user, interaction.member)
+                    }
+                }})
+            }else {
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: await commands.sundleikurinn_com(interaction.data, interaction.channel_id, interaction.guild_id, interaction.user)
+                    }
+                }})
+            }
         }else if(interaction.data.name === "profile_picture"){
             if(interaction.member){
                 client.api.interactions(interaction.id, interaction.token).callback.post({data: {
@@ -126,10 +146,43 @@ function command_reply(client, commands){
                     }
                 }})
             }
-
+        }else if(interaction.data.name === "events"){
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content:  '\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)'
+                }
+            }})
+        }else if(interaction.data.name === "facts"){
+                    
+            const fact1 = Math.floor(Math.random() * facts.length);
+            const fact2 = Math.floor(Math.random() * facts.length);
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: facts[fact1] + " " + facts[fact2]
+                }
+            }})
+        }else if(interaction.data.name === "image"){
+            commands.image(image => {
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: image
+                    }
+                }})
+            })
+        }else if(interaction.data.name === "kick"){
+                    
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: await commands.kick_com(interaction.data, interaction.guild_id)
+                }
+            }})
         }
 
-        console.log(interaction.data);
+        // console.log(interaction.data.options);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }

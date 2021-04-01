@@ -44,7 +44,7 @@ var servers = {};
 
 const fs = require('fs');
 
-const token = JSON.parse(fs.readFileSync("bot_Token.json"));
+let token;
 
 const sl = require('./commands/Sundleikurinn.js')
 
@@ -394,6 +394,46 @@ async function help(data, channel_){
 
 /**
  * 
+ * @param {String} channel_id
+ * @param {Discord.User} user
+ * @param {Discord.GuildMember | Discord.User} member
+ */
+async function sundl_play(channel_id, user, member){
+    const channel = await bot.channels.fetch(channel_id)
+    let collector = channel.createMessageCollector(m => m.author == user)
+    collector.on('collect', m =>{
+        
+        
+        if(m.content.toLowerCase() === 'ja' || m.content.toLowerCase() === 'já'){
+            collector.stop()
+            channel.send('**Ok nú skulum við byrja**')
+
+            for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
+                if(sl.SundleikurinnData.userData.Endings[i].User == user){
+                    sl.Sundleikurinn(member, channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[i]})
+                    return;
+                }
+            }
+            process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[..........] 0%".red)
+            
+            sl.SundleikurinnData.userData.Endings.push({UserId: user.id, User: user, Endings: []})
+            readline.clearLine(process.stdout, 0);
+            readline.cursorTo(process.stdout, 0);
+            process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[|||||.....] 50%".red)
+
+            JamesBot.editFile(EndingsId, JSON.stringify(sl.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '));
+            readline.clearLine(process.stdout, 0);
+            readline.cursorTo(process.stdout, 0);
+            console.log("Adding new user to sundleykurinn".green + " - " + "Finished".green);
+
+            sl.Sundleikurinn(memer, channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
+        }else if(m.content.toLowerCase() === 'nei'){
+            collector.stop()
+        }
+    })
+}
+/**
+ * 
  * @param   {{options: [
  *              {name: "play", type: 1} | 
  *              {name: "stats", type: 2, options: [
@@ -403,43 +443,21 @@ async function help(data, channel_){
  *                  {name: "all", type: 1}
  *              ]}
  *          ]}} data 
- * @param {Discord.User} user
  * @param {String} channel_id
+ * @param {String} guild_id
+ * @param {Discord.User} user
+ * @param {Discord.GuildMember | Discord.User} member
  */
-async function sundleikurinn_com(data, channel_id, user, member = user){
+async function sundleikurinn_com(data, channel_id, guild_id, user, member = user){
     user = await bot.users.fetch(user.id)
+    if(member.joined_at){
+        member = await (await bot.guilds.fetch(guild_id)).members.fetch(user)
+    }else{
+        member = user
+    }
     if(data.options[0].name === "play"){
-        msg.channel.send('Ertu viss um að þú viljir spila "Sundleikurinn"?');
-        
-        let collector = msg.channel.createMessageCollector(m => m.author == msg.author)
-        collector.on('collect', m =>{
-            
-            
-            if(m.content === 'Ja'){
-                collector.stop()
-                msg.channel.send('**Ok nú skulum við byrja**')
-
-                for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
-                    if(sl.SundleikurinnData.userData.Endings[i].User == msg.author){
-                        sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[i]})
-                        return;
-                    }
-                }
-                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[..........] 0%".red)
-                
-                sl.SundleikurinnData.userData.Endings.push({UserId: msg.author.id, User: msg.author, Endings: []})
-                readline.clearLine(process.stdout, 0);
-                readline.cursorTo(process.stdout, 0);
-                process.stdout.write("Adding new user to sundleykurinn".green + "-" + "[|||||.....] 50%".red)
-
-                JamesBot.editFile(EndingsId, JSON.stringify(sl.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '));
-                readline.clearLine(process.stdout, 0);
-                readline.cursorTo(process.stdout, 0);
-                console.log("Adding new user to sundleykurinn".green + " - " + "Finished".green);
-
-                sl.Sundleikurinn(msg.member, msg.channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
-            }
-        })
+        sundl_play(channel_id, user, member)
+        return 'Ertu viss um að þú viljir spila "Sundleikurinn"? (Já / Nei)';
 
     }else if(data.options[0].name == "stats"){
         if(data.options[0].options[0].name == "all"){
@@ -447,51 +465,97 @@ async function sundleikurinn_com(data, channel_id, user, member = user){
             return "-stats-"
 
         }else if(data.options[0].options[0].name === "player"){
-            let user = msg.content.split(" ")
-            let member;
-            if(user.length > 1){
-                user = user[1]
-                if(user.substring(0, 2) == '<@' && user.substring(user.length - 1) == '>'){
-                    try{
-                        user = await bot.users.fetch(user.replace(/[<@!>]/g, ''))
-                    }catch (e){
-                        console.log(msg.content)
-                        msg.channel.send("Could not find user")
-                        return
-                    }
-                    
-                    if(msg.guild){
-                        try{
-                            member = await msg.guild.members.fetch(user.id);
-                        }catch (e){
-                            member = user;
-                        }
-                    }
+            if(data.options[0].options[0].options){
+                user = await bot.users.fetch(data.options[0].options[0].options[0].value)
+                if(member.guild){
+                    member = await member.guild.members.fetch(user.id);
                 }else{
-                    msg.channel.send(user + " is not a valid ping")
-                    return
+                    member = user;
                 }
-            }else{  
-                member = msg.member
-                if(!member){
-                    member = msg.author
-                }
-                user = msg.author
             }
 
             if(user == bot.user){
-                PrintStats(msg, sl.SundleikurinnData.botData.Endings.Endings, user, member)
-                return;
+                PrintStats(await bot.channels.fetch(channel_id), sl.SundleikurinnData.botData.Endings.Endings, user, member)
+                return "-stats-";
             }
             for(let i = 0; i < sl.SundleikurinnData.userData.Endings.length; i++){
-                if(sl.SundleikurinnData.userData.Endings[i].User == user){
-                    PrintStats(msg, sl.SundleikurinnData.userData.Endings[i].Endings, user, member)
-                    return
+                if(sl.SundleikurinnData.userData.Endings[i].User.id == user.id){
+                    PrintStats(await bot.channels.fetch(channel_id), sl.SundleikurinnData.userData.Endings[i].Endings, user, member)
+                    return "-stats-";
                 }
             }
-            msg.channel.send("Þú virðist ekki hafa spilað sundleikinn")
+            return "Þú virðist ekki hafa spilað sundleikinn"
         }
     }
+}
+
+
+
+
+/**
+ * 
+ * @param {(image: string) => any} callback 
+ */
+async function image(callback){
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "Attack on titan meme",
+        method: "GET",
+        headers: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+
+
+
+
+
+    request(options, function(error, response, responseBody) {
+        if (error) {
+            return;
+        }
+  
+ 
+        $ = cheerio.load(responseBody); 
+ 
+
+        var links = $(".image a.link");
+ 
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+        
+        console.log(urls);
+
+        if (!urls.length) {
+           
+            return;
+        }
+ 
+        // Send result
+        callback(urls[Math.floor(Math.random() * urls.length)]);
+    });
+}
+
+
+
+
+/**
+ * 
+ * @param {{options: [{value: String}]}} data 
+ * @param {String} guild_id 
+ */
+async function kick_com(data, guild_id = undefined){
+    if(!guild_id){
+        return "You are not in a server"
+    }
+    const member = await (await bot.guilds.fetch(guild_id)).members.fetch(data.options[0].value)
+    if (!member) {
+        return  `Who are you trying to kick? You must mention a user.`
+    }
+    if (!member.kickable) {
+        return `I can't kick this user. Sorry!`
+    }
+    await member.kick()
+    return `${member.user.tag} was thrown down a tree.`
 }
 
 
@@ -534,10 +598,10 @@ bot.on("message", async (message) => {
 });
 
 bot.on('ready', () => {
-     slash_com.send_commands_guild(bot, '701873712370286722');
+    // slash_com.send_commands_guild(bot, '701873712370286722');
     // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
@@ -638,9 +702,6 @@ bot.on('message', async msg=> {
     }else if(msg.content === "Ég fékk heimavinnu í dag hvað á ég að gera?"){
         msg.reply('Kveiktu í landakotsskóla!');
     
-    }else if(msg.content === "!events"){
-        msg.reply('\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)');
-    
     }else if(msg.content === "Hey besti botti ertu vakandi?"){
         msg.reply("Nei");
     
@@ -651,7 +712,7 @@ bot.on('message', async msg=> {
         msg.reply("Ég!");
 
     }else if (msg.content.startsWith("!delete")) {
-      msg.delete(); 
+        msg.delete(); 
     
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
         msg.reply('NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!');
@@ -779,24 +840,7 @@ bot.on("message", async message => {
     }
 
 
-    if (message.content.startsWith("!kick")) {
-      const member = message.mentions.members.first()
-      if (!member) {
-        return message.reply(
-          `Who are you trying to kick? You must mention a user.`
-        )
-      }
-      if (!member.kickable) {
-        return message.reply(`I can't kick this user. Sorry!`)
-      }
-      return member
-        .kick()
-        .then(() => message.reply(`${member.user.tag} was thrown down a tree.`))
-        .catch(error => message.reply(`Sorry, an error occured.`))
-
-
-
-    }else if (message.content.startsWith("Ég")) {
+    if (message.content.startsWith("Ég")) {
         const member = message.mentions.members.first()
         if (!member) {
         return message.reply(
@@ -815,54 +859,8 @@ bot.on("message", async message => {
 
     let args = message.content.substring(PREFIX.length).split(" ");
 
-    switch (args[0]) {
-        case 'image':
-        image(message);
-
-        break;
-    }
 
 });
-
-function image(message){
-
-    var options = {
-        url: "http://results.dogpile.com/serp?qc=images&q=" + "Attack on titan meme",
-        method: "GET",
-        headers: {
-            "Accept": "text/html",
-            "User-Agent": "Chrome"
-        }
-    };
-
-
-
-
-
-    request(options, function(error, response, responseBody) {
-        if (error) {
-            return;
-        }
-  
- 
-        $ = cheerio.load(responseBody); 
- 
-
-        var links = $(".image a.link");
- 
-        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
-        
-        console.log(urls);
-
-        if (!urls.length) {
-           
-            return;
-        }
- 
-        // Send result
-        message.channel.send( urls[Math.floor(Math.random() * urls.length)]);
-    });
-}
 
 
 
@@ -958,10 +956,6 @@ bot.on("message", msg => {
 
 
 
-var facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær"];
-var fact = Math.floor(Math.random() * facts.length);
-
-
 var bananas = ["Hinn heilaga Gumma guð", "Hinn heilaga Gumma sund", "Hinn heilaga prest Snæ", "Hinn heilaga Teit flugsunds eingil", "Hinn heilaga Gumma Krist"];
 
 bot.on('message', msg=>{
@@ -985,9 +979,6 @@ bot.on('message', msg=>{
         msg.reply(`\nÞann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
         
 
-    }else if(msg.content === "!facts"){
-        var fact = Math.floor(Math.random() * facts.length);
-        msg.reply(facts[fact] + " " + facts[Math.floor(Math.random() * facts.length)])
     }else if(msg.content === "kirill spírill"){
         exports.run = async (bot, message, args, tools) => {
 
@@ -1148,12 +1139,12 @@ async function PrintAll(channel){
 
 /**
  * 
- * @param {Discord.Message} msg 
+ * @param {Discord.TextChannel} channel 
  * @param {Number[]} Endings
  * @param {Discord.User} user
  * @param {Discord.Member} member
  */
-function PrintStats(msg, Endings, user, member){
+function PrintStats(channel, Endings, user, member){
     let stats = {good: 0, neutral: 0, bad: 0, sc: 0}
     for (let j = 0; j < Endings.length; j++) {
         if(EndingsList[Endings[j]].Type == 0){
@@ -1243,7 +1234,7 @@ function PrintStats(msg, Endings, user, member){
         ])
         .setFooter("Takk fyrir að spila sundleikinn", bot.user.avatarURL());
 
-    msg.channel.send("", {
+    channel.send("", {
         embed: embeded.setImage("attachment://map.png"),
         files: [{
             attachment: 'img\\map.png',
@@ -1257,8 +1248,23 @@ function PrintStats(msg, Endings, user, member){
 
 JamesBot = new Drive.Project("credentials.json", async JamesBot => {
     RawSundleykurinnData = await JamesBot.getFile(EndingsId)
-    bot.login(token);
-    process.stdout.write("Bot login".green + " - " + `[..........] 0%`.red);
+    try{
+        token = JSON.parse(fs.readFileSync("bot_Token.json"));
+        bot.login(token);
+        process.stdout.write("Bot login".green + " - " + `[..........] 0%`.red);
+    }catch(e){
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
+        rl.question('Enter the bot token: ', (Token_) => {
+            rl.close();
+            token = Token_;
+            fs.writeFileSync('bot_Token.json', JSON.stringify(token));
+            bot.login(token);
+            process.stdout.write("Bot login".green + " - " + `[..........] 0%`.red);
+        });
+    }
 })
 
 
