@@ -201,6 +201,15 @@ function command_reply(client, commands){
                 }
             }})
 
+        }else if (interaction.data.name === "joke"){
+            const Joke = JSON.parse(fs.readFileSync("jokes.json"));
+            const randomJoke = Joke[Math.floor(Math.random() * (Joke.length - 0.1))];
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: (randomJoke)
+                }
+            }})
         }    
 
         // console.log(interaction.data.options);

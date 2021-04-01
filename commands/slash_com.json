@@ -123,5 +123,10 @@
         "name": "member_count",
         "description": "How many members there are in the guild",
         "options": []
+    },
+    {
+        "name": "joke",
+        "description": "Sends a random joke",
+        "options": []
     }
 ]
