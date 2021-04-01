@@ -29,7 +29,7 @@ exports.SundleikurinnData = {
  * @param {number} Armn
  */
 function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
-    collector = channel.createMessageCollector(m => m.author == player.user)
+    let collector = channel.createMessageCollector(m => m.author == player.user)
     switch(id){
         case 3:
             setTimeout(() => {

@@ -1272,17 +1272,3 @@ bot.on('message', message => {
         Playjs.execute(message, args);
     }
 });
-
-
-
-bot.on('message', msg => {  
-    const args = msg.content.slice(PREFIX.length).split(' ');  
-    const command = args.shift().toLowerCase(); 
-    
-    
-    if (command === 'suggest'){  
-    const channel = msg.guild.channels.cache.find(ch => ch.id === '827213162213408802');
-    
-    channel.send('Suggestion:\n' + args.join(' ')) 
-    }
-});

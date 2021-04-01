@@ -40,7 +40,7 @@
         }]
     },
     {
-        "name": "servercount",
+        "name": "server_count",
         "description": "Sends number of servers the bot is in",
         "options": []
     },
@@ -128,5 +128,15 @@
         "name": "joke",
         "description": "Sends a random joke",
         "options": []
+    },
+    {
+        "name": "suggest",
+        "description": "Suggest something",
+        "options": [{
+            "name": "suggestion",
+            "description": "The suggestion",
+            "type": 3, 
+            "required": true
+        }]
     }
 ]
