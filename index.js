@@ -426,7 +426,7 @@ async function sundl_play(channel_id, user, member){
             readline.cursorTo(process.stdout, 0);
             console.log("Adding new user to sundleykurinn".green + " - " + "Finished".green);
 
-            sl.Sundleikurinn(memer, channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
+            sl.Sundleikurinn(member, channel, 3, {Endings: sl.SundleikurinnData.userData.Endings[sl.SundleikurinnData.userData.Endings.length - 1]})
         }else if(m.content.toLowerCase() === 'nei'){
             collector.stop()
         }
@@ -450,7 +450,7 @@ async function sundl_play(channel_id, user, member){
  */
 async function sundleikurinn_com(data, channel_id, guild_id, user, member = user){
     user = await bot.users.fetch(user.id)
-    if(member.joined_at){
+    if(guild_id){
         member = await (await bot.guilds.fetch(guild_id)).members.fetch(user)
     }else{
         member = user
@@ -744,14 +744,10 @@ bot.on('message', async msg=> {
 })
 
 bot.on('message', msg=>{
-        if (msg.content.includes('changeNick')) {
+    if (msg.content.includes('changeNick')) {
         if (!msg.guild.me.hasPermission('MANAGE_NICKNAMES')) return msg.channel.send('I don\'t have permission to change your nickname!');
         msg.member.setNickname(msg.content.replace('changeNick ', ''));
-    }   
-});
-
-bot.on('message', msg=>{
-    if(msg.content === "G"){
+    }else if(msg.content === "G"){
         msg.channel.send({embed: {
             color: 3447003,
             author: {
@@ -766,22 +762,17 @@ bot.on('message', msg=>{
                 }
           }});
     }
-})
-
-
-
-bot.on('message', message => {
-    let args = message.content.substring(PREFIX.length).split(" ");
+    let args = msg.content.substring(PREFIX.length).split(" ");
     
     switch(args[0]) {
         case 'H':
-            const name = message.author.username;
+            const name = msg.author.username;
             const embed = new Discord.MessageEmbed()
                 .setAuthor('How long you got left in the void', )
-                .addField("Who you askin about", message.author.username)
-                .addField("Hvenær þessi skilaboð voru send", message.author.createdAt);
+                .addField("Who you askin about", msg.author.username)
+                .addField("Hvenær þessi skilaboð voru send", msg.author.createdAt);
 
-            message.channel.send({embed});
+            msg.channel.send({embed});
             break;
 
         }
