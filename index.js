@@ -542,15 +542,18 @@ async function image(callback){
  * 
  * @param {{options: [{value: String}]}} data 
  * @param {String} guild_id 
+ * @param {Discord.GuildMember} the_member 
  */
-async function kick_com(data, guild_id = undefined){
+async function kick_com(data, guild_id = undefined, the_member = undefined){
     if(!guild_id){
-        return "You are not in a server"
+        return "You are not in a server."
+    }
+    const permissions = new Discord.Permissions(parseInt(the_member.permissions))
+
+    if(!permissions.has('KICK_MEMBERS')){
+        return "You don't have permission to kick someone."
     }
     const member = await (await bot.guilds.fetch(guild_id)).members.fetch(data.options[0].value)
-    if (!member) {
-        return  `Who are you trying to kick? You must mention a user.`
-    }
     if (!member.kickable) {
         return `I can't kick this user. Sorry!`
     }

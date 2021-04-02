@@ -179,7 +179,7 @@ function command_reply(client, commands){
             client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
-                    content: await commands.kick_com(interaction.data, interaction.guild_id)
+                    content: await commands.kick_com(interaction.data, interaction.guild_id, interaction.member)
                 }
             }})
         }else if(interaction.data.name === "bot_uptime"){
@@ -232,7 +232,7 @@ function command_reply(client, commands){
             }
         }
 
-        // console.log(interaction.data.options);
+        // console.log(interaction);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }
