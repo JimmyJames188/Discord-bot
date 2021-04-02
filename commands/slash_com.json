@@ -95,8 +95,8 @@
         "options": []
     },
     {
-        "name": "facts",
-        "description": "Gives facts",
+        "name": "names",
+        "description": "Sends a randomly put together name",
         "options": []
     },
     {
