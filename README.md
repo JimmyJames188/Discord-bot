@@ -71,5 +71,6 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * /member_count => How many members in the server
 * /joke => Sends 1 out of 39 jokes 
 * !delete => deletes !delete message (utterly pointless)
+* !changeNick => Changes your nick (pointless just use /nick it's built in)
 
 <!-- END OF COMMANDS -->

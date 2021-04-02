@@ -155,7 +155,7 @@ function command_reply(client, commands){
                     content:  '\n1: James made a kahoot about the discord server a while ago that STILL hasn´t been played. \n2: Lögreglan ætlar að handtaka kaktus sem sást í gærkvöldi um klukkan 11:35 niðri í bæ. Sagt er að kaktusinn býr í matarkjallara sem er neðst niðri í ráðhúsinu. Kaktusinn er sagður heita Pétur. (This is genuienly to long to translate)'
                 }
             }})
-        }else if(interaction.data.name === "facts"){
+        }else if(interaction.data.name === "names"){
                     
             const fact1 = Math.floor(Math.random() * facts.length);
             const fact2 = Math.floor(Math.random() * facts.length);
@@ -213,7 +213,7 @@ function command_reply(client, commands){
                 }
             }})
            
-        }else if (interaction.data.name = 'suggest'){
+        }else if (interaction.data.name === 'suggest'){
             sugestion_channel.send('Suggestion:\n' + interaction.data.options[0].value)
             if(interaction.member){
                 client.api.interactions(interaction.id, interaction.token).callback.post({data: {
