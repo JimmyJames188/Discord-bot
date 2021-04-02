@@ -602,7 +602,8 @@ bot.on("message", async (message) => {
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722');
-    // slash_com.send_commands_all(bot);
+     slash_com.send_commands_all(bot);
+    // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
     if(Drive.WaitingForInput){
@@ -1266,3 +1267,23 @@ bot.on('message', message => {
         Playjs.execute(message, args);
     }
 });
+
+
+
+
+bot.on('message', message => {
+    if (message.content.toLowerCase().startsWith('bot_stats')){
+        if(message.author.bot) return;
+        let days = Math.floor(bot.uptime / 86400000);
+        let hours = Math.floor(bot.uptime / 3600000) % 24;
+        let minutes = Math.floor(bot.uptime / 60000) % 60;
+        let seconds = Math.floor(bot.uptime / 1000) % 60;
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('RANDOM')
+            .setTitle("Bot's Stats")
+            .addField(" \u200B ", "**Servers** : ` " + `${bot.guilds.cache.size}` + " `")
+            .addField(" \u200B ", "**Total channels** : ` " + `${bot.channels.cache.size}` + " `")
+            .addField( "\u200B ", `**__Uptime:__** :`  + `\n${days}d ${hours}h ${minutes}m ${seconds}s` + " ")
+        message.channel.send(exampleEmbed);
+    }
+})

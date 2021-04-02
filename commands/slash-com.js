@@ -182,18 +182,6 @@ function command_reply(client, commands){
                     content: await commands.kick_com(interaction.data, interaction.guild_id, interaction.member)
                 }
             }})
-        }else if(interaction.data.name === "bot_uptime"){
-            let days = Math.floor(client.uptime / 86400000);
-            let hours = Math.floor(client.uptime / 3600000) % 24;
-            let minutes = Math.floor(client.uptime / 60000) % 60;
-            let seconds = Math.floor(client.uptime / 1000) % 60;
-
-            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
-                type: 4,
-                data: {
-                    content: `__Uptime:__\n${days}d ${hours}h ${minutes}m ${seconds}s`
-                }
-            }})
 
         }else if (interaction.data.name === `member_count`) {
             client.api.interactions(interaction.id, interaction.token).callback.post({data: {
@@ -230,6 +218,28 @@ function command_reply(client, commands){
                     }
                 }})
             }
+        }else if (interaction.data.name === `bot_stats`) {
+            let days = Math.floor(client.uptime / 86400000);
+            let hours = Math.floor(client.uptime / 3600000) % 24;
+            let minutes = Math.floor(client.uptime / 60000) % 60;
+            let seconds = Math.floor(client.uptime / 1000) % 60;
+            const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('RANDOM')
+            .setTitle("Bot's Stats")
+            .addField(" \u200B ", "**Servers** : ` " + `${client.guilds.cache.size}` + " `")
+            .addField(" \u200B ", "**Total channels** : ` " + `${client.channels.cache.size}` + " `")
+            .addField( "\u200B ", `**__Uptime:__** :`  + `\n${days}d ${hours}h ${minutes}m ${seconds}s` + " ")
+
+            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: "-stats-"
+                }
+            }})
+
+            const channel = await client.channels.fetch(interaction.channel_id)
+            channel.send(exampleEmbed)
+        
         }
 
         // console.log(interaction);
