@@ -101,13 +101,6 @@ function command_reply(client, commands){
                     content: commands.decrypt(interaction.data)
                 }
             }})
-        }else if(interaction.data.name == 'server_count') {
-            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
-                type: 4,
-                data: {
-                    content: `Im in ${client.guilds.cache.array().length} servers!`
-                }
-            }})
         }else if(interaction.data.name == 'help') {
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
