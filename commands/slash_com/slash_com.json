@@ -40,11 +40,6 @@
         }]
     },
     {
-        "name": "server_count",
-        "description": "Sends number of servers the bot is in",
-        "options": []
-    },
-    {
         "name": "help",
         "description": "Shows all commands",
         "options": [{
