@@ -38,7 +38,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats})
 }
 exports.command_reply = command_reply
 
@@ -713,6 +713,20 @@ async function kick_com(data, guild_id = undefined, the_member = undefined){
     }
     await member.kick()
     return `${member.user.tag} was thrown down a tree.`
+}
+
+function bot_stats(){  
+    let days = Math.floor(bot.uptime / 86400000);
+    let hours = Math.floor(bot.uptime / 3600000) % 24;
+    let minutes = Math.floor(bot.uptime / 60000) % 60;
+    let seconds = Math.floor(bot.uptime / 1000) % 60;
+    const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('RANDOM')
+        .setTitle("Bot's Stats")
+        .addField(" \u200B ", "**Servers** : ` " + `${bot.guilds.cache.size}` + " `")
+        .addField(" \u200B ", "**Total channels** : ` " + `${bot.channels.cache.size}` + " `")
+        .addField( "\u200B ", `**__Uptime:__** :`  + `\n${days}d ${hours}h ${minutes}m ${seconds}s` + " ")
+    return exampleEmbed
 }
 
 

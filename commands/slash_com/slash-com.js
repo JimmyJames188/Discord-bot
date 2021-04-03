@@ -65,6 +65,7 @@ exports.delete_commands_all = delete_commands_all;
  *          sundleikurinn_com:  (data: {}, channel_id: String, guild_id: String, user: Discord.User, member?: Discord.GuildMember) => Promise<String>
  *          image:              (callback: (image: string) => any)
  *          kick_com:           (data: {}, guild_id?: String) => Promise<String>
+ *          bot_stats:          () => Discord.MessageEmbed
  *         }} commands
  */
 function command_reply(client, commands){
@@ -212,16 +213,6 @@ function command_reply(client, commands){
                 }})
             }
         }else if (interaction.data.name === `bot_stats`) {
-            let days = Math.floor(client.uptime / 86400000);
-            let hours = Math.floor(client.uptime / 3600000) % 24;
-            let minutes = Math.floor(client.uptime / 60000) % 60;
-            let seconds = Math.floor(client.uptime / 1000) % 60;
-            const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('RANDOM')
-            .setTitle("Bot's Stats")
-            .addField(" \u200B ", "**Servers** : ` " + `${client.guilds.cache.size}` + " `")
-            .addField(" \u200B ", "**Total channels** : ` " + `${client.channels.cache.size}` + " `")
-            .addField( "\u200B ", `**__Uptime:__** :`  + `\n${days}d ${hours}h ${minutes}m ${seconds}s` + " ")
 
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
@@ -231,7 +222,7 @@ function command_reply(client, commands){
             }})
 
             const channel = await client.channels.fetch(interaction.channel_id)
-            channel.send(exampleEmbed)
+            channel.send(commands.bot_stats())
         
         }
 
