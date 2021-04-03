@@ -10,7 +10,7 @@ var crypto = require('crypto');
 
 const Drive = require('./Storage/Drive.js')
 
-const slash_com = require('./commands/slash-com.js')
+const slash_com = require('./commands/slash_com/slash-com.js')
 
 const Feistel_Cipher = require('./commands/Feistel_Cipher.js')
 
