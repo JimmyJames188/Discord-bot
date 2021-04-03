@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs')
-const json = JSON.parse(fs.readFileSync('commands/slash_com.json'))
+const json = JSON.parse(fs.readFileSync('commands/slash_com/slash_com.json'))
 
 
 const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Stefán", "Borgar", "Gummi", "Snær", "Guð", "Bíbí", "Sundmaður", "Sundkona", "Sundþjálfari", "Júlíus", "Botti", "Hermann", "Ingi", "Halldór"];

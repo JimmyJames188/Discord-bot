@@ -29,7 +29,7 @@ exports.SundleikurinnData = {
  * @param {number} Armn
  */
 function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
-    let collector = channel.createMessageCollector(m => m.author == player.user)
+    let collector = channel.createMessageCollector(m => m.author.id == player.id)
     switch(id){
         case 3:
             setTimeout(() => {
@@ -40,12 +40,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     switch(m.content){
                         case '1':
                             collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 4, PlayerData)
+                            exports.Sundleikurinn(m.author, m.channel, 4, PlayerData)
                             break;
                         
                         case '2':
                             collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 10, PlayerData)
+                            exports.Sundleikurinn(m.author, m.channel, 10, PlayerData)
                             break;
                             
                         case '3':
@@ -74,12 +74,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     switch(m.content){
                         case '1':
                             collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 6, PlayerData)
+                            exports.Sundleikurinn(m.author, m.channel, 6, PlayerData)
                             break;
                         
                         case '2':
                             collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 5, PlayerData)
+                            exports.Sundleikurinn(m.author, m.channel, 5, PlayerData)
                             break;
                             
 
@@ -127,22 +127,22 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 7, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 7, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 8, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 8, PlayerData)
                         break;
 
                     case '3':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 9, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 9, PlayerData)
                         break;
                             
                     case '4':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 31, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 31, PlayerData)
                         break;
 
                     default:
@@ -261,12 +261,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     switch(m.content){
                         case '1':
                             collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 11, PlayerData)
+                            exports.Sundleikurinn(m.author, m.channel, 11, PlayerData)
                             break;
                         
                         case '2':
                             collector.stop()
-                            exports.Sundleikurinn(m.member, m.channel, 13, PlayerData)
+                            exports.Sundleikurinn(m.author, m.channel, 13, PlayerData)
                             break;
 
                         default:
@@ -286,17 +286,17 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 12, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 12, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 13, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 13, PlayerData)
                         break;
                     
                     case '3':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 14, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 14, PlayerData)
                         break;
 
                     default:
@@ -375,22 +375,22 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 15, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 15, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 32, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 32, PlayerData)
                         break;
                     
                     case '3':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 37, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 37, PlayerData)
                         break;
                     
                     case '4':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 40, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 40, PlayerData)
                         break;
 
                     default:
@@ -409,22 +409,22 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 23, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 23, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 24, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 24, PlayerData)
                         break;
                     
                     case '3':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 25, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 25, PlayerData)
                         break;
                     
                     case '4':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 16, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 16, PlayerData)
                         break;
 
                     default:
@@ -729,12 +729,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                             switch(m.content){
                                 case '1':
                                     collector.stop()
-                                    exports.Sundleikurinn(m.member, m.channel, 26, PlayerData)
+                                    exports.Sundleikurinn(m.author, m.channel, 26, PlayerData)
                                     break;
                                 
                                 case '2':
                                     collector.stop()
-                                    exports.Sundleikurinn(m.member, m.channel, 30, PlayerData)
+                                    exports.Sundleikurinn(m.author, m.channel, 30, PlayerData)
                                     break;
 
                                 default:
@@ -756,17 +756,17 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 28, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 28, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 29, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 29, PlayerData)
                         break;
                     
                     case '3':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 27, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 27, PlayerData)
                         break;
 
                     default:
@@ -939,12 +939,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 33, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 33, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 34, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 34, PlayerData)
                         break;
                     
 
@@ -994,12 +994,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 35, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 35, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 36, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 36, PlayerData)
                         break;
                     
 
@@ -1079,12 +1079,12 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 switch(m.content){
                     case '1':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 38, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 38, PlayerData)
                         break;
                     
                     case '2':
                         collector.stop()
-                        exports.Sundleikurinn(m.member, m.channel, 39, PlayerData)
+                        exports.Sundleikurinn(m.author, m.channel, 39, PlayerData)
                         break;
                     
 
