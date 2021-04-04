@@ -92,7 +92,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
             
         case 5:
-            channel.send("**Bíbí ræðst á þig og drekkir þig í sundlauginni - Endir**")
+            channel.send("**Bíbí ræðst á þig og drekkir þig í sundlauginni - Endir (1)**")
             if(PlayerData.Endings.Endings.length == 0){
                 channel.send("**Til hamingju með að klára fyrstu endinguna!**")
 
@@ -153,7 +153,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
             case 7:
-                channel.send('**Hann gefur þér afbragðs lýsi frá Siglufirði þannig að þú finnur krafta þína streyma um líkamann og þú grærð nýja hendi! Heilinn þinn stækkar fimmfalt og þú verður Íslandsmestari í sundi - Endir**')
+                channel.send('**Hann gefur þér afbragðs lýsi frá Siglufirði þannig að þú finnur krafta þína streyma um líkamann og þú grærð nýja hendi! Heilinn þinn stækkar fimmfalt og þú verður Íslandsmestari í sundi - Endir (2)**')
                 if(PlayerData.Endings.Endings.length == 0){
 
                     PlayerData.Endings.Endings.push(2)
@@ -184,7 +184,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 break;
 
             case 8:
-                channel.send('**Snær gerir það of fast og hendin hans fer í gegnum þig - Endir**')
+                channel.send('**Snær gerir það of fast og hendin hans fer í gegnum þig - Endir (3)**')
                 
                 if(PlayerData.Endings.Endings.length == 0){
 
@@ -218,7 +218,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
 
             case 9:
-                channel.send('**Hann syngur fyrir þér og þú fyllist af ást fyrir KR og grærð hendina til baka. Þú færð lagið á heilann restina af æfingunni - Endir**')
+                channel.send('**Hann syngur fyrir þér og þú fyllist af ást fyrir KR og grærð hendina til baka. Þú færð lagið á heilann restina af æfingunni - Endir (4)**')
 
                 if(PlayerData.Endings.Endings.length == 0){
 
@@ -308,7 +308,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
         
         case 12:
-            channel.send("**Vinur þinn nennir ekki að bíða og hann fer en þú neitar að fara. Þú bíður og bíður og bíður þangað til að lokum þú sveltur í hel - Endir**")
+            channel.send("**Vinur þinn nennir ekki að bíða og hann fer en þú neitar að fara. Þú bíður og bíður og bíður þangað til að lokum þú sveltur í hel - Endir (5)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(5)
@@ -338,7 +338,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
         
         case 13:
-            channel.send("**Þú ferð heim og ekkert sérstakt gerist - Endir**")
+            channel.send("**Þú ferð heim og ekkert sérstakt gerist - Endir (6)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(6)
@@ -468,7 +468,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 17:
-            channel.send("**Þú og vinur þinn báðir deyið og þið fáið aldrei að vita hversu margir dóu hjá Ármenningunum - Endir**")
+            channel.send("**Þú og vinur þinn báðir deyið og þið fáið aldrei að vita hversu margir dóu hjá Ármenningunum - Endir (7)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(7)
@@ -498,7 +498,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 18:
-            channel.send("**Sundfélaginn þinn deyr en þú vinnur. Þú fékkst pottinn en æfingarnar verða aldrei eins - Endir**", {
+            channel.send("**Sundfélaginn þinn deyr en þú vinnur. Þú fékkst pottinn en æfingarnar verða aldrei eins - Endir (8)**", {
                 files: [{
                     attachment: 'img\\IHWBWC.jpg',
                     name: 'IHWBWC.jpg'
@@ -533,7 +533,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 19:
-            channel.send("**Sundfélaginn þinn deyr og þið tapið. Þú ferð heim og fellur í þunglyndi og byrjar að drekka. Að lokum fremurðu sjálfsmorð - Endir**")
+            channel.send("**Sundfélaginn þinn deyr og þið tapið. Þú ferð heim og fellur í þunglyndi og byrjar að drekka. Að lokum fremurðu sjálfsmorð - Endir (9)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(9)
@@ -563,7 +563,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 20:
-            channel.send("**Þú deyrð og færð aldrei að vita hvað gerist næst - Endir**")
+            channel.send("**Þú deyrð og færð aldrei að vita hvað gerist næst - Endir (10)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(10)
@@ -593,7 +593,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 21:
-            channel.send("**Hvorugur ykkar deyr en " + (30 - Armn) + " ármenningar/ur deyja/deyr þannig að þið vinnið. Þið komist í pottinn og slakið á. Þið íhugið lífið ykkar og talið um hvað þið ætlið að fá ykkur í kvöldmat - Endir**")
+            channel.send("**Hvorugur ykkar deyr en " + (30 - Armn) + " ármenningar/ur deyja/deyr þannig að þið vinnið. Þið komist í pottinn og slakið á. Þið íhugið lífið ykkar og talið um hvað þið ætlið að fá ykkur í kvöldmat - Endir (11)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(11)
@@ -623,7 +623,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 22:
-            channel.send("**Engin deyr og ármeningar fá að halda pottin. Þið farið bara heim vonsviknir og í smávegis í áfalli - Endir**")
+            channel.send("**Engin deyr og ármeningar fá að halda pottin. Þið farið bara heim vonsviknir og í smávegis í áfalli - Endir (12)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(12)
@@ -653,7 +653,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
         
             case 23:
-            channel.send("**Þú kallar á Snæ og hann kemur fljúgandi með lýsi í hendi! Þú rétt svo snertir hvern og einn og þeir skjótast upp í loftið og festast í þakinu. Þið fáið pottinn! - Endir**")
+            channel.send("**Þú kallar á Snæ og hann kemur fljúgandi með lýsi í hendi! Þú rétt svo snertir hvern og einn og þeir skjótast upp í loftið og festast í þakinu. Þið fáið pottinn! - Endir (13)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(13)
@@ -683,7 +683,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 24:
-            channel.send("**Þú ýtir sundfélaganum þínum í pottinn og segir honum að berja þá. Ármenningarnir stökkva allir ofan á hann og það sést ekkert í hann í heila mínútu. Svo fara þeir allir frá og þú sérð að það eina eftir af vini þínum er bara eyra. Ármenningarnir horfa allir á þig og stökkva… - Endir**")
+            channel.send("**Þú ýtir sundfélaganum þínum í pottinn og segir honum að berja þá. Ármenningarnir stökkva allir ofan á hann og það sést ekkert í hann í heila mínútu. Svo fara þeir allir frá og þú sérð að það eina eftir af vini þínum er bara eyra. Ármenningarnir horfa allir á þig og stökkva… - Endir (14)**")
             if(PlayerData.Endings.Endings.length == 0){
     
                 PlayerData.Endings.Endings.push(14)
@@ -778,7 +778,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 27:
-            channel.send("**Þið hoppið niður af laugardalslauginni og lendið í runna fyrir aftan laugina. Þið hlaupið! Þið felið ykkur á Hrafnistu í tvo daga og farið svo heim - Endir**")
+            channel.send("**Þið hoppið niður af laugardalslauginni og lendið í runna fyrir aftan laugina. Þið hlaupið! Þið felið ykkur á Hrafnistu í tvo daga og farið svo heim - Endir (15)**")
             if(PlayerData.Endings.Endings.length == 0){
     
                 PlayerData.Endings.Endings.push(15)
@@ -808,7 +808,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 28:
-            channel.send("**Þið hoppið ofaní laugina og ætlið að synda upp að bakkanum en þið takið eftir hlera á botninum í lauginni! Þið opnið hann og farið inn. Inni er falið herbergi þar sem það er heill stafli af gulli og peningum! Þetta er eins og að koma inn í peningageyminn hans Jóakims Aðalandar! Þú skiptir ágóðanum með félaganum þínum og þið verðið rosalega ríkir! - Endir**")
+            channel.send("**Þið hoppið ofaní laugina og ætlið að synda upp að bakkanum en þið takið eftir hlera á botninum í lauginni! Þið opnið hann og farið inn. Inni er falið herbergi þar sem það er heill stafli af gulli og peningum! Þetta er eins og að koma inn í peningageyminn hans Jóakims Aðalandar! Þú skiptir ágóðanum með félaganum þínum og þið verðið rosalega ríkir! - Endir (16)**")
             if(PlayerData.Endings.Endings.length == 0){
     
                 PlayerData.Endings.Endings.push(16)
@@ -838,7 +838,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 29:
-            channel.send("**Þið gefist upp og farið í fangelsi í tvö ár - Endir**")
+            channel.send("**Þið gefist upp og farið í fangelsi í tvö ár - Endir (17)**")
             if(PlayerData.Endings.Endings.length == 0){
     
                 PlayerData.Endings.Endings.push(17)
@@ -868,7 +868,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 30:
-            channel.send("**Þið ákvarðið að bíða til morguns með að reyna að komast út því að þið vitið að allar útidyrahurðir séu lokaðar. Þið farið niður í þreksalinn til þess að ná í dýnurnar þar og farið með þær undir áhorfendapallana. Þið sofið þar. Þið vaknið við óhljóðin í hana! Þú fattar að þú sért niðurkomin/n í miðjan húsdýragarðinn! Starfsfólkið neitar að hleypa þér út þannig að þú lifir restina af lífinu þínu hjá selunum - Endir**")
+            channel.send("**Þið ákvarðið að bíða til morguns með að reyna að komast út því að þið vitið að allar útidyrahurðir séu lokaðar. Þið farið niður í þreksalinn til þess að ná í dýnurnar þar og farið með þær undir áhorfendapallana. Þið sofið þar. Þið vaknið við óhljóðin í hana! Þú fattar að þú sért niðurkomin/n í miðjan húsdýragarðinn! Starfsfólkið neitar að hleypa þér út þannig að þú lifir restina af lífinu þínu hjá selunum - Endir (18)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(18)
@@ -901,7 +901,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             channel.send("**Snær reynir að bjarga þér en er allt of seinn. Þegar allir halda að þetta sé búið birtist Gummi Guð. Honum fynnst ekki sanngjarn að þú náðir ekki að klára refsinguna og semur við Gjöfullin að hann leifi þér að koma aftur til Jarðar en þú munt þurfa að stofna kult og forna 100 túristum og hann mun gefa þér öfl til að hjálpa þér**")
             
             setTimeout(() => {
-                channel.send("**Þú gerir eins og hann segir og fórnar 100 túristum með því að nota öldur til að drekkja þá í Vík og lifir svo sem ódauðlegur maður með yfirnáttúrulega krafta - Endir**")
+                channel.send("**Þú gerir eins og hann segir og fórnar 100 túristum með því að nota öldur til að drekkja þá í Vík og lifir svo sem ódauðlegur maður með yfirnáttúrulega krafta - Endir (19)**")
                 if(PlayerData.Endings.Endings.length == 0){
         
                     PlayerData.Endings.Endings.push(19)
@@ -957,7 +957,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 33:
-            channel.send("**Þú reynir að hlaupa út um innganginn en hrasar og klessir á vegg. Birgir (með g) fyrir óþekktar ástæður er einmitt á leiðinni út og bjargar þér og vini þínum - Endir**")
+            channel.send("**Þú reynir að hlaupa út um innganginn en hrasar og klessir á vegg. Birgir (með g) fyrir óþekktar ástæður er einmitt á leiðinni út og bjargar þér og vini þínum - Endir (20)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(20)
@@ -1012,7 +1012,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 35:
-            channel.send("**Þú hleypur inn í tæknibúrið! Oh oh! Þú rakst í takkann sem kveikir á eldflaugunum undir lauginni sem sendir laugardalslaugina til mars! - Endir**")
+            channel.send("**Þú hleypur inn í tæknibúrið! Oh oh! Þú rakst í takkann sem kveikir á eldflaugunum undir lauginni sem sendir laugardalslaugina til mars! - Endir (21)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(21)
@@ -1042,7 +1042,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 36:
-            channel.send("**Þú hleypur inn í klefann og finnur stóran skáp. Þú kemur þér fyrir og lokar skápnum! Oh oh! Ármenningarnir læstu skápnum! Þeir fara síðan með lykilinn í pottinn og hanga þar. Þú sveltur í hel - Endir**")
+            channel.send("**Þú hleypur inn í klefann og finnur stóran skáp. Þú kemur þér fyrir og lokar skápnum! Oh oh! Ármenningarnir læstu skápnum! Þeir fara síðan með lykilinn í pottinn og hanga þar. Þú sveltur í hel - Endir (22)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(22)
@@ -1097,7 +1097,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 38:
-            channel.send("**Þú dregur út róandi töflurnar sem þú ert með í vasanum (ekki spyrja) og kastar þeim í munnana þeirra allra. Þeir róast samstundis og leyfa þér að sitja hjá sér í pottinum - Endir**")
+            channel.send("**Þú dregur út róandi töflurnar sem þú ert með í vasanum (ekki spyrja) og kastar þeim í munnana þeirra allra. Þeir róast samstundis og leyfa þér að sitja hjá sér í pottinum - Endir (23)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(23)
@@ -1127,7 +1127,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 39:
-            channel.send("**Þú byrjar að syngja íslenska þjóðsönginn en þeir festa límband fyrir munninn á þér! Æ æ þú manst allt í einu það sem þér var kennt í leikskóla! Ármenningar eru allir danskir og því hata íslenska þjóðsönginn vegna þess að það minnir þá á að þeir réðu einu sinni yfir okkur! - Endir**")
+            channel.send("**Þú byrjar að syngja íslenska þjóðsönginn en þeir festa límband fyrir munninn á þér! Æ æ þú manst allt í einu það sem þér var kennt í leikskóla! Ármenningar eru allir danskir og því hata íslenska þjóðsönginn vegna þess að það minnir þá á að þeir réðu einu sinni yfir okkur! - Endir (24)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(24)
@@ -1157,7 +1157,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 40:
-            channel.send("**Þú lokkar þá úr pottinum með gull hatti! Þeir hoppa allir út úr pottinum og glápa á hattinn. Þegar þeir eru allir komnir við hliðina á lauginni flýgur Snær inn og slær þá alla í sundlaugina! Þeir drukkna allir því að þeir kunna ekki að synda - Endir**")
+            channel.send("**Þú lokkar þá úr pottinum með gull hatti! Þeir hoppa allir út úr pottinum og glápa á hattinn. Þegar þeir eru allir komnir við hliðina á lauginni flýgur Snær inn og slær þá alla í sundlaugina! Þeir drukkna allir því að þeir kunna ekki að synda - Endir (25)**")
             if(PlayerData.Endings.Endings.length == 0){
         
                 PlayerData.Endings.Endings.push(25)
