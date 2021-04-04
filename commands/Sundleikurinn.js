@@ -1122,7 +1122,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 21 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 21, "#00A000", false))
     
             }
             break;
@@ -1152,8 +1152,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 22 í fyrsta skipti!**")
-    
+                channel.send("", ending_embed(player, channel.client, 22, "#A00000", false))
             }
             break;
 
@@ -1207,7 +1206,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 23 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 23, "#00A000", false))
     
             }
             break;
@@ -1237,7 +1236,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 24 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 24, "#A00000", false))
     
             }
             break;
@@ -1267,7 +1266,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 25 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 25, "#00A000", false))
     
             }
             break;
