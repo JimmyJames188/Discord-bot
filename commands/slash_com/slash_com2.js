@@ -411,7 +411,7 @@ async function help(data, channel_){
     ClippingContext.clip()
     ClippingContext.drawImage(canvas, 0, 0)
 
-    fs.writeFile("img/allmap.png", ClippingCanvas.toBuffer(), () => {})
+    fs.writeFileSync("img/allmap.png", ClippingCanvas.toBuffer())
 
     const embeded = new Discord.MessageEmbed()
         .setColor(`#${color.red + color.green}00`)
@@ -510,7 +510,7 @@ function PrintStats(channel, Endings, user, member){
 
 
     // console.log('<img src="' + canvas.toBuffer() + '" />')
-    fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
+    fs.writeFileSync("img/map.png", canvas.toBuffer())
 
     
     function name(member) {
