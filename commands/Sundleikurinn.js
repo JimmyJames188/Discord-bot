@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require("discord.js");
 const Drive = require("..\\Storage\\Drive.js")
+const cvs = require('canvas')
 
 
 const delay = 1000
@@ -8,6 +9,19 @@ const EndingsId = '1CxeqpkqA238s1WYz83n88NK-GdwgIgtU';
 
 let JamesBot = new Drive.Project("credentials.json", async JamesBot => {
 })
+
+cvs.CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
+    if (width < 2 * radius) radius = width / 2;
+    if (height < 2 * radius) radius = height / 2;
+    this.beginPath();
+    this.moveTo(x + radius, y);
+    this.arcTo(x + width, y, x + width, y + height, radius);
+    this.arcTo(x + width, y + height, x, y + height, radius);
+    this.arcTo(x, y + height, x, y, radius);
+    this.arcTo(x, y, x + width, y, radius);
+    this.closePath();
+    return this;
+}
 
 
 exports.SundleikurinnData = {
@@ -19,6 +33,77 @@ exports.SundleikurinnData = {
     },
     updatedDrive: false
 }
+
+/**
+ * 
+ * @param {Number} ending 
+ * @param {'#A00000' | '#A0A000' | '#00A000'} color 
+ * @param {Boolean} secret
+ */
+function create_ending_img(ending, color, secret = false){
+    const folder = "img/ending.png"
+    const width = 500;
+    const height = 800;
+    const lineWidth = height / 20
+    const canvas = cvs.createCanvas(width + lineWidth, height + lineWidth)
+    const context = canvas.getContext('2d')
+    
+    context.roundRect(lineWidth / 2, lineWidth / 2, width, height, 20)
+    if(secret){
+        context.fillStyle = color;
+        context.fill()
+        context.fillStyle = '#000000'
+    }else{
+        context.fillStyle = '#000000';
+        context.fill()
+        context.fillStyle = color
+    }
+    context.strokeStyle = '#000000'
+    context.lineWidth = lineWidth;
+    context.stroke()
+    context.font = `bold ${70 * height / 200}pt Calibri`
+    context.textBaseline = 'middle'
+    context.textAlign = 'center'
+    context.fillText(ending, (width + lineWidth) / 2, (height + lineWidth) / 2)
+    fs.writeFile(folder, canvas.toBuffer(), () => {})
+    return folder
+}
+
+function name(member) {
+    if(member.displayName){
+        return member.displayName
+    }
+    return member.username
+}
+
+/**
+ * @param {Discord.GuildMember} player
+ * @param {Discord.Client} client
+ * @param {Number} ending 
+ * @param {'#A00000' | '#A0A000' | '#00A000'} color 
+ * @param {Boolean} secret
+ */
+function ending_embed(player, client, ending, color, secret = false){
+    let user = player;
+    if(player.guild){
+        user = player.user
+    }
+    const embededMSG = new Discord.MessageEmbed()
+        .setColor(color)
+        .setTitle(`Tilhamingju með að klára endingu n. ${ending} í fyrsta skipti`)
+        .setAuthor(name(player), user.avatarURL())
+        .setFooter("Takk fyrir að spila sundleikinn", client.user.avatarURL())
+        .setImage('attachment://ending.png');
+
+    return {
+        embed: embededMSG,
+        files: [{
+            attachment: create_ending_img(ending, color, secret),
+            name: 'ending.png'
+        }]
+    }
+}
+
 
 /**
  * 
@@ -116,7 +201,8 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 1 í fyrsta skipti!**")
+
+                channel.send("", ending_embed(player, channel.client, 1, "#A00000", false))
 
             }
             break;
@@ -157,10 +243,10 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 if(PlayerData.Endings.Endings.length == 0){
 
                     PlayerData.Endings.Endings.push(2)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
                     channel.send("**Til hamingju með að klára fyrstu endinguna!**")
                     return;
     
@@ -173,11 +259,11 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     }
     
                     PlayerData.Endings.Endings.push(2)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
-                    channel.send("**Til hamingju með að klára endinguna n. 2 í fyrsta skipti!**")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
+                    channel.send("", ending_embed(player, channel.client, 2, "#00A000", false))
     
                 }
     
@@ -189,10 +275,10 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 if(PlayerData.Endings.Endings.length == 0){
 
                     PlayerData.Endings.Endings.push(3)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
                     channel.send("**Til hamingju með að klára fyrstu endinguna!**")
                     return;
     
@@ -205,11 +291,11 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     }
     
                     PlayerData.Endings.Endings.push(3)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
-                    channel.send("**Til hamingju með að klára endinguna n. 3 í fyrsta skipti!**")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
+                    channel.send("", ending_embed(player, channel.client, 3, "#A00000", false))
     
                 }
         
