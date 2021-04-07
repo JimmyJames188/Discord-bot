@@ -8,6 +8,8 @@ const {google} = require('googleapis');
 
 var crypto = require('crypto');
 
+const Notification = require('./commands/notification.js')
+
 const Drive = require('./Storage/Drive.js')
 
 const slash_com = require('./commands/slash_com/slash-com.js')
@@ -150,6 +152,10 @@ bot.on('ready', () => {
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
+    Notification.setClient(bot)
+    const anotific = new Notification.Notification('test', new Date('2021-04-07 17:33:00'), 60000, new Date('2021-04-07 17:41:00'), {number: (i) => {return ' - ' + i}})
+    anotific.startUpdate(bot.channels.cache.find(ch => ch.id === '784155273161998386'))
+
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
             readline.clearLine(process.stdout, 0);
