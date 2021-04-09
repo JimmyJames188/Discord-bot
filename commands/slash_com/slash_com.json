@@ -133,5 +133,15 @@
         "name": "bot_stats",
         "description": "Sends stats about the bot",
         "options": []
+    },
+    {
+         "name": "user_info",
+         "description": "Sends info about user",
+         "options": [{
+            "name": "user",
+            "description": "Info for user",
+            "type": 6, 
+            "required": false
+        }]
     }
 ]

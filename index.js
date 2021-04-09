@@ -199,7 +199,7 @@ bot.on('message', async msg=> {
    
     }else if(msg.content === "Snær er ekki skemtilegur"){
         msg.reply('NEI!!!');
-   
+
     }else if(msg.content === "!racist-info"){
         msg.reply('https://youtu.be/USE86UbsV8c');
    
