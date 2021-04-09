@@ -259,7 +259,7 @@ async function help(data, channel_){
             
         }
         
-        description = description + "\n\nTo open chapter you can send command **!help `the number of the page`**"
+        description = description + "\n\nTo open chapter you can send command **/help `the number of the page`**"
         for (let i = 0; i < embeded.length; i++) {
             embeded[i].setDescription(description)
         }
