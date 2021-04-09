@@ -47,7 +47,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, notification})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification})
 }
 exports.command_reply = command_reply
 
@@ -741,6 +741,54 @@ function bot_stats(){
 
 
 
+/**
+ * 
+ * @param {{options: [{value: String}]}} data 
+ * @param {Discord.GuildMember} member 
+ * @param {String} channel_id 
+ */
+async function user_info(data, member, channel_id) {
+    const channel = await bot.channels.fetch(channel_id)
+    const guild = channel.guild
+    const msg_member = channel.guild.members.cache.get(member.user.id)
+
+    if(data.options) {
+        member = guild.members.cache.get(data.options[0].value)
+
+    }else {
+        member = msg_member
+    }
+
+    const user = member.user
+
+    const embed = new Discord.MessageEmbed()
+        .setAuthor(`${member.displayName}'s info`, user.avatarURL())
+        .addFields(
+            {
+                name: 'User tag',
+                value: user.tag
+            },
+            {
+                name: 'Is bot',
+                value: user.bot
+            },
+            {
+                name: 'Nick',
+                value: member.nickname || 'None'
+            },
+            {
+                name: 'When the user joined the server',
+                value: member.joinedAt
+            },
+            {
+                name: "User is bannable",
+                value: member.bannable
+            }
+        )
+        .setFooter("User info", bot.user.avatarURL())
+
+    channel.send(embed)
+}
 
 function romanize (num) {
     var digits = String(+num).split(""),

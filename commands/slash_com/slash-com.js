@@ -66,6 +66,7 @@ exports.delete_commands_all = delete_commands_all;
  *          image:              (callback: (image: string) => any)
  *          kick_com:           (data: {}, guild_id?: String) => Promise<String>
  *          bot_stats:          () => Discord.MessageEmbed
+ *          user_info:          (data: {}, member: Discord.GuildMember, channel_id: string) => Promise<Void>
  *          notification:       (data: {}) => String
  *         }} commands
  */
@@ -213,6 +214,7 @@ function command_reply(client, commands){
                     }
                 }})
             }
+            
         }else if (interaction.data.name === `bot_stats`) {
 
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
@@ -225,6 +227,28 @@ function command_reply(client, commands){
             const channel = await client.channels.fetch(interaction.channel_id)
             channel.send(commands.bot_stats())
         
+        }else if (interaction.data.name === `user_info`) {
+
+            if(interaction.member) {
+
+                await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: "-User info-"
+                    }
+                }})
+
+                commands.user_info(interaction.data, interaction.member, interaction.channel_id)
+            
+            }else {
+                client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                    type: 4,
+                    data: {
+                        content: "Sorry, this command can only be used on a server"
+                    }
+                }})
+  
+            }
         }else if (interaction.data.name === `notification`) {
 
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {

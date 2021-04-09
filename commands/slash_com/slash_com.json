@@ -135,6 +135,17 @@
         "options": []
     },
     {
+        "name": "user_info",
+        "description": "Sends info about user",
+        "options": [{
+        "name": "user",
+        "description": "Info for user",
+        "type": 6, 
+        "required": false
+        }]
+
+    },
+    {
         "name": "notification",
         "description": "Notifications by the bot",
         "options": [{
@@ -203,4 +214,5 @@
             }]
         }]
     }
+
 ]
