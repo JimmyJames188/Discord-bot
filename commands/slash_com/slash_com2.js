@@ -6,6 +6,8 @@ const Gskuld = '1JxSZiunPLPOJdZCMLtHxuhpu2Wh7ohwBfW9aq0Pq6hw';
 
 const Drive = require('./../../Storage/Drive.js')
 
+const Notification = require('./../notification.js')
+
 const cvs = require('canvas')
 
 const fs = require('fs');
@@ -20,17 +22,24 @@ const cheerio = require('cheerio');
 
 const slash_com = require('./slash-com.js')
 
-let bot;
+let bot = new Discord.Client();
 
 let JamesBot;
 
 let EndingsList;
 
 
+/**
+ * 
+ * @param {Discord.Client} bot_ 
+ * @param {Drive.Project} Jamesbot_ 
+ * @param {[]} EndingsList_ 
+ */
 function getVariables(bot_, Jamesbot_, EndingsList_){
     bot = bot_
     JamesBot = Jamesbot_
     EndingsList = EndingsList_
+    Notification.setClient(bot)
 }
 exports.getVariables = getVariables
 
@@ -38,7 +47,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification})
 }
 exports.command_reply = command_reply
 
@@ -250,7 +259,7 @@ async function help(data, channel_){
             
         }
         
-        description = description + "\n\nTo open chapter you can send command **!help `the number of the page`**"
+        description = description + "\n\nTo open chapter you can send command **/help `the number of the page`**"
         for (let i = 0; i < embeded.length; i++) {
             embeded[i].setDescription(description)
         }
@@ -411,7 +420,7 @@ async function help(data, channel_){
     ClippingContext.clip()
     ClippingContext.drawImage(canvas, 0, 0)
 
-    fs.writeFile("img/allmap.png", ClippingCanvas.toBuffer(), () => {})
+    fs.writeFileSync("img/allmap.png", ClippingCanvas.toBuffer())
 
     const embeded = new Discord.MessageEmbed()
         .setColor(`#${color.red + color.green}00`)
@@ -510,7 +519,7 @@ function PrintStats(channel, Endings, user, member){
 
 
     // console.log('<img src="' + canvas.toBuffer() + '" />')
-    fs.writeFile("img/map.png", canvas.toBuffer(), () => {})
+    fs.writeFileSync("img/map.png", canvas.toBuffer())
 
     
     function name(member) {
@@ -779,4 +788,89 @@ async function user_info(data, member, channel_id) {
         .setFooter("User info", bot.user.avatarURL())
 
     channel.send(embed)
+}
+
+function romanize (num) {
+    var digits = String(+num).split(""),
+        key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+               "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+               "","I","II","III","IV","V","VI","VII","VIII","IX"],
+        roman = "",
+        i = 3;
+    while (i--)
+        roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+    return ' - ' + Array(+digits.join("") + 1).join("M") + roman;
+}
+
+/**
+ * 
+ * @param {{
+ *          resolved: {channels: 
+ *                  {[key: string]: {name: String, id: String, type: number, permissions: String}}
+ *              },
+ *          options: [
+ *              {name: 'create', type: 1, options: [
+ *                  {name: 'name',          type: 3, value: String},
+ *                  {name: 'date',          type: 3, value: String},
+ *                  {name: 'counting_type', type: 3, value: 'Function_none' | 'Function_roman' | 'Function_arabic'},
+ *                  {name: 'channel',       type: 7, value: String},
+ *                  {name: 'color',         type: 3, value: String},
+ *                  {name: 'frequancy',     type: 4, value: number},
+ *                  {name: 'until',         type: 3, value: String},
+ *                  {name: 'start_number',  type: 4, value: number}
+ *              ]}
+ *        ]}} data 
+ */
+function notification(data){
+    if(data.resolved.channels[data.options[0].options[3].value].type != 0){
+        return 'Channel not compateble'
+    }
+
+    const name = data.options[0].options[0].value
+    const date = new Date(data.options[0].options[1].value)
+    const channel = bot.channels.cache.get(data.options[0].options[3].value)
+
+    let FunctionNumber;
+    switch(data.options[0].options[2].value){
+        case 'Function_none':
+            FunctionNumber = undefined;
+            break;
+        
+        case 'Function_arabic':
+            FunctionNumber = (i) => {return ' - ' + i};
+            break;
+
+        case 'Function_roman':
+            FunctionNumber = romanize;
+            break
+    }
+
+    const options = {number: FunctionNumber};
+    let frequancy, until;
+    for (let i = 4; i < data.options[0].options.length; i++) {
+        const option = data.options[0].options[i];
+        switch(option.name){
+            case 'color':
+                options.color = option.value;
+                break;
+            
+            case 'frequancy':
+                frequancy = option.value;
+                break;
+
+            case 'until':
+                until = new Date(option.value);
+                break;
+
+            case 'start_number':
+                options.StartNumber = option.value;
+                break;
+        }
+    }
+
+    console.log({name, date, frequancy, until, options})
+    const notification = new Notification.Notification(name, date, frequancy, until, options)
+    notification.startUpdate(channel)
+
+    return `Notificaton ${name} successfully created`;
 }

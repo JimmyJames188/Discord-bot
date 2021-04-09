@@ -67,6 +67,7 @@ exports.delete_commands_all = delete_commands_all;
  *          kick_com:           (data: {}, guild_id?: String) => Promise<String>
  *          bot_stats:          () => Discord.MessageEmbed
  *          user_info:          (data: {}, member: Discord.GuildMember, channel_id: string) => Promise<Void>
+ *          notification:       (data: {}) => String
  *         }} commands
  */
 function command_reply(client, commands){
@@ -248,9 +249,17 @@ function command_reply(client, commands){
                 }})
   
             }
+        }else if (interaction.data.name === `notification`) {
+
+            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: commands.notification(interaction.data)
+                }
+            }})
         }
 
-        // console.log(interaction);
+        // console.log(interaction.data);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }

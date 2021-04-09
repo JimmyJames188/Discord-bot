@@ -65,7 +65,7 @@ function create_ending_img(ending, color, secret = false){
     context.textBaseline = 'middle'
     context.textAlign = 'center'
     context.fillText(ending, (width + lineWidth) / 2, (height + lineWidth) / 2)
-    fs.writeFile(folder, canvas.toBuffer(), () => {})
+    fs.writeFileSync(folder, canvas.toBuffer())
     return folder
 }
 
@@ -309,10 +309,10 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 if(PlayerData.Endings.Endings.length == 0){
 
                     PlayerData.Endings.Endings.push(4)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
                     channel.send("**Til hamingju með að klára fyrstu endinguna!**")
                     return;
     
@@ -325,11 +325,11 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     }
     
                     PlayerData.Endings.Endings.push(4)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
-                    channel.send("**Til hamingju með að klára endinguna n. 4 í fyrsta skipti!**")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
+                    channel.send("", ending_embed(player, channel.client, 4, "#A0A000", false))
     
                 }
             
@@ -418,7 +418,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 5 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 5, "#A00000", false))
 
             }
             break;
@@ -448,8 +448,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 6 í fyrsta skipti!**")
-
+                channel.send("", ending_embed(player, channel.client, 6, "#A0A000", false))
             }
             break;
 
@@ -578,7 +577,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 7 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 7, "#A00000", true))
 
             }
             break;
@@ -613,7 +612,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 8 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 8, "#A0A000", true))
 
             }
             break;
@@ -643,7 +642,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 9 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 9, "#A00000", false))
 
             }
             break;
@@ -673,7 +672,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 10 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 10, "#A00000", false))
 
             }
             break;
@@ -703,7 +702,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 11 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 11, "#00A000", false))
 
             }
             break;
@@ -733,7 +732,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endinguna n. 12 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 12, "#A0A000", true))
 
             }
             break;
@@ -763,7 +762,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 13 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 13, "#00A000", false))
 
             }
             break;
@@ -793,7 +792,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 14 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 14, "#A00000", false))
     
             }
             break;
@@ -888,7 +887,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 15 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 15, "#A0A000", false))
     
             }
             break;
@@ -918,7 +917,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 16 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 16, "#00A000", false))
     
             }
             break;
@@ -948,7 +947,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 17 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 17, "#A00000", false))
     
             }
             break;
@@ -978,7 +977,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 18 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 18, "#A00000", false))
     
             }
             break;
@@ -991,10 +990,10 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                 if(PlayerData.Endings.Endings.length == 0){
         
                     PlayerData.Endings.Endings.push(19)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
                     channel.send("**Til hamingju með að klára fyrstu endinguna!**")
                     return;
         
@@ -1007,11 +1006,11 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
                     }
         
                     PlayerData.Endings.Endings.push(19)
-                JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
+                    JamesBot.editFile(EndingsId, JSON.stringify(exports.SundleikurinnData.userData.Endings, ['UserId', 'Endings'], '\t').replace(/\[\n\t\t\t/g, '[').replace(/\n\t\t\]/g, ']').replace(/,\n\t\t\t/g, ', '))
 
-                console.log("New ending has been added to user");
-                console.log("Updated player data")
-                    channel.send("**Til hamingju með að klára endingu n. 19 í fyrsta skipti!**")
+                    console.log("New ending has been added to user");
+                    console.log("Updated player data")
+                    channel.send("", ending_embed(player, channel.client, 19, "#00A000", true))
         
                 }
             }, delay)
@@ -1067,7 +1066,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
 
                 console.log("New ending has been added to user");
                 console.log("Updated player data")
-                channel.send("**Til hamingju með að klára endingu n. 20 í fyrsta skipti!**")
+                channel.send("", ending_embed(player, channel.client, 20, "#00A000", false))
     
             }
             break;
