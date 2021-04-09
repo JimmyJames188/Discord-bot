@@ -750,10 +750,10 @@ function bot_stats(){
 async function user_info(data, member, channel_id) {
     const channel = await bot.channels.fetch(channel_id)
     const guild = channel.guild
-    const msg_member = channel.guild.members.cache.get(member.user.id)
+    const msg_member = await channel.guild.members.fetch(member.user.id)
 
     if(data.options) {
-        member = guild.members.cache.get(data.options[0].value)
+        member = await guild.members.fetch(data.options[0].value)
 
     }else {
         member = msg_member
