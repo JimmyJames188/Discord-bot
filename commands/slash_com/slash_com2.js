@@ -39,7 +39,7 @@ function getVariables(bot_, Jamesbot_, EndingsList_){
     bot = bot_
     JamesBot = Jamesbot_
     EndingsList = EndingsList_
-    Notification.setClient(bot)
+    Notification.setClient(bot_, Jamesbot_)
 }
 exports.getVariables = getVariables
 

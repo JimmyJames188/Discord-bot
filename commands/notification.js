@@ -1,18 +1,27 @@
 const Discord = require("discord.js")
-const fs = require('fs')
+const Drive = require('./../Storage/Drive.js')
 const day = 86400000;
 const hour = 3600000;
 const min5 = 300000;
 let client = new Discord.Client();
+const json_id = '1zzuB0gjwZggpxxMXGgYCKLD2JtMY8AQA';
+let notification_array = []
+
 
 const Options = {color: '#FFA0A0', NotificationMessage: 'Finished', StartNumber: 1, number: () => {return ''}, fromString: false}
 
 /**
  * 
  * @param {Discord.Client} client_ 
+ * @param {Drive.Project} JamesBot_
  */
-function setClient(client_) {
+async function setClient(client_, JamesBot_) {
     client = client_
+    JamesBot = JamesBot_
+    const array = await JamesBot_.getFile(json_id)
+    for (let i = 0; i < array.length; i++) {
+        await Notification.parse(array[i])
+    }
 }
 exports.setClient = setClient
 
@@ -49,6 +58,9 @@ class Notification{
         if(!options.fromString){
             this.getNextTime()
         }
+
+        this.array_index = notification_array.push(this) - 1
+        save()
     }
 
     getNextTime(){
@@ -69,6 +81,7 @@ class Notification{
         if(!this.infenitly && (!this.nextTime || this.nextTime.getTime() > this.until.getTime())) return;
         this.message = await channel.send(this.createEmbed())
         // fs.writeFileSync('testnotific.json', this.toString())
+        save()
         this.update(this.message)
     }
     
@@ -140,6 +153,7 @@ class Notification{
             .setDescription(`${this.options.NotificationMessage} - ${this.nextTime.toString()}`)
 
         message.edit(embed)
+        save()
         
         if  (!this.oneTime && 
             (this.infenitly || (this.nextTime.getTime() + this.frequancy <= this.until.getTime()))){
@@ -147,6 +161,9 @@ class Notification{
             this.index++;
             this.nextTime = new Date(this.nextTime.getTime() + this.frequancy);
             this.startUpdate(message.channel)
+        }else{
+            notification_array.splice(this.array_index, 1)
+            save()
         }
     }
 
@@ -193,3 +210,11 @@ class Notification{
 }
 
 exports.Notification = Notification;
+
+function save() {
+    let array = []
+    notification_array.forEach(v => {
+        array.push(v.toString())
+    })
+    JamesBot.editFile(json_id, JSON.stringify(array, undefined, '\t'))
+}
