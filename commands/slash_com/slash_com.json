@@ -133,5 +133,74 @@
         "name": "bot_stats",
         "description": "Sends stats about the bot",
         "options": []
+    },
+    {
+        "name": "notification",
+        "description": "Notifications by the bot",
+        "options": [{
+            "name": "create",
+            "description": "Create a new notification (Please read desctiptions of options)",
+            "type": 1, 
+            "options": [{
+                "name": "name",
+                "description": "Name for the notification",
+                "type": 3, 
+                "required": true
+            },
+            {
+                "name": "date",
+                "description": "Date of the next notification `yyyy/mm/dd hh:mm:ss`",
+                "type": 3, 
+                "required": true
+            },
+            {
+                "name": "counting_type",
+                "description": "How to count the notifications (The number after the title)",
+                "type": 3, 
+                "required": true,
+                "choices": [{
+                    "name": "None",
+                    "value": "Function_none"
+                },
+                {
+                    "name": "Arabic numerals (1, 2, 3,..)",
+                    "value": "Function_arabic"
+                },
+                {
+                    "name": "Roman numerals (I, II, III,..)",
+                    "value": "Function_roman"
+                }]
+            },
+            {
+                "name": "channel",
+                "description": "Channel where the notification will be send",
+                "type": 7, 
+                "required": true
+            },
+            {
+                "name": "color",
+                "description": "Color for the message in hex. Default is `#FFA0A0` (Optional)",
+                "type": 3, 
+                "required": false
+            },
+            {
+                "name": "frequancy",
+                "description": "A number of millisecound between notifications. If not specified will only apper once",
+                "type": 4, 
+                "required": false
+            },
+            {
+                "name": "until",
+                "description": "Last date of the notifications. If not specified will continue infenitly `yyyy/mm/dd hh:mm:ss`",
+                "type": 3, 
+                "required": false
+            },
+            {
+                "name": "start_number",
+                "description": "Number to start counting from. Default is 1 (Optional)",
+                "type": 4, 
+                "required": false
+            }]
+        }]
     }
 ]

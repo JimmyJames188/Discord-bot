@@ -1,10 +1,11 @@
 const Discord = require("discord.js")
+const fs = require('fs')
 const day = 86400000;
 const hour = 3600000;
 const min5 = 300000;
-let client
+let client = new Discord.Client();
 
-const Options = {color: '#FFA0A0', NotificationMessage: 'Finished', StartNumber:1, number: () => {return ''}}
+const Options = {color: '#FFA0A0', NotificationMessage: 'Finished', StartNumber: 1, number: () => {return ''}, fromString: false}
 
 /**
  * 
@@ -22,7 +23,7 @@ class Notification{
      * @param {Date} date 
      * @param {Number} frequancy in ms
      * @param {Date} until 
-     * @param {{color: String, NotificationMessage: String, StartNumber: number, number: (index: number) => String}} options
+     * @param {{color: String, NotificationMessage: String, StartNumber: number, number: (index: number) => String, fromString: Boolean}} options
      */
     constructor(name, date, frequancy = undefined, until = undefined, options = Options){
         const keys = Object.keys(Options)
@@ -40,12 +41,23 @@ class Notification{
         this.color = options.color
         this.options = options
         this.index = options.StartNumber
+        this.message = {channel: {}}
 
         this.oneTime = !frequancy
         this.infenitly = !until
-        this.nextTime = new Date(date.toString())
-        while (this.nextTime < Date.now()) {
-            this.nextTime = new Date(this.nextTime.getTime() + frequancy)
+
+        if(!options.fromString){
+            this.getNextTime()
+        }
+    }
+
+    getNextTime(){
+        if(this.infenitly || Date.now() < this.until.getTime()){
+            this.nextTime = new Date(this.date.toString())
+            while (this.nextTime.getTime() < Date.now()) {
+                this.nextTime = new Date(this.nextTime.getTime() + this.frequancy)
+                this.index++
+            }
         }
     }
 
@@ -54,14 +66,15 @@ class Notification{
      * @param {Discord.TextChannel} channel 
      */
     async startUpdate(channel){
-        this.update(await channel.send(this.createEmbed()))
+        if(!this.infenitly && (!this.nextTime || this.nextTime.getTime() > this.until.getTime())) return;
+        this.message = await channel.send(this.createEmbed())
+        // fs.writeFileSync('testnotific.json', this.toString())
+        this.update(this.message)
     }
     
     
     getDelay(){
         const untilNextTime = this.nextTime.getTime() - Date.now()
-        console.log(this.nextTime)
-        console.log(untilNextTime)
         this.untilNextTime = untilNextTime;
         if(untilNextTime > day){
             this.delay = untilNextTime % day;
@@ -135,6 +148,47 @@ class Notification{
             this.nextTime = new Date(this.nextTime.getTime() + this.frequancy);
             this.startUpdate(message.channel)
         }
+    }
+
+    toString(){
+        const object = {
+            name: this.name,
+            date: this.date,
+            frequency: this.frequancy,
+            until: this.until,
+            options: JSON.parse(JSON.stringify(this.options)),
+            nextTime: this.nextTime,
+            message: this.message.id,
+            channel: this.message.channel.id,
+            FunctionNumber: 'return ' + this.options.number.toString()
+        }
+        object.options.StartNumber = this.index;
+
+        return JSON.stringify(object)
+    }
+
+    /**
+     * 
+     * @param {String} options_
+     */
+    static async parse(options_){
+        const object = JSON.parse(options_)
+        object.date = new Date(object.date)
+        object.until = new Date(object.until)
+        let options = object.options
+        options.fromString = true
+        options.number = new Function(object.FunctionNumber)()
+
+        const notification = new Notification(object.name, object.date, object.frequancy, object.until, options)
+        if(object.nextTime){
+            notification.nextTime = new Date(object.nextTime)
+        }
+        if(object.message){
+            const channel = await client.channels.fetch(object.channel)
+            notification.update(await channel.messages.fetch(object.message))
+        }
+
+        return notification;
     }
 }
 

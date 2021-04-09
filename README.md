@@ -51,9 +51,12 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * .volume `0 - 200` => Changes volume
 
 ### Sundleikurinn commands
-* /sundleikurinn play  => starts new game
+* /sundleikurinn play => starts new game
 * /sundleikurinn stats player `player (optional) (if the bot is chosen sends statistics as if all endins were complited)` => Sends statistics
 * /sundleikurinn stats all => Sends avarige statistics for everyone
+
+### Notification commands
+* /notification create `name` `date` `counting_type` `channel` `color` `frequancy` `until` `start_number` => Creates a notification. For better explanation read description when creating the notification.
 
 ### Other commands
 * /help => All commands

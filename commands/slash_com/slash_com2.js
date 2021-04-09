@@ -6,6 +6,8 @@ const Gskuld = '1JxSZiunPLPOJdZCMLtHxuhpu2Wh7ohwBfW9aq0Pq6hw';
 
 const Drive = require('./../../Storage/Drive.js')
 
+const Notification = require('./../notification.js')
+
 const cvs = require('canvas')
 
 const fs = require('fs');
@@ -20,17 +22,24 @@ const cheerio = require('cheerio');
 
 const slash_com = require('./slash-com.js')
 
-let bot;
+let bot = new Discord.Client();
 
 let JamesBot;
 
 let EndingsList;
 
 
+/**
+ * 
+ * @param {Discord.Client} bot_ 
+ * @param {Drive.Project} Jamesbot_ 
+ * @param {[]} EndingsList_ 
+ */
 function getVariables(bot_, Jamesbot_, EndingsList_){
     bot = bot_
     JamesBot = Jamesbot_
     EndingsList = EndingsList_
+    Notification.setClient(bot)
 }
 exports.getVariables = getVariables
 
@@ -38,7 +47,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, notification})
 }
 exports.command_reply = command_reply
 
@@ -730,3 +739,90 @@ function bot_stats(){
 }
 
 
+
+
+
+function romanize (num) {
+    var digits = String(+num).split(""),
+        key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+               "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+               "","I","II","III","IV","V","VI","VII","VIII","IX"],
+        roman = "",
+        i = 3;
+    while (i--)
+        roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+    return ' - ' + Array(+digits.join("") + 1).join("M") + roman;
+}
+
+/**
+ * 
+ * @param {{
+ *          resolved: {channels: 
+ *                  {[key: string]: {name: String, id: String, type: number, permissions: String}}
+ *              },
+ *          options: [
+ *              {name: 'create', type: 1, options: [
+ *                  {name: 'name',          type: 3, value: String},
+ *                  {name: 'date',          type: 3, value: String},
+ *                  {name: 'counting_type', type: 3, value: 'Function_none' | 'Function_roman' | 'Function_arabic'},
+ *                  {name: 'channel',       type: 7, value: String},
+ *                  {name: 'color',         type: 3, value: String},
+ *                  {name: 'frequancy',     type: 4, value: number},
+ *                  {name: 'until',         type: 3, value: String},
+ *                  {name: 'start_number',  type: 4, value: number}
+ *              ]}
+ *        ]}} data 
+ */
+function notification(data){
+    if(data.resolved.channels[data.options[0].options[3].value].type != 0){
+        return 'Channel not compateble'
+    }
+
+    const name = data.options[0].options[0].value
+    const date = new Date(data.options[0].options[1].value)
+    const channel = bot.channels.cache.get(data.options[0].options[3].value)
+
+    let FunctionNumber;
+    switch(data.options[0].options[2].value){
+        case 'Function_none':
+            FunctionNumber = undefined;
+            break;
+        
+        case 'Function_arabic':
+            FunctionNumber = (i) => {return ' - ' + i};
+            break;
+
+        case 'Function_roman':
+            FunctionNumber = romanize;
+            break
+    }
+
+    const options = {number: FunctionNumber};
+    let frequancy, until;
+    for (let i = 4; i < data.options[0].options.length; i++) {
+        const option = data.options[0].options[i];
+        switch(option.name){
+            case 'color':
+                options.color = option.value;
+                break;
+            
+            case 'frequancy':
+                frequancy = option.value;
+                break;
+
+            case 'until':
+                until = new Date(option.value);
+                break;
+
+            case 'start_number':
+                options.StartNumber = option.value;
+                break;
+        }
+    }
+
+    console.log({name, date, frequancy, until, options})
+    const notification = new Notification.Notification(name, date, frequancy, until, options)
+    notification.startUpdate(channel)
+
+    return `Notificaton ${name} successfully created`;
+}
