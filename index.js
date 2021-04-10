@@ -512,30 +512,28 @@ bot.on('message', msg=>{
         
 
     }else if(msg.content === "kirill spírill"){
-        exports.run = async (bot, message, args, tools) => {
 
-            if (!args[0]) return message.channel.send('***Please specify some text!***');
-    
-            let res = await urban(args.join(' ')).catch(e => {
-                return message.channel.send('***Sorry, that word was not found!***');
-            });
-    
-            const embed = new Discord.MessageEmbed()
+            const spirill = new Discord.MessageEmbed()
                 .setColor('RANDOM')
-                .setTitle(res.word)
-                .setURL(res.urbanURL)
-                .setDescription('Definition: \n*${res.definition}*\n\nExample:\n*${res.example}*')
-                .addField('Author', res.author, true)
-                .addField('Rating', '**\'Upvotes: ${res.thumbsUp} | Downvotes: ${res.thumbsDown}\'**')
+                .setTitle('Kirill Spírill')
+                .attachFiles(["https://media.giphy.com/media/w6KndnBTp3iIIPo5qY/giphy.gif"]);
     
-            if (res.tags.length > 0 && res.tags.join(', ').length < 1024){
-                embed.addField('Tags', res.tags.join(', '), true)
-            }
     
-            message.channel.send(embed);
+            msg.channel.send(spirill);
+
+    }else if(msg.content === "k mad"){
+
+        const spirill = new Discord.MessageEmbed()
+            .setColor('RANDOM')
+            .setTitle('Kirill is very mad')
+            .attachFiles(["https://media.giphy.com/media/k0KY1jRlccXLIpjaZF/giphy.gif"]);
+
+
+        msg.channel.send(spirill);
         }
     }
-})
+)
+
 
 exports.run = async (bot, message, args, tools) => {
 
