@@ -1,4 +1,4 @@
-const ytdl = require('ytdl-core');
+/* const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 
 module.exports = {
@@ -63,4 +63,4 @@ module.exports = {
             message.channel.send('No video results found');
         }
     }
-}
+} */
