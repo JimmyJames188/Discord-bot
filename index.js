@@ -275,6 +275,17 @@ bot.on('message', async msg=> {
 
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+
+    }else if(msg.content.startsWith("Hot topic:")){
+        const jam = bot.emojis.cache.find(emoji => emoji.name === `pleaseendmysuffering`)
+
+        const emojis = ['👎','👍', '🤷‍♂️', '🤡', jam]
+
+        const randomEmoji = emojis[Math.floor(Math.random() * (emojis.length - 0.1))];
+
+        msg.react(randomEmoji)
+    
+
     }else if(msg.content.startsWith('Ó góði botti, hvaða einkunn fékk ')){
         var input = msg.content.split('<')
         if(input.length != 2){

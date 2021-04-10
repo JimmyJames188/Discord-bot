@@ -34,12 +34,12 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * kirill spírill => `IDK`
 
 ### Reactions
-| 👎                    | 👍                |
-| --------------------- | ----------------- |
-| IS JAMES BANANAMAN    | ÞORSTEINN BAD     |
-| SH eru bestir         | JAMES FOR OWNER   |
-| STEFFI ER OWNER       | I'M HOME          |
-| JAMES BAD             |                   |
+| 👎                    | 👍                |  Random   |
+| --------------------- | ----------------- | --------- |
+| IS JAMES BANANAMAN    | ÞORSTEINN BAD     | Hot topic |
+| SH eru bestir         | JAMES FOR OWNER   |           |
+| STEFFI ER OWNER       | I'M HOME          |           |
+| JAMES BAD             |                   |           |
 
 ### Voice chat commands
 * .join => Joins the voice chat
