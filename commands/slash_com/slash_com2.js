@@ -843,6 +843,10 @@ function notification(data){
         case 'Function_roman':
             FunctionNumber = romanize;
             break
+
+        case 'Function_ep_arabic':
+            FunctionNumber = (i) => {return ' Episode ' + i};
+            break;
     }
 
     const options = {number: FunctionNumber};
