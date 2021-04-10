@@ -70,8 +70,9 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * /gskuld `user` => Says what `user` owes the Gjöfull
 * /suggest => Sends a suggestion to channel called "Suggestions"
 * /member_count => How many members in the server
-* /joke => Sends 1 out of 39 jokes 
+* /joke => Sends 1 out of 49 jokes 
 * /bot_stats => Sends statistics about the bot
+* /user_info => Sends information about a user
 * !delete => deletes !delete message (utterly pointless)
 * !changeNick => Changes your nick (pointless just use /nick it's built in)
 
