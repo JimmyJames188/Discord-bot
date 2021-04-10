@@ -32,6 +32,7 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * Ó góði botti hvern eigum við að biðja í dag? => `Sá sem maður á að eiga að biðja í dag`  
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
 * kirill spírill => `Virkar mjög vel`
+* k mad => `Kirill mad`
 
 ### Reactions
 | 👎                    | 👍                |  Random   |
