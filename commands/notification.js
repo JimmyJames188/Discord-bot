@@ -10,6 +10,34 @@ let notification_array = []
 
 const Options = {color: '#FFA0A0', NotificationMessage: 'Finished', StartNumber: 1, number: () => {return ''}, fromString: false}
 
+var escapable = /[\\\"\x00-\x1f\x7f-\uffff]/g,
+meta = {    // table of character substitutions
+    '\b': '\\b',
+    '\t': '\\t',
+    '\n': '\\n',
+    '\f': '\\f',
+    '\r': '\\r',
+    '"' : '\\"',
+    '\\': '\\\\'
+};
+
+function quote(string) {
+
+// If the string contains no control characters, no quote characters, and no
+// backslash characters, then we can safely slap some quotes around it.
+// Otherwise we must also replace the offending characters with safe escape
+// sequences.
+
+escapable.lastIndex = 0;
+return escapable.test(string) ?
+    '"' + string.replace(escapable, function (a) {
+        var c = meta[a];
+        return typeof c === 'string' ? c :
+            '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+    }) + '"' :
+    '"' + string + '"';
+}
+
 /**
  * 
  * @param {Discord.Client} client_ 
@@ -22,6 +50,7 @@ async function setClient(client_, JamesBot_) {
     for (let i = 0; i < array.length; i++) {
         await Notification.parse(array[i])
     }
+    save()
 }
 exports.setClient = setClient
 
@@ -60,7 +89,9 @@ class Notification{
         }
 
         this.array_index = notification_array.push(this) - 1
-        save()
+        if(!options.fromString){
+            save()
+        }
     }
 
     getNextTime(){
@@ -77,11 +108,11 @@ class Notification{
      * 
      * @param {Discord.TextChannel} channel 
      */
-    async startUpdate(channel){
+    async startUpdate(channel, save_this = true){
         if(!this.infenitly && (!this.nextTime || this.nextTime.getTime() > this.until.getTime())) return;
         this.message = await channel.send(this.createEmbed())
         // fs.writeFileSync('testnotific.json', this.toString())
-        save()
+        if (save_this){ save()};
         this.update(this.message)
     }
     
@@ -153,10 +184,11 @@ class Notification{
             .setDescription(`${this.options.NotificationMessage} - ${this.nextTime.toString()}`)
 
         message.edit(embed)
-        save()
         
         if  (!this.oneTime && 
             (this.infenitly || (this.nextTime.getTime() + this.frequancy <= this.until.getTime()))){
+            
+            save()
 
             this.index++;
             this.nextTime = new Date(this.nextTime.getTime() + this.frequancy);
@@ -169,7 +201,7 @@ class Notification{
 
     toString(){
         const object = {
-            name: this.name,
+            name: quote(this.name),
             date: this.date,
             frequency: this.frequancy,
             until: this.until,
@@ -196,13 +228,13 @@ class Notification{
         options.fromString = true
         options.number = new Function(object.FunctionNumber)()
 
-        const notification = new Notification(object.name, object.date, object.frequancy, object.until, options)
+        const notification = new Notification(JSON.parse(object.name), object.date, object.frequancy, object.until, options)
         if(object.nextTime){
             notification.nextTime = new Date(object.nextTime)
         }
         if(object.message){
             const channel = await client.channels.fetch(object.channel)
-            notification.update(await channel.messages.fetch(object.message))
+            await notification.update(await channel.messages.fetch(object.message))
         }
 
         return notification;
