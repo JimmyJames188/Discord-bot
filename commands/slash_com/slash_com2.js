@@ -765,6 +765,10 @@ async function user_info(data, member, channel_id) {
         .setAuthor(`${member.displayName}'s info`, user.avatarURL())
         .addFields(
             {
+                name: 'Nick',
+                value: member.nickname || 'None'
+            },
+            {
                 name: 'User tag',
                 value: user.tag
             },
@@ -773,16 +777,12 @@ async function user_info(data, member, channel_id) {
                 value: user.bot
             },
             {
-                name: 'Nick',
-                value: member.nickname || 'None'
+                name: "User is bannable",
+                value: member.bannable
             },
             {
                 name: 'When the user joined the server',
                 value: member.joinedAt
-            },
-            {
-                name: "User is bannable",
-                value: member.bannable
             }
         )
         .setFooter("User info", bot.user.avatarURL())
