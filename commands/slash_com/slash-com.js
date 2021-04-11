@@ -74,6 +74,7 @@ exports.delete_commands_all = delete_commands_all;
  *          bot_stats:          () => Discord.MessageEmbed
  *          user_info:          (data: {}, member: Discord.GuildMember, channel_id: string) => Promise<Void>
  *          notification:       (data: {}) => String
+ *          Hypixel:            (data: {}) => Promise<String>
  *         }} commands
  */
 function command_reply(client, commands){
@@ -261,6 +262,14 @@ function command_reply(client, commands){
                 type: 4,
                 data: {
                     content: commands.notification(interaction.data)
+                }
+            }})
+        }else if (interaction.data.name === `hypixel`) {
+
+            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: await commands.Hypixel(interaction.data)
                 }
             }})
         }

@@ -6,6 +6,8 @@ const Gskuld = '1JxSZiunPLPOJdZCMLtHxuhpu2Wh7ohwBfW9aq0Pq6hw';
 
 const Drive = require('./../../Storage/Drive.js')
 
+const fetch = require('cross-fetch');
+
 const Notification = require('./../notification.js')
 
 const cvs = require('canvas')
@@ -22,11 +24,27 @@ const cheerio = require('cheerio');
 
 const slash_com = require('./slash-com.js')
 
+const Hypixel_API_Key = 'd95d5de2-3986-472f-8904-0e4897b696c7'
+
+let Hypixel_UUID = ''
+
 let bot = new Discord.Client();
 
 let JamesBot;
 
 let EndingsList;
+
+fetch(`https://api.hypixel.net/key?key=${Hypixel_API_Key}`)
+    .then(result => result.json())
+    .then(({ record }) => {
+        // Get the owner's player UUID
+        Hypixel_UUID = record.owner
+        fetch(`https://api.hypixel.net/player?uuid=${Hypixel_UUID}&key=${Hypixel_API_Key}`)
+        .then(result => result.json())
+        .then(({ player }) => {
+            // Log the player's username
+        })
+    })
 
 
 /**
@@ -47,7 +65,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification, Hypixel})
 }
 exports.command_reply = command_reply
 
@@ -877,4 +895,60 @@ function notification(data){
     notification.startUpdate(channel)
 
     return `Notificaton ${name} successfully created`;
+}
+
+/**
+ * 
+ * @param   {{options: [
+*               {name: 'player', type: 2, options: [
+*                   {name: 'online',    type: 1, options: [
+*                       {name: 'player_name', type: 3, value: String}
+*                   ]} |
+*                   {name: 'friends',   type: 1, options: [
+*                       {name: 'player_name', type: 3, value: String}
+*                   ]} |
+*                   {name: 'stats',     type: 1, options: [
+*                       {name: 'player_name', type: 3, value: String}
+*                   ]}
+*               ]}
+ *          ]}} data 
+ */
+async function Hypixel(data){
+    if(data.options[0].name == 'player'){
+        const options = data.options[0].options[0]
+        const player_info = (await fetch(`https://api.mojang.com/users/profiles/minecraft/${options.options[0].value}`).then(result => result.json()));
+        if(player_info.error){
+            return 'Did not find the player'
+        }
+        switch(options.name){
+            case 'online':
+                const status = (await fetch(`https://api.hypixel.net/status?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).session;
+                if(status.online){
+                    console.log(status)
+                    return `${player_info.name} is online and is playing ${status.mode}`
+                }else{
+                    return `${player_info.name} is not online`
+                }
+
+            case 'friends':
+                const friends = (await fetch(`https://api.hypixel.net/friends?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).records;
+                if(friends.length == 0){
+                    return 'No friend found'
+                }
+
+                let friends_names = []
+                for (let i = 0; i < friends.length; i++) {
+                    const friend = friends[i];
+                    let friend_uuid;
+                    if(player_info.id == friend.uuidSender){
+                        friend_uuid = friend.uuidReceiver
+                    }else{
+                        friend_uuid = friend.uuidSender
+                    }
+                    friends_names.push((await fetch(`https://api.mojang.com/user/profiles/${friend_uuid}/names`).then(result => result.json()))[0].name)
+                }
+                return `${player_info.name} has ${friends_names.length} friends and they are: \n\n${friends_names.join(',\n')}`
+        }
+    }
+    
 }

@@ -138,10 +138,10 @@
         "name": "user_info",
         "description": "Sends info about user",
         "options": [{
-        "name": "user",
-        "description": "Info for user",
-        "type": 6, 
-        "required": false
+            "name": "user",
+            "description": "Info for user",
+            "type": 6, 
+            "required": false
         }]
 
     },
@@ -217,6 +217,42 @@
                 "required": false
             }]
         }]
+    },
+    {
+        "name": "hypixel",
+        "description": "Commands for the hypixel minecraft server",
+        "options": [{
+            "name": "player",
+            "description": "Data from a player",
+            "type": 2, 
+            "options": [{
+                "name": "online",
+                "description": "Checks if the player is online",
+                "type": 1, 
+                "options": [{
+                    "name": "player_name",
+                    "description": "Name of a player",
+                    "type": 3, 
+                    "required": true
+                }]
+            },
+            {
+                "name": "friends",
+                "description": "Friends of a player",
+                "type": 1, 
+                "options": [{
+                    "name": "player_name",
+                    "description": "Name of a player",
+                    "type": 3, 
+                    "required": true
+                }]
+            },
+            {
+                "name": "stats",
+                "description": "Statistics of a player (unfinished)",
+                "type": 1, 
+                "options": []
+            }]
+        }]
     }
-
 ]
