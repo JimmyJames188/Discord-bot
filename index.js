@@ -263,6 +263,9 @@ bot.on('message', async msg=> {
     
     }else if(msg.content === "🅱️ruh"){
         msg.reply("Bruh");
+
+    }else if(msg.content.endsWith(', yes indeed')){
+        msg.react('👎','🤡');
     
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
@@ -281,6 +284,9 @@ bot.on('message', async msg=> {
 
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+
+    }else if(msg.content === "Leaderboard"){
+        msg.channel.send(await messageCount(msg.guild))
 
     }else if(msg.content.startsWith("Hot topic:")){
         const jam = bot.emojis.cache.find(emoji => emoji.name === `pleaseendmysuffering`)
@@ -707,3 +713,53 @@ distube
         console.error(e)
         message.channel.send("An error encountered: " + e);
     });
+
+
+
+/**
+ * 
+ * @param {Discord.Guild} guild 
+ * @returns 
+ */
+async function messageCount(guild){
+    const members = {}
+
+    for (let i = 0; i < (await guild.members.fetch()).array().length; i++) {
+        const member = (await guild.members.fetch()).array()[i];
+        
+        members[member.user.id] = 0
+    }
+    
+    for (let i = 0; i < guild.channels.cache.array().length; i++) {
+        const channel = guild.channels.cache.array()[i];
+        
+
+        if (channel.type == 'text') {
+
+            try{
+                const messages = (await channel.messages.fetch()).array()
+                messages.forEach(message => {
+                    members[message.author.id]++
+                })
+            }catch(e){
+
+            }
+        }
+    }
+
+    let array = []
+    const keys = Object.keys(members)
+    keys.forEach(key => {
+        array.push({name: guild.members.cache.get(key).displayName, value: members[key] })
+    })
+
+    array.sort(function(a, b) {
+        return b.value - a.value;
+    });
+
+    array.forEach((v,i) => {
+        array[i] = (i + 1) + ". " + v.name + " - " + v.value
+    })
+
+    return array.join("\n")
+}
