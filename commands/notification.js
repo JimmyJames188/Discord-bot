@@ -203,7 +203,7 @@ class Notification{
         const object = {
             name: quote(this.name),
             date: this.date,
-            frequency: this.frequancy,
+            frequancy: this.frequancy,
             until: this.until,
             options: JSON.parse(JSON.stringify(this.options)),
             nextTime: this.nextTime,
@@ -223,7 +223,9 @@ class Notification{
     static async parse(options_){
         const object = JSON.parse(options_)
         object.date = new Date(object.date)
-        object.until = new Date(object.until)
+        if(object.until){
+            object.until = new Date(object.until)
+        }
         let options = object.options
         options.fromString = true
         options.number = new Function(object.FunctionNumber)()
@@ -234,7 +236,9 @@ class Notification{
         }
         if(object.message){
             const channel = await client.channels.fetch(object.channel)
-            await notification.update(await channel.messages.fetch(object.message))
+            const message = await channel.messages.fetch(object.message)
+            notification.message = message;
+            await notification.update(message)
         }
 
         return notification;
