@@ -10,10 +10,13 @@ const facts = ["Kirill", "pp", "Zolotuskiy", "James", "Mother", "Eiríkur", "Ste
  * 
  * @param {Discord.Client} client 
  * @param {String} guild_id
+ * @param {String} command_name
  */
-function send_commands_guild(client, guild_id){
+function send_commands_guild(client, guild_id, command_name = 'all'){
     json.forEach(command_ => {
-        client.api.applications(client.user.id).guilds(guild_id).commands.post({data: command_})
+        if(command_name == command_.name || command_name == 'all'){
+            client.api.applications(client.user.id).guilds(guild_id).commands.post({data: command_})
+        }
     });
 }
 exports.send_commands_guild = send_commands_guild;
@@ -21,10 +24,13 @@ exports.send_commands_guild = send_commands_guild;
 /**
  * 
  * @param {Discord.Client} client 
+ * @param {String} command_name
  */
-function send_commands_all(client){
+function send_commands_all(client, command_name = 'all'){
     json.forEach(command_ => {
-        client.api.applications(client.user.id).commands.post({data: command_})
+        if(command_name == command_.name || command_name == 'all'){
+            client.api.applications(client.user.id).commands.post({data: command_})
+        }
     });
 }
 exports.send_commands_all = send_commands_all;

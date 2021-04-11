@@ -180,6 +180,10 @@
                 {
                     "name": "Roman numerals (I, II, III,..)",
                     "value": "Function_roman"
+                },
+                {
+                    "name": "Episode number (Episose 1, Episose 2,..)",
+                    "value": "Function_ep_arabic"
                 }]
             },
             {
