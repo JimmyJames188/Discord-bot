@@ -147,8 +147,8 @@ bot.on("message", async (message) => {
 const fun = (index) => index === 1
 
 bot.on('ready', () => {
-    // slash_com.send_commands_guild(bot, '701873712370286722');
-    // slash_com.send_commands_all(bot);
+    // slash_com.send_commands_guild(bot, '701873712370286722', 'hypixel');
+    // slash_com.send_commands_all(bot, 'hypixel');
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
