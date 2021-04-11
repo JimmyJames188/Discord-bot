@@ -19,6 +19,7 @@
     "discord-battleship": "^1.0.4",
     "discord.js": "^12.5.1",
     "discord.js-commando": "^0.10.0",
+    "distube": "^2.8.12",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.2.7",
     "fluent-ffmpeg": "^2.1.2",
@@ -28,7 +29,7 @@
     "relevant-urban": "^2.0.0",
     "request": "^2.88.2",
     "yt-search": "^2.7.3",
-    "ytdl-core": "^4.5.0"
+    "ytdl-core-discord": "^1.3.0"
   },
   "devDependencies": {},
   "description": ""

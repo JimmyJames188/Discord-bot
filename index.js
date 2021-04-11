@@ -22,6 +22,8 @@ const urban = require("relevant-urban")
 
 const ffmpeg = require('ffmpeg');
 
+const DisTube = require('distube');
+
 const { error } = require("console");
 
 const ytdl = require("ytdl-core");
@@ -188,6 +190,10 @@ bot.on("guildMemberAdd", member => {
 })
 
 
+bot.on('ready',() => {
+    bot.user.setActivity("slash commands")
+})
+
 
 bot.on('message', async msg=> {
     // console.log(msg)
@@ -257,6 +263,9 @@ bot.on('message', async msg=> {
     
     }else if(msg.content === "🅱️ruh"){
         msg.reply("Bruh");
+
+    }else if(msg.content.endsWith(', yes indeed')){
+        msg.react('👎','🤡');
     
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
@@ -275,6 +284,9 @@ bot.on('message', async msg=> {
 
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+
+    }else if(msg.content === "Leaderboard"){
+        msg.channel.send(await messageCount(msg.guild))
 
     }else if(msg.content.startsWith("Hot topic:")){
         const jam = bot.emojis.cache.find(emoji => emoji.name === `pleaseendmysuffering`)
@@ -597,7 +609,7 @@ for (const file of commandFiles) {
 }
 
 
-bot.on('message', message => {
+/* bot.on('message', message => {
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
     const args = message.content.slice(PREFIX.length).split(/ +/);
@@ -609,7 +621,7 @@ bot.on('message', message => {
     } else if (command === 'leave') {
         Playjs.execute(message, args);
     }
-});
+}); */
 
 
 
@@ -630,3 +642,124 @@ bot.on('message', message => {
         message.channel.send(exampleEmbed);
     }
 })
+
+
+
+
+
+const distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
+
+bot.on("message", async (message) => {
+    if (message.author.bot) return;
+    if (!message.content.startsWith(PREFIX)) return;
+    const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
+    const command = args.shift();
+
+    if (command == "play")
+        distube.play(message, args.join(" "));
+
+    if (["repeat", "loop"].includes(command))
+        distube.setRepeatMode(message, parseInt(args[0]));
+
+    if (command == "stop") {
+        distube.stop(message);
+        message.channel.send("Stopped the music!");
+    }
+
+    if (command == "skip")
+        distube.skip(message);
+
+    if (command == "volume")
+        distube.setVolume(message, args[0]);
+
+    if (command == "queue") {
+        let queue = distube.getQueue(message);
+        message.channel.send('Current queue:\n' + queue.songs.map((song, id) =>
+            `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\``
+        ).slice(0, 10).join("\n"));
+    }
+
+    if ([`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`].includes(command)) {
+        let filter = distube.setFilter(message, command);
+        message.channel.send("Current queue filter: " + (filter || "Off"));
+    }
+});
+
+// Queue status template
+const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
+
+// DisTube event listeners, more in the documentation page
+distube
+    .on("playSong", (message, queue, song) => message.channel.send(
+        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
+    ))
+    .on("addSong", (message, queue, song) => message.channel.send(
+        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
+    ))
+    .on("playList", (message, queue, playlist, song) => message.channel.send(
+        `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
+    ))
+    .on("addList", (message, queue, playlist) => message.channel.send(
+        `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
+    ))
+    // DisTubeOptions.searchSongs = true
+    .on("searchResult", (message, result) => {
+        let i = 0;
+        message.channel.send(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
+    })
+    // DisTubeOptions.searchSongs = true
+    .on("searchCancel", (message) => message.channel.send(`Searching canceled`))
+    .on("error", (message, e) => {
+        console.error(e)
+        message.channel.send("An error encountered: " + e);
+    });
+
+
+
+/**
+ * 
+ * @param {Discord.Guild} guild 
+ * @returns 
+ */
+async function messageCount(guild){
+    const members = {}
+
+    for (let i = 0; i < (await guild.members.fetch()).array().length; i++) {
+        const member = (await guild.members.fetch()).array()[i];
+        
+        members[member.user.id] = 0
+    }
+    
+    for (let i = 0; i < guild.channels.cache.array().length; i++) {
+        const channel = guild.channels.cache.array()[i];
+        
+
+        if (channel.type == 'text') {
+
+            try{
+                const messages = (await channel.messages.fetch()).array()
+                messages.forEach(message => {
+                    members[message.author.id]++
+                })
+            }catch(e){
+
+            }
+        }
+    }
+
+    let array = []
+    const keys = Object.keys(members)
+    keys.forEach(key => {
+        array.push({name: guild.members.cache.get(key).displayName, value: members[key] })
+    })
+
+    array.sort(function(a, b) {
+        return b.value - a.value;
+    });
+
+    array.forEach((v,i) => {
+        array[i] = (i + 1) + ". " + v.name + " - " + v.value
+    })
+
+    return array.join("\n")
+}
