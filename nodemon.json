@@ -1,4 +1,3 @@
 {   
-    "ignore": ["*.json","*.js"],
-    "delay": "10000"
+    "ignore": ["*.json","*.js"]
 }
