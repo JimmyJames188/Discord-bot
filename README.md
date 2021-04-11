@@ -33,6 +33,7 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * Ó góði botti hvern eigum við að biðja þann `dd/mm/yy`? => `Sá sem maður á að eiga að biðja þennan dag`  
 * kirill spírill => `Virkar mjög vel`
 * k mad => `Kirill mad`
+* Leaderboard => `List of who's sent the most messages in the server`
 
 ### Reactions
 | 👎                    | 👍                |  Random   |
@@ -42,14 +43,12 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 | STEFFI ER OWNER       | I'M HOME          |           |
 | JAMES BAD             |                   |           |
 
-### Voice chat commands
-* .join => Joins the voice chat
-* .play `link to a youtube video` => Plays the audio of the youtoube video
-* .leave => Leaves the voice chat
-* .stop => Stops the current song that is playing
-* .pause => Pauses the current song that is playing
-* .resume => Resumes the current song that is playing
-* .volume `0 - 200` => Changes volume
+### Music commands
+* !play `Song title` => Plays the audio of the youtube video
+* !stop => Stops the current song that is playing
+* !pause => (NOT CURRENTLY WORKING) Pauses the current song that is playing
+* !resume => (NOT CURRENTLY WORKING) Resumes the current song that is playing
+* !volume `0 - 200` => Changes volume
 
 ### Sundleikurinn commands
 * /sundleikurinn play => starts new game
