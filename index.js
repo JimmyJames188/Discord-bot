@@ -191,7 +191,7 @@ bot.on("guildMemberAdd", member => {
 
 
 bot.on('ready',() => {
-    bot.user.setStatus("Using slash commands")
+    bot.user.setActivity("slash commands")
 })
 
 
