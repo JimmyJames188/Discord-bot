@@ -154,8 +154,8 @@ bot.on('ready', () => {
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
-    
-    bot.user.setActivity("slash commands")
+
+    bot.user.setActivity("/help")
 
     if(Drive.WaitingForInput){
         Drive.WaitingForInputCallback(() => {
