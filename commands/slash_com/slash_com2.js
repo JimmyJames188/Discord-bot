@@ -65,7 +65,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification, Hypixel})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification, Hypixel, messageCount})
 }
 exports.command_reply = command_reply
 
@@ -951,4 +951,54 @@ async function Hypixel(data){
         }
     }
     
+}
+
+
+/**
+ * 
+ * @param {string} guild_id 
+ * @returns 
+ */
+ async function messageCount(guild_id){
+    const guild = bot.guilds.cache.get(guild_id)
+    const members = {}
+
+    for (let i = 0; i < (await guild.members.fetch()).array().length; i++) {
+        const member = (await guild.members.fetch()).array()[i];
+        
+        members[member.user.id] = 0
+    }
+    
+    for (let i = 0; i < guild.channels.cache.array().length; i++) {
+        const channel = guild.channels.cache.array()[i];
+        
+
+        if (channel.type == 'text') {
+
+            try{
+                const messages = (await channel.messages.fetch()).array()
+                messages.forEach(message => {
+                    members[message.author.id]++
+                })
+            }catch(e){
+
+            }
+        }
+    }
+
+    let array = []
+    const keys = Object.keys(members)
+    keys.forEach(key => {
+        array.push({name: guild.members.cache.get(key).displayName, value: members[key] })
+    })
+
+    array.sort(function(a, b) {
+        return b.value - a.value;
+    });
+
+    array.forEach((v,i) => {
+        array[i] = (i + 1) + ". " + v.name + " - " + v.value
+    })
+
+    return array.join("\n")
 }

@@ -149,8 +149,8 @@ bot.on("message", async (message) => {
 const fun = (index) => index === 1
 
 bot.on('ready', () => {
-    // slash_com.send_commands_guild(bot, '701873712370286722', 'hypixel');
-    // slash_com.send_commands_all(bot, 'hypixel');
+    // slash_com.send_commands_guild(bot, '701873712370286722', 'leaderboard');
+    // slash_com.send_commands_all(bot);
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
@@ -281,9 +281,6 @@ bot.on('message', async msg=> {
 
     }else if(msg.content === "Mamman þín"){
         msg.reply('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-
-    }else if(msg.content === "Leaderboard"){
-        msg.channel.send(await messageCount(msg.guild))
 
     }else if(msg.content.startsWith("Hot topic:")){
         const jam = bot.emojis.cache.find(emoji => emoji.name === `pleaseendmysuffering`)
@@ -710,53 +707,3 @@ distube
         console.error(e)
         message.channel.send("An error encountered: " + e);
     });
-
-
-
-/**
- * 
- * @param {Discord.Guild} guild 
- * @returns 
- */
-async function messageCount(guild){
-    const members = {}
-
-    for (let i = 0; i < (await guild.members.fetch()).array().length; i++) {
-        const member = (await guild.members.fetch()).array()[i];
-        
-        members[member.user.id] = 0
-    }
-    
-    for (let i = 0; i < guild.channels.cache.array().length; i++) {
-        const channel = guild.channels.cache.array()[i];
-        
-
-        if (channel.type == 'text') {
-
-            try{
-                const messages = (await channel.messages.fetch()).array()
-                messages.forEach(message => {
-                    members[message.author.id]++
-                })
-            }catch(e){
-
-            }
-        }
-    }
-
-    let array = []
-    const keys = Object.keys(members)
-    keys.forEach(key => {
-        array.push({name: guild.members.cache.get(key).displayName, value: members[key] })
-    })
-
-    array.sort(function(a, b) {
-        return b.value - a.value;
-    });
-
-    array.forEach((v,i) => {
-        array[i] = (i + 1) + ". " + v.name + " - " + v.value
-    })
-
-    return array.join("\n")
-}
