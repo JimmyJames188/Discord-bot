@@ -253,11 +253,11 @@
                 "type": 1, 
                 "options": []
             }]
-        },
-        {
-            "name": "leaderboard",
-            "description": "Leaderboard of most messages sent in a server", 
-            "options": []
         }]
+    },
+    {
+        "name": "leaderboard",
+        "description": "Leaderboard of most messages sent in a server", 
+        "options": []
     }
 ]

@@ -74,12 +74,8 @@ exports.delete_commands_all = delete_commands_all;
  *          bot_stats:          () => Discord.MessageEmbed
  *          user_info:          (data: {}, member: Discord.GuildMember, channel_id: string) => Promise<Void>
  *          notification:       (data: {}) => String
-<<<<<<< HEAD
- *          Hypixel:            (data: {}) => Promise<String>
- *          Leaderboards:       (guild_id: string) => Promise<String>
-=======
  *          Hypixel:            (data: {}, channel_id: String) => Promise<String>
->>>>>>> cf0ff23e88ed7ae230dc36fa00a9afa10b3e4597
+ *          messageCount:       (guild_id: string) => Promise<String>
  *         }} commands
  */
 function command_reply(client, commands){
@@ -279,13 +275,14 @@ function command_reply(client, commands){
             }})
 
         }else if(interaction.data.name === `leaderboard`) {
-
+            console.log(interaction)
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
-                    content: await commands.messageCount(interaction.guild_id)
+                    content: 'Here is leaderboard:'
                 }
             }})
+            client.channels.cache.get(interaction.channel_id).send(await commands.messageCount(interaction.guild_id))
         }
 
         // console.log(interaction.data);
