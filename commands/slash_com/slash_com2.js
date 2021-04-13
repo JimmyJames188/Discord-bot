@@ -24,7 +24,22 @@ const cheerio = require('cheerio');
 
 const slash_com = require('./slash-com.js')
 
-const Hypixel_API_Key = 'd95d5de2-3986-472f-8904-0e4897b696c7'
+let Hypixel_API_Key = ''
+
+try{    
+    Hypixel_API_Key = JSON.parse(fs.readFileSync("Hypixel_token.json"));
+}catch(e){
+    
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
+        rl.question('Enter the Hypixel API key: ', (Token_) => {
+            rl.close();
+            Hypixel_API_Key = Token_;
+            fs.writeFileSync('Hypixel_token.json', JSON.stringify(Token_));
+        });
+}
 
 let Hypixel_UUID = ''
 
@@ -34,17 +49,36 @@ let JamesBot;
 
 let EndingsList;
 
-fetch(`https://api.hypixel.net/key?key=${Hypixel_API_Key}`)
-    .then(result => result.json())
-    .then(({ record }) => {
-        // Get the owner's player UUID
-        Hypixel_UUID = record.owner
-        fetch(`https://api.hypixel.net/player?uuid=${Hypixel_UUID}&key=${Hypixel_API_Key}`)
-        .then(result => result.json())
-        .then(({ player }) => {
-            // Log the player's username
-        })
-    })
+const Hypixel_GameTypes = [
+    {Type: 'MAIN',              Database: undefined,        name: 'Main'},
+    {Type: 'QUAKECRAFT',        Database: 'Quake',          name: 'Quake'},
+    {Type: 'WALLS',             Database: 'Walls',          name: 'Walls'},
+    {Type: 'PAINTBALL',         Database: 'Paintball',      name: 'Paintball'},
+    {Type: 'SURVIVAL_GAMES',    Database: 'HungerGames',    name: 'Blitz Survival Games'},
+    {Type: 'TNTGAMES',          Database: 'TNTGames',       name: 'TNT Games'},
+    {Type: 'VAMPIREZ',          Database: 'VampireZ',       name: 'VampireZ'},
+    {Type: 'WALLS3',            Database: 'Walls3',         name: 'Mega Walls'},
+    {Type: 'ARCADE',            Database: 'Arcade',         name: 'Arcade'},
+    {Type: 'ARENA',             Database: 'Arena',          name: 'Arena'},
+    {Type: 'UHC',               Database: 'UHC',            name: 'UHC Champions'},
+    {Type: 'MCGO',              Database: 'MCGO',           name: 'Cops and Crims'},
+    {Type: 'BATTLEGROUND',      Database: 'Battleground',   name: 'Warlords'},
+    {Type: 'SUPER_SMASH',       Database: 'SuperSmash',     name: 'Smash Heroes'},
+    {Type: 'GINGERBREAD',       Database: 'GingerBread',    name: 'Turbo Kart Racers'},
+    {Type: 'HOUSING',           Database: 'Housing',        name: 'Housing'},
+    {Type: 'SKYWARS',           Database: 'SkyWars',        name: 'SkyWars'},
+    {Type: 'TRUE_COMBAT',       Database: 'TrueCombat',     name: 'Crazy Walls'},
+    {Type: 'SPEED_UHC',         Database: 'SpeedUHC',       name: 'Speed UHC'},
+    {Type: 'SKYCLASH',          Database: 'SkyClash',       name: 'SkyClash'},
+    {Type: 'LEGACY',            Database: 'Legacy',         name: 'Classic Games'},
+    {Type: 'PROTOTYPE',         Database: 'Prototype',      name: 'Prototype'},
+    {Type: 'BEDWARS',           Database: 'Bedwars',        name: 'Bed Wars'},
+    {Type: 'MURDER_MYSTERY',    Database: 'MurderMystery',  name: 'Murder Mystery'},
+    {Type: 'BUILD_BATTLE',      Database: 'BuildBattle',    name: 'Build Battle'},
+    {Type: 'DUELS',             Database: 'Duels',          name: 'Duels'},
+    {Type: 'SKYBLOCK',          Database: 'SkyBlock',       name: 'SkyBlock'},
+    {Type: 'PIT',               Database: 'Pit',            name: 'Pit'}
+]
 
 
 /**
@@ -848,6 +882,7 @@ function notification(data){
     const date = new Date(data.options[0].options[1].value)
     const channel = bot.channels.cache.get(data.options[0].options[3].value)
 
+    let NotificationMessage = undefined
     let FunctionNumber;
     switch(data.options[0].options[2].value){
         case 'Function_none':
@@ -864,6 +899,7 @@ function notification(data){
 
         case 'Function_ep_arabic':
             FunctionNumber = (i) => {return ' Episode ' + i};
+            NotificationMessage = 'Aired'
             break;
     }
 
@@ -912,23 +948,37 @@ function notification(data){
 *                   ]}
 *               ]}
  *          ]}} data 
+ * @param {String} channel_id
  */
-async function Hypixel(data){
+async function Hypixel(data, channel_id){
+    const channel = bot.channels.cache.get(channel_id)
     if(data.options[0].name == 'player'){
         const options = data.options[0].options[0]
         const player_info = (await fetch(`https://api.mojang.com/users/profiles/minecraft/${options.options[0].value}`).then(result => result.json()));
         if(player_info.error){
             return 'Did not find the player'
         }
+        // fs.writeFileSync('test.png', Buffer.from(await (await fetch(`https://crafatar.com/avatars/${player_info.id}`)).arrayBuffer()))
+        const embeded = new Discord.MessageEmbed()
         switch(options.name){
             case 'online':
                 const status = (await fetch(`https://api.hypixel.net/status?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).session;
                 if(status.online){
                     console.log(status)
-                    return `${player_info.name} is online and is playing ${status.mode}`
+                    if(status.mode == 'LOBBY'){
+                        embeded.setDescription(Hypixel_GameTypes.find(type => type.Type == status.gameType).name + ' lobby')
+                    }else{
+                        embeded.setDescription('Playing ' + Hypixel_GameTypes.find(type => type.Type == status.gameType).name)
+                    }
+                    embeded.setAuthor(player_info.name + ' is online',`https://crafatar.com/avatars/${player_info.id}?overlay`)
+                    embeded.setColor('#00FF00')
+                    channel.send(embeded)
                 }else{
-                    return `${player_info.name} is not online`
+                    embeded.setAuthor(player_info.name + ' is offline',`https://crafatar.com/avatars/${player_info.id}?overlay`)
+                    embeded.setColor('#FF0000')
+                    channel.send(embeded)
                 }
+                return '-hypixel-'
 
             case 'friends':
                 const friends = (await fetch(`https://api.hypixel.net/friends?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).records;
@@ -945,7 +995,8 @@ async function Hypixel(data){
                     }else{
                         friend_uuid = friend.uuidSender
                     }
-                    friends_names.push((await fetch(`https://api.mojang.com/user/profiles/${friend_uuid}/names`).then(result => result.json()))[0].name)
+                    const name = await fetch(`https://api.mojang.com/user/profiles/${friend_uuid}/names`).then(result => result.json())
+                    friends_names.push(name[name.length - 1].name)
                 }
                 return `${player_info.name} has ${friends_names.length} friends and they are: \n\n${friends_names.join(',\n')}`
         }
