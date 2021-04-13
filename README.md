@@ -58,6 +58,11 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 ### Notification commands
 * /notification create `name` `date` `counting_type` `channel` `color` `frequancy` `until` `start_number` => Creates a notification. For better explanation read description when creating the notification.
 
+### Hypixel commands
+* /hypixel player online  `player` => Checks if the player is online
+* /hypixel player friends `player` => Telles players friend
+* /hypixel player stats   `player` => `Not used`
+
 ### Other commands
 * /help => All commands
 * /profile_picture => Returns your profile picture
@@ -65,8 +70,8 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * /kick `user` => Kickes user
 * /image => Gives aot meme
 * /facts => Gives facts
-* /encrypt "`key`" "`message`" => Returnes encrypted message
-* /decrypt "`key`" "`encrypted message`" => Returnes message
+* /encrypt `key` `message` => Returnes encrypted message
+* /decrypt `key` `encrypted message`" => Returnes message
 * /gskuld `user` => Says what `user` owes the Gjöfull
 * /suggest => Sends a suggestion to channel called "Suggestions"
 * /member_count => How many members in the server
