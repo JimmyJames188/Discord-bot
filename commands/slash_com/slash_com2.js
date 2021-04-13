@@ -933,6 +933,54 @@ function notification(data){
     return `Notificaton ${name} successfully created`;
 }
 
+
+
+/**
+ * 
+ * @param {{online: true, gameType: String, mode: String, map: String} | {online: false}} status
+ * @param {{id: String, name: String}} player_info
+ */
+function check_status(status, player_info){
+    const embeded = new Discord.MessageEmbed()
+    if(status.online){
+        console.log(status)
+        if(status.mode == 'LOBBY'){
+            embeded.setDescription(Hypixel_GameTypes.find(type => type.Type == status.gameType).name + ' lobby')
+        }else{
+            embeded.setDescription('Playing ' + Hypixel_GameTypes.find(type => type.Type == status.gameType).name)
+        }
+        embeded.setAuthor(player_info.name + ' is online',`https://crafatar.com/avatars/${player_info.id}?overlay`)
+        embeded.setColor('#00FF00')
+    }else{
+        embeded.setAuthor(player_info.name + ' is offline',`https://crafatar.com/avatars/${player_info.id}?overlay`)
+        embeded.setColor('#FF0000')
+    }
+    return embeded;
+}
+
+/**
+ * 
+ * @param {Object[]} friends
+ * @param {{id: String, name: String}} player_info 
+ * @param {Discord.TextChannel} channel
+ */
+async function send_friends(friends, player_info, channel){
+
+    for (let i = 0; i < friends.length; i++) {
+        const friend = friends[i];
+        let friend_uuid;
+        if(player_info.id == friend.uuidSender){
+            friend_uuid = friend.uuidReceiver
+        }else{
+            friend_uuid = friend.uuidSender
+        }
+        const name = await fetch(`https://api.mojang.com/user/profiles/${friend_uuid}/names`).then(result => result.json())
+        const status = (await fetch(`https://api.hypixel.net/status?uuid=${friend_uuid}&key=${Hypixel_API_Key}`).then(result => result.json())).session;
+        channel.send(check_status(status, {id: friend_uuid, name:name[name.length - 1].name}))
+    }
+
+}
+
 /**
  * 
  * @param   {{options: [
@@ -960,24 +1008,12 @@ async function Hypixel(data, channel_id){
         }
         // fs.writeFileSync('test.png', Buffer.from(await (await fetch(`https://crafatar.com/avatars/${player_info.id}`)).arrayBuffer()))
         const embeded = new Discord.MessageEmbed()
+            .setAuthor(player_info.name + ' ',`https://crafatar.com/avatars/${player_info.id}?overlay`)
+
         switch(options.name){
             case 'online':
                 const status = (await fetch(`https://api.hypixel.net/status?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).session;
-                if(status.online){
-                    console.log(status)
-                    if(status.mode == 'LOBBY'){
-                        embeded.setDescription(Hypixel_GameTypes.find(type => type.Type == status.gameType).name + ' lobby')
-                    }else{
-                        embeded.setDescription('Playing ' + Hypixel_GameTypes.find(type => type.Type == status.gameType).name)
-                    }
-                    embeded.setAuthor(player_info.name + ' is online',`https://crafatar.com/avatars/${player_info.id}?overlay`)
-                    embeded.setColor('#00FF00')
-                    channel.send(embeded)
-                }else{
-                    embeded.setAuthor(player_info.name + ' is offline',`https://crafatar.com/avatars/${player_info.id}?overlay`)
-                    embeded.setColor('#FF0000')
-                    channel.send(embeded)
-                }
+                channel.send(check_status(status, player_info))
                 return '-hypixel-'
 
             case 'friends':
@@ -986,19 +1022,8 @@ async function Hypixel(data, channel_id){
                     return 'No friend found'
                 }
 
-                let friends_names = []
-                for (let i = 0; i < friends.length; i++) {
-                    const friend = friends[i];
-                    let friend_uuid;
-                    if(player_info.id == friend.uuidSender){
-                        friend_uuid = friend.uuidReceiver
-                    }else{
-                        friend_uuid = friend.uuidSender
-                    }
-                    const name = await fetch(`https://api.mojang.com/user/profiles/${friend_uuid}/names`).then(result => result.json())
-                    friends_names.push(name[name.length - 1].name)
-                }
-                return `${player_info.name} has ${friends_names.length} friends and they are: \n\n${friends_names.join(',\n')}`
+                send_friends(friends, player_info, channel)
+                return `${player_info.name} has ${friends.length} friends and they are: `
         }
     }
     
