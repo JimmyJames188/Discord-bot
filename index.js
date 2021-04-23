@@ -30,6 +30,8 @@ const ytdl = require("ytdl-core");
 
 const ytSearch = require('yt-search');
 
+const nodeCleanup = require('node-cleanup');
+
 const Playjs = require("./commands/Play.js")
 
 const bot = new Discord.Client();
@@ -150,7 +152,7 @@ const fun = (index) => index === 1
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722', 'leaderboard');
-    // slash_com.send_commands_all(bot, 'hypixel');
+    // slash_com.send_commands_all(bot, 'notification');
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
@@ -707,3 +709,8 @@ distube
         console.error(e)
         message.channel.send("An error encountered: " + e);
     });
+
+nodeCleanup(function (exitCode, signal) {
+    // release resources here before node exits
+    bot.destroy()
+});
