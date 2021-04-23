@@ -80,6 +80,7 @@ class Notification{
         this.options = options
         this.index = options.StartNumber
         this.message = {channel: {}}
+        this.deleted = false;
 
         this.oneTime = !frequancy
         this.infenitly = !until
@@ -167,6 +168,7 @@ class Notification{
      * @param {Discord.Message} message 
      */
     async update(message){
+        if(this.deleted) return;
         this.getDelay()
         if(this.untilNextTime < 0) return this.End(message);
         message.edit(this.createEmbed())
@@ -242,6 +244,53 @@ class Notification{
         }
 
         return notification;
+    }
+
+    delete(){
+        this.deleted = true;
+        notification_array.splice(this.array_index, 1)
+        save()
+        if(!this.message.deleted && this.message.id){
+            this.message.delete()
+        }
+    }
+
+    /**
+     * 
+     * @param {String} name 
+     * @param {Discord.TextChannel} channel 
+     * @param {Discord.User} user 
+     * @returns 
+     */
+    static deleteByName(name, channel, user){
+        const filtered = notification_array.filter(notification => notification.name == name)
+        if(filtered.length == 0){
+            return 'Notification not found'
+        }else if(filtered.length == 1){
+            filtered[0].delete()
+            return 'Deleted notification'
+        }else{
+            let collector = channel.createMessageCollector(m => m.author.id == user.id)
+            collector.on('collect', msg => {
+                if(!filtered[parseInt(msg.content)]){
+                    channel.send('Invalid option')
+                }else{
+                    collector.stop()
+                    filtered[parseInt(msg.content)].delete()
+                    channel.send('Deleted notification')
+                }
+            })
+
+            let message = [];
+            filtered.forEach((notification, i) => {
+                let channel;
+                if(notification.message.id){
+                    channel = notification.message.channel.toString();
+                }
+                message.push(`${i}. channel: ${channel}, message id: ${notification.message.id}`)
+            })
+            return `Found ${filtered.length} notification: \n\n` + message.join(',\n')
+        }
     }
 }
 

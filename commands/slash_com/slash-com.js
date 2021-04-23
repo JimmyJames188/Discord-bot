@@ -73,7 +73,7 @@ exports.delete_commands_all = delete_commands_all;
  *          kick_com:           (data: {}, guild_id?: String) => Promise<String>
  *          bot_stats:          () => Discord.MessageEmbed
  *          user_info:          (data: {}, member: Discord.GuildMember, channel_id: string) => Promise<Void>
- *          notification:       (data: {}) => String
+ *          notification:       (data: {}, user: Discord.User, channel: Discord.TextChannel) => String
  *          Hypixel:            (data: {}, channel_id: String) => Promise<String>
  *          messageCount:       (guild_id: string) => Promise<String>
  *         }} commands
@@ -259,15 +259,17 @@ function command_reply(client, commands){
             }
         }else if (interaction.data.name === `notification`) {
 
-            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+            const channel = client.channels.cache.get(interaction.channel_id)
+            console.log(channel)
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
-                    content: commands.notification(interaction.data)
+                    content: commands.notification(interaction.data, interaction.user || interaction.member.user, channel)
                 }
             }})
         }else if (interaction.data.name === `hypixel`) {
 
-            await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
                     content: await commands.Hypixel(interaction.data, interaction.channel_id)
@@ -275,7 +277,7 @@ function command_reply(client, commands){
             }})
 
         }else if(interaction.data.name === `leaderboard`) {
-            console.log(interaction)
+
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
@@ -285,7 +287,7 @@ function command_reply(client, commands){
             client.channels.cache.get(interaction.channel_id).send(await commands.messageCount(interaction.guild_id))
         }
 
-        // console.log(interaction.data);
+        console.log(interaction.data);
         // new Discord.WebhookClient(client.user.id, interaction.token).send('hello world')
     })
 }
