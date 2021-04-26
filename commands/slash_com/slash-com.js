@@ -211,14 +211,14 @@ function command_reply(client, commands){
                 client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                     type: 4,
                     data: {
-                        content: `${(await client.users.fetch(interaction.member.user.id)).toString()} suggested ${interaction.data.options[0].value}`
+                        content: `${(await client.users.fetch(interaction.member.user.id)).toString()} suggested: ${interaction.data.options[0].value}`
                     }
                 }})
             }else{
                 client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                     type: 4,
                     data: {
-                        content: `${(await client.users.fetch(interaction.user.id)).toString()} suggested ${interaction.data.options[0].value}`
+                        content: `${(await client.users.fetch(interaction.user.id)).toString()} suggested: ${interaction.data.options[0].value}`
                     }
                 }})
             }
