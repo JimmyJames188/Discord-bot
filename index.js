@@ -196,6 +196,9 @@ bot.on('message', async msg=> {
     // console.log(msg)
     if (msg.content === "Blubadub") {
         msg.channel.send(3+3)
+
+    }else if (msg.content === "!github") {
+        msg.channel.send(githubEmbed)
    
     }else if (msg.content === "Ey whats my mental age bot?") {
         msg.channel.send("You're mentally: " + Math.floor(Math.random() * 100 + 1) + "")
@@ -706,4 +709,12 @@ distube
     .on("error", (message, e) => {
         console.error(e)
         message.channel.send("An error encountered: " + e);
-    });
+});
+
+
+const githubEmbed = new Discord.MessageEmbed()
+    .setTitle("Github: James's Good Advice Bot")
+    .setThumbnail("https://d2td6mzj4f4e1e.cloudfront.net/wp-content/uploads/2019/04/good-advice.jpg")
+    .setDescription("James's Good Advice Bot is an all round fun bot started by Jimmy James. Later on Kirill-Iceland came in and brought a lot of the most complex commands (SBB-50 also came in and helped a bit with the joke command).")
+    .setURL("https://github.com/JimmyJames188/Discord-bot")
+    .addField("The creator's githubs:", '\nJimmy James: https://github.com/JimmyJames188 \n\nKirill-Iceland: https://github.com/Kirill-iceland \n\nSBB-50: https://github.com/SBB-50', true)
