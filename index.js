@@ -30,6 +30,8 @@ const ytdl = require("ytdl-core");
 
 const ytSearch = require('yt-search');
 
+const nodeCleanup = require('node-cleanup');
+
 const Playjs = require("./commands/Play.js")
 
 const bot = new Discord.Client();
@@ -150,7 +152,7 @@ const fun = (index) => index === 1
 
 bot.on('ready', () => {
     // slash_com.send_commands_guild(bot, '701873712370286722', 'leaderboard');
-    // slash_com.send_commands_all(bot, 'hypixel');
+    // slash_com.send_commands_all(bot, 'notification');
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
@@ -718,3 +720,9 @@ const githubEmbed = new Discord.MessageEmbed()
     .setDescription("James's Good Advice Bot is an all round fun bot started by Jimmy James. Later on Kirill-Iceland came in and brought a lot of the most complex commands (SBB-50 also came in and helped a bit with the joke command).")
     .setURL("https://github.com/JimmyJames188/Discord-bot")
     .addField("The creator's githubs:", '\nJimmy James: https://github.com/JimmyJames188 \n\nKirill-Iceland: https://github.com/Kirill-iceland \n\nSBB-50: https://github.com/SBB-50', true)
+
+
+nodeCleanup(function (exitCode, signal) {
+    // release resources here before node exits
+    bot.destroy()
+});

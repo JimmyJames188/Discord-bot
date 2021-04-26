@@ -216,6 +216,17 @@
                 "type": 4, 
                 "required": false
             }]
+        },
+        {
+            "name": "delete",
+            "description": "Deletes a new notification",
+            "type": 1, 
+            "options": [{
+                "name": "name",
+                "description": "Name of the notification",
+                "type": 3, 
+                "required": true
+            }]
         }]
     },
     {

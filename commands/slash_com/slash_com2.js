@@ -870,67 +870,77 @@ function romanize (num) {
  *                  {name: 'frequancy',     type: 4, value: number},
  *                  {name: 'until',         type: 3, value: String},
  *                  {name: 'start_number',  type: 4, value: number}
+ *              ]} |
+ *              {name: 'delete', type: 1, options: [
+ *                  {name: 'name',          type: 3, value: String}
  *              ]}
  *        ]}} data 
+ * @param {Discord.User} user
+ * @param {Discord.TextChannel} channel
  */
-function notification(data){
-    if(data.resolved.channels[data.options[0].options[3].value].type != 0){
-        return 'Channel not compateble'
-    }
+function notification(data, user, channel){
+    console.log(data.options[0])
+    if(data.options[0].name == 'create'){
+        if(data.resolved.channels[data.options[0].options[3].value].type != 0){
+            return 'Channel not compateble'
+        }
 
-    const name = data.options[0].options[0].value
-    const date = new Date(data.options[0].options[1].value)
-    const channel = bot.channels.cache.get(data.options[0].options[3].value)
+        const name = data.options[0].options[0].value
+        const date = new Date(data.options[0].options[1].value)
+        const channel = bot.channels.cache.get(data.options[0].options[3].value)
 
-    let NotificationMessage = undefined
-    let FunctionNumber;
-    switch(data.options[0].options[2].value){
-        case 'Function_none':
-            FunctionNumber = undefined;
-            break;
-        
-        case 'Function_arabic':
-            FunctionNumber = (i) => {return ' - ' + i};
-            break;
-
-        case 'Function_roman':
-            FunctionNumber = romanize;
-            break
-
-        case 'Function_ep_arabic':
-            FunctionNumber = (i) => {return ' Episode ' + i};
-            NotificationMessage = 'Aired'
-            break;
-    }
-
-    const options = {number: FunctionNumber};
-    let frequancy, until;
-    for (let i = 4; i < data.options[0].options.length; i++) {
-        const option = data.options[0].options[i];
-        switch(option.name){
-            case 'color':
-                options.color = option.value;
+        let NotificationMessage = undefined
+        let FunctionNumber;
+        switch(data.options[0].options[2].value){
+            case 'Function_none':
+                FunctionNumber = undefined;
                 break;
             
-            case 'frequancy':
-                frequancy = option.value;
+            case 'Function_arabic':
+                FunctionNumber = (i) => {return ' - ' + i};
                 break;
 
-            case 'until':
-                until = new Date(option.value);
-                break;
+            case 'Function_roman':
+                FunctionNumber = romanize;
+                break
 
-            case 'start_number':
-                options.StartNumber = option.value;
+            case 'Function_ep_arabic':
+                FunctionNumber = (i) => {return ' Episode ' + i};
+                NotificationMessage = 'Aired'
                 break;
         }
+
+        const options = {number: FunctionNumber, NotificationMessage};
+        let frequancy, until;
+        for (let i = 4; i < data.options[0].options.length; i++) {
+            const option = data.options[0].options[i];
+            switch(option.name){
+                case 'color':
+                    options.color = option.value;
+                    break;
+                
+                case 'frequancy':
+                    frequancy = option.value;
+                    break;
+
+                case 'until':
+                    until = new Date(option.value);
+                    break;
+
+                case 'start_number':
+                    options.StartNumber = option.value;
+                    break;
+            }
+        }
+
+        console.log({name, date, frequancy, until, options})
+        const notification = new Notification.Notification(name, date, frequancy, until, options)
+        notification.startUpdate(channel)
+
+        return `Notificaton ${name} successfully created`;
+    }else if(data.options[0].name == 'delete'){
+        return Notification.Notification.deleteByName(data.options[0].options[0].value, channel, user)
     }
-
-    console.log({name, date, frequancy, until, options})
-    const notification = new Notification.Notification(name, date, frequancy, until, options)
-    notification.startUpdate(channel)
-
-    return `Notificaton ${name} successfully created`;
 }
 
 
@@ -976,7 +986,7 @@ async function send_friends(friends, player_info, channel){
         }
         const name = await fetch(`https://api.mojang.com/user/profiles/${friend_uuid}/names`).then(result => result.json())
         const status = (await fetch(`https://api.hypixel.net/status?uuid=${friend_uuid}&key=${Hypixel_API_Key}`).then(result => result.json())).session;
-        channel.send(check_status(status, {id: friend_uuid, name:name[name.length - 1].name}))
+        await channel.send(check_status(status, {id: friend_uuid, name:name[name.length - 1].name}))
     }
 
 }
@@ -1002,8 +1012,13 @@ async function Hypixel(data, channel_id){
     const channel = bot.channels.cache.get(channel_id)
     if(data.options[0].name == 'player'){
         const options = data.options[0].options[0]
-        const player_info = (await fetch(`https://api.mojang.com/users/profiles/minecraft/${options.options[0].value}`).then(result => result.json()));
-        if(player_info.error){
+        let player_info;
+        try{
+            player_info = (await fetch(`https://api.mojang.com/users/profiles/minecraft/${options.options[0].value}`).then(result => result.json()));
+            if(player_info.errorMessage){
+                return 'Did not find the player'
+            }
+        }catch(e){
             return 'Did not find the player'
         }
         // fs.writeFileSync('test.png', Buffer.from(await (await fetch(`https://crafatar.com/avatars/${player_info.id}`)).arrayBuffer()))
