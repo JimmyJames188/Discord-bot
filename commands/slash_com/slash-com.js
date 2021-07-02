@@ -285,6 +285,15 @@ function command_reply(client, commands){
                 }
             }})
             client.channels.cache.get(interaction.channel_id).send(await commands.messageCount(interaction.guild_id))
+        
+        }else if (interaction.data.name === `history`) {
+
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: await commands.history(interaction.data, interaction.channel_id)
+                }
+            }})
         }
 
         console.log(interaction.data);

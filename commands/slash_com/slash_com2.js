@@ -1093,3 +1093,60 @@ async function Hypixel(data, channel_id){
 
     return array.join("\n")
 }
+
+
+/**
+ * 
+ * @param {{
+ *          options: [
+ *              {name: 'create', type: 1, options: [
+ *                  {name: 'name',          type: 3, value: String},
+ *                  {name: 'date',          type: 3, value: String},
+ *                  {name: 'counting_type', type: 3, value: 'Function_none' | 'Function_roman' | 'Function_arabic'},
+ *                  {name: 'channel',       type: 7, value: String},
+ *                  {name: 'color',         type: 3, value: String},
+ *                  {name: 'frequancy',     type: 4, value: number},
+ *                  {name: 'until',         type: 3, value: String},
+ *                  {name: 'start_number',  type: 4, value: number}
+ *              ]} |
+ *              {name: 'delete', type: 1, options: [
+ *                  {name: 'name',          type: 3, value: String}
+ *              ]}
+ *        ]}} data 
+  * @param {String} channel_id
+  */
+ async function Hypixel(data, channel_id){
+     const channel = bot.channels.cache.get(channel_id)
+     if(data.options[0].name == 'player'){
+         const options = data.options[0].options[0]
+         let player_info;
+         try{
+             player_info = (await fetch(`https://api.mojang.com/users/profiles/minecraft/${options.options[0].value}`).then(result => result.json()));
+             if(player_info.errorMessage){
+                 return 'Did not find the player'
+             }
+         }catch(e){
+             return 'Did not find the player'
+         }
+         // fs.writeFileSync('test.png', Buffer.from(await (await fetch(`https://crafatar.com/avatars/${player_info.id}`)).arrayBuffer()))
+         const embeded = new Discord.MessageEmbed()
+             .setAuthor(player_info.name + ' ',`https://crafatar.com/avatars/${player_info.id}?overlay`)
+ 
+         switch(options.name){
+             case 'online':
+                 const status = (await fetch(`https://api.hypixel.net/status?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).session;
+                 channel.send(check_status(status, player_info))
+                 return '-hypixel-'
+ 
+             case 'friends':
+                 const friends = (await fetch(`https://api.hypixel.net/friends?uuid=${player_info.id}&key=${Hypixel_API_Key}`).then(result => result.json())).records;
+                 if(friends.length == 0){
+                     return 'No friend found'
+                 }
+ 
+                 send_friends(friends, player_info, channel)
+                 return `${player_info.name} has ${friends.length} friends and they are: `
+         }
+     }
+     
+ }

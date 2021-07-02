@@ -151,8 +151,8 @@ bot.on("message", async (message) => {
 const fun = (index) => index === 1
 
 bot.on('ready', () => {
-    // slash_com.send_commands_guild(bot, '701873712370286722', 'leaderboard');
-    // slash_com.send_commands_all(bot, 'notification');
+    // slash_com.send_commands_guild(bot, '701873712370286722', 'history');
+    // slash_com.send_commands_all(bot, 'history');
     // slash_com.delete_commands_all(bot);
     // slash_com.delete_commands_guild(bot, '701873712370286722')
     slash_com2.command_reply()
@@ -253,7 +253,13 @@ bot.on('message', async msg=> {
     
     }else if(msg.content.toUpperCase() === "YES"){
          msg.reply('YES YES YES YES YES YES YES YES');
-   
+
+    }else if(msg.content === "!channel"){
+        const guild = msg.channel.guild
+        const channel = msg.channel
+        const random_channel = guild.channels.cache.random()
+        channel.send(random_channel.name)
+        
     }else if(msg.content === "Kirill hakkaði tölvuna mína! Hvað á ég að gera!?"){
         msg.reply('https://www.youtube.com/watch?v=Nt2246e0f6I');
     
@@ -726,3 +732,4 @@ nodeCleanup(function (exitCode, signal) {
     // release resources here before node exits
     bot.destroy()
 });
+

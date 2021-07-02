@@ -270,5 +270,39 @@
         "name": "leaderboard",
         "description": "Leaderboard of most messages sent in a server", 
         "options": []
+    },
+    {
+        "name": "history",
+        "description": "Historic facts",
+        "options": [{
+            "name": "historic_object",
+            "description": "Historical place/person",
+            "type": 4, 
+            "required": false,
+            "choices": [{
+                "name": "Phoenicians",
+                "value": 0
+            },
+            {
+                "name": "The Roman Empire",
+                "value": 0
+            },
+            {
+                "name": "Gaius Julius Caesar",
+                "value": 0
+            },
+            {
+                "name": "Nero Cladius",
+                "value": 0
+            },
+            {
+                "name": "Alexander The Great",
+                "value": 0
+            },
+            {
+                "name": "Hannibal",
+                "value": 0
+            }]
+        }]
     }
 ]
