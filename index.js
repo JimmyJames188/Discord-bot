@@ -206,7 +206,7 @@ bot.on('message', async msg=> {
         msg.channel.send("You're mentally: " + Math.floor(Math.random() * 100 + 1) + "")
    
     }else if(msg.content === "Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás"){
-        msg.reply("Svo verði ósk þín. Besti bottin á þessari discord rás er James's Good Advice Bot");
+        msg.reply("Svo verði ósk þín. Besti bottinn á þessari discord rás er James's Good Advice Bot");
    
     }else if(msg.content === "Snær er ekki skemtilegur"){
         msg.reply('NEI!!!');

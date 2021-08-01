@@ -5,7 +5,7 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 ### Text reply
 * Blubadub => 6
 * Ey whats my mental age bot? => You're mentally: `Random number`
-* Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás => Svo verði ósk þín. Besti bottin á þessari discord rás er James's Good Advice Bot
+* Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás => Svo verði ósk þín. Besti bottinn á þessari discord rás er James's Good Advice Bot
 * Snær er ekki skemtilegur => NEI!!!
 * !racist-info => [https://youtu.be/USE86UbsV8c](https://youtu.be/USE86UbsV8c)
 * !nice => [https://youtu.be/ffQmb-cNFuk](https://youtu.be/ffQmb-cNFuk)
