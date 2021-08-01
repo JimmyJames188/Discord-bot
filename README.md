@@ -1,5 +1,5 @@
 # James's bot
-This bot was originaly created by [James](https://github.com/JimmyJames188) for private use on discord servers. Later [Kirill](https://github.com/Kirill-iceland) contributed much content to the bot.
+This bot was originaly created by [James](https://github.com/JimmyJames188) for private use on discord servers. Later [Kirill](https://github.com/Kirill-iceland) contributed loads of content to the bot ([Ultimateguy33](https://github.com/SBB-50) added a few jokes to the joke command).
 
 ## Commands
 ### Text reply
