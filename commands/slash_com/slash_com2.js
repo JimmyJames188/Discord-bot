@@ -711,7 +711,7 @@ async function sundleikurinn_com(data, channel_id, guild_id, user, member = user
  */
 async function image(callback){
     var options = {
-        url: "http://results.dogpile.com/serp?qc=images&q=" + "Kirill Zolotuskiy",
+        url: "http://results.dogpile.com/serp?qc=images&q=" + "Cat",
         method: "GET",
         headers: {
             "Accept": "text/html",

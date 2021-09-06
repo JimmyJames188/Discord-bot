@@ -205,6 +205,18 @@ function command_reply(client, commands){
                 }
             }})
            
+
+        }else if (interaction.data.name === "advice"){
+            console.log('test')
+            const Advice = JSON.parse(fs.readFileSync("advice.json"));
+            const randomAdvice = Advice[Math.floor(Math.random() * (Advice.length - 0.1))];
+            client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+                type: 4,
+                data: {
+                    content: (randomAdvice)
+                }
+            }})
+           
         }else if (interaction.data.name === 'suggest'){
             sugestion_channel.send('Suggestion:\n' + interaction.data.options[0].value)
             if(interaction.member){
@@ -281,7 +293,7 @@ function command_reply(client, commands){
             await client.api.interactions(interaction.id, interaction.token).callback.post({data: {
                 type: 4,
                 data: {
-                    content: 'Here is leaderboard:'
+                    content: 'Here is the leaderboard:'
                 }
             }})
             client.channels.cache.get(interaction.channel_id).send(await commands.messageCount(interaction.guild_id))

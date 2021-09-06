@@ -151,10 +151,10 @@ bot.on("message", async (message) => {
 const fun = (index) => index === 1
 
 bot.on('ready', () => {
-    // slash_com.send_commands_guild(bot, '701873712370286722', 'history');
+    // slash_com.send_commands_guild(bot, '701873712370286722', 'advice');
     // slash_com.send_commands_all(bot, 'history');
     // slash_com.delete_commands_all(bot);
-    // slash_com.delete_commands_guild(bot, '701873712370286722')
+    // slash_com.delete_commands_guild(bot, '701873712370286722', 'advice')
     slash_com2.command_reply()
 
     bot.user.setActivity("/help")
@@ -239,7 +239,7 @@ bot.on('message', async msg=> {
     }else if(msg.content === "clapping"){
         msg.reply('Bruh it´s claping \n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING');
    
-    }else if(msg.content === "Kirill hakkaði botinn minn! Hvað á ég að gera!?"){
+    }else if(msg.content === "Kirill hakkaði botann minn! Hvað á ég að gera!?"){
         msg.reply('https://www.youtube.com/watch?v=Nt2246e0f6I');
    
     }else if(msg.content === "no"){

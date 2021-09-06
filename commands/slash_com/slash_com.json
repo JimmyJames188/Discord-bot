@@ -120,6 +120,11 @@
         "options": []
     },
     {
+        "name": "advice",
+        "description": "Sends a random piece of advice",
+        "options": []
+    },
+    {
         "name": "suggest",
         "description": "Suggest something",
         "options": [{
