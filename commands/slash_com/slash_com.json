@@ -1,7 +1,7 @@
 [
     {
         "name": "gskuld",
-        "description": "How much do you own to the Gjöfull",
+        "description": "How much you owe the Gjöfull",
         "options": [{
             "name": "user",
             "description": "User to check",
