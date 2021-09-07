@@ -170,7 +170,7 @@ async function gskuld(data, user){
         }
     }
     if(skuldugur){
-        return "Engin skuld fanst hjá " + user.toString()
+        return "Engin skuld fannst hjá " + user.toString()
     }else{
         return skuld
     }
