@@ -1156,7 +1156,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
 
         case 37:
-            channel.send("**Hvernig viltu róa þá? \n 1. Gefa þeim róandi töflur \n 2. Syngja islenska þjóðsönginn**")
+            channel.send("**Hvernig viltu róa þá?** \n 1. Gefa þeim róandi töflur \n 2. Syngja islenska þjóðsönginn")
             
             collector.on('collect', m =>{
                 

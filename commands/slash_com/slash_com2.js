@@ -99,7 +99,7 @@ exports.getVariables = getVariables
  * 
  */
 function command_reply(){
-    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification, Hypixel, messageCount})
+    slash_com.command_reply(bot, {gskuld, encrypt, decrypt, help, sundleikurinn_com, image, kick_com, bot_stats, user_info, notification, Hypixel, messageCount, history})
 }
 exports.command_reply = command_reply
 
@@ -1150,3 +1150,16 @@ async function Hypixel(data, channel_id){
      }
      
  }
+
+/**
+ * 
+ * @param {{
+ *          options: [
+ *                  {name: 'historic_object', type: 3, value: string}
+ *        ]}} data 
+ * @param {Discord.TextChannel} channel
+ */
+function history(data, channel){
+    const History = JSON.parse(fs.readFileSync("storage/History.json"))
+    return History[data.options[0].value]
+}
