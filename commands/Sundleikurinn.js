@@ -678,7 +678,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 21:
-            channel.send("**Hvorugur ykkar deyr en " + (30 - Armn) + " ármenningar/ur deyja/deyr þannig að þið vinnið. Þið komist í pottinn og slakið á. Þið íhugið lífið ykkar og talið um hvað þið ætlið að fá ykkur í kvöldmat - Endir (11)**")
+            channel.send("**Hvorugur ykkar deyr en " + (30 - Armn) + " Ármenningar/ur deyja/deyr þannig að þið vinnið. Þið komist í pottinn og slakið á. Þið íhugið lífið ykkar og talið um hvað þið ætlið að fá ykkur í kvöldmat - Endir (11)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(11)
@@ -708,7 +708,7 @@ function Sundleikurinn(player, channel, id, PlayerData, Armn = 30){
             break;
     
         case 22:
-            channel.send("**Engin deyr og ármeningar fá að halda pottin. Þið farið bara heim vonsviknir og í smávegis í áfalli - Endir (12)**")
+            channel.send("**Engin deyr og Ármeningar fá að halda pottin. Þið farið bara heim vonsviknir og í smávegis í áfalli - Endir (12)**")
             if(PlayerData.Endings.Endings.length == 0){
 
                 PlayerData.Endings.Endings.push(12)
