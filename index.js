@@ -138,7 +138,7 @@ async function getSundleikurinnPlayerData(data){
 const { DiscordBattleShip } = require("discord-battleship");
 const { executionAsyncResource } = require("async_hooks");
 
-const BattleShip = new DiscordBattleShip({ 
+const BattleShip = new DiscordBattleShip({
     embedColor: "RED",
     prefix: "?",
 });
@@ -186,11 +186,11 @@ bot.on("guildMemberAdd", member => {
         "Hey here´s some good advice: Don't be racist \n \n \n For further info please type in chat !racist-info"
     )
 
-    var role = member.guild.roles.resolve("727092499822411816"); 
+    var role = member.guild.roles.resolve("727092499822411816");
     var duDe = member.guild.roles.resolve("");
 
     member.roles.add(role);
- 
+
 })
 
 
@@ -201,47 +201,47 @@ bot.on('message', async msg=> {
 
     }else if (msg.content === "!github") {
         msg.channel.send(githubEmbed)
-   
+
     }else if (msg.content === "Ey whats my mental age bot?") {
         msg.channel.send("You're mentally: " + Math.floor(Math.random() * 100 + 1) + "")
-   
+
     }else if(msg.content === "Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás"){
         msg.reply("Svo verði ósk þín. Besti bottinn á þessari discord rás er James's Good Advice Bot");
-   
+
     }else if(msg.content === "Snær er ekki skemtilegur"){
         msg.reply('NEI!!!');
 
     }else if(msg.content === "!racist-info"){
         msg.reply('https://youtu.be/USE86UbsV8c');
-   
+
     }else if(msg.content === "!nice"){
         msg.reply('https://youtu.be/ffQmb-cNFuk');
-   
+
     }else if(msg.content === "Jæja þá skulum við fara með bæn"){
         msg.reply('Heilagi Gummi! Lífið og heilsan er helgidómur, sem þú hefur gefið okkur, því er allt heilagt sem viðheldur lífinu. Gef okkur því visku til að njóta matar og drykkjar með fögnuði og þakklátum huga og gæta jafnframt hófs. Blessaðu líf okkar og starf og gef okkur náð og þrótttil að vera trúir þjónar á akri þínum. Send snauðum og sjúkum hjálp og syrgjendum huggun. Blessaðu og helgaðu lífið sérhverja stund í Gumma krists heilaga nafni. A M E N');
-   
+
     }else if(msg.content === "Lights out!"){
         var botping = Math.round(bot.ws.ping)
         msg.reply(`And away we go! \nI had a reaction time of ${botping}ms.`);
-   
+
     }else if(msg.content === "F"){
         msg.reply('F');
-   
+
     }else if(msg.content === "Welcome to the channel!"){
         msg.reply("It's nice to be here!");
-   
+
     }else if(msg.content === "@James's Good Advice Bot#8745 Stefán vill spila. Á ég að spila með honum?"){
         msg.reply('AUÐVITAÐ HVERSLAGS SPURNING ER ÞETTA EIGINLEGA!!');
-   
+
     }else if(msg.content === "Þorsteinn er dauður!" || msg.content === "Stefán er dauður!"){
         msg.reply('Haha lol það er afþví að ég drakk 10 kíló af monster og 360 no-scopeaði hann! XD XD XD');
-   
+
     }else if(msg.content === "clapping"){
         msg.reply('Bruh it´s claping \n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING\n CLAPING \n CLAPING');
-   
+
     }else if(msg.content === "Kirill hakkaði botann minn! Hvað á ég að gera!?"){
         msg.reply('https://www.youtube.com/watch?v=Nt2246e0f6I');
-   
+
     }else if(msg.content === "no"){
         msg.reply("Yes");
 
@@ -250,7 +250,7 @@ bot.on('message', async msg=> {
 
     }else if (msg.content === `I forgot the server name!`) {
 	msg.channel.send(`Aha! James's good advice bot is here to save the day! This server's name is: **${msg.guild.name}**`);
-    
+
     }else if(msg.content.toUpperCase() === "YES"){
          msg.reply('YES YES YES YES YES YES YES YES');
 
@@ -259,34 +259,34 @@ bot.on('message', async msg=> {
         const channel = msg.channel
         const random_channel = guild.channels.cache.random()
         channel.send(random_channel.name)
-        
+
     }else if(msg.content === "Kirill hakkaði tölvuna mína! Hvað á ég að gera!?"){
         msg.reply('https://www.youtube.com/watch?v=Nt2246e0f6I');
-    
+
     }else if(msg.content === "Ég fékk heimavinnu í dag hvað á ég að gera?"){
         msg.reply('Kveiktu í landakotsskóla!');
-    
+
     }else if(msg.content === "Hey besti botti ertu vakandi?"){
         msg.reply("Nei");
-    
+
     }else if(msg.content === "🅱️ruh"){
         msg.reply("Bruh");
 
     }else if(msg.content.endsWith(', yes indeed')){
         msg.react('👎','🤡');
-    
+
     }else if(msg.content === "Hvaða botti ætlar barasta ekki að læra að reikna?"){
         msg.reply("Ég!");
 
     }else if (msg.content.startsWith("!delete")) {
-        msg.delete(); 
-    
+        msg.delete();
+
     }else if(msg.content === "HVER ER BIG SMORT HÉR?"){
         msg.reply('NEI!!!!! @JimmyJames ER BIG SMORT HÉR!!!');
-    
+
     }else if(msg.content === "Bruh"){
         msg.reply('Bruh');
-    
+
     }else if(msg.content === "bruh"){
         msg.reply('bruh');
 
@@ -301,7 +301,7 @@ bot.on('message', async msg=> {
         const randomEmoji = emojis[Math.floor(Math.random() * (emojis.length - 0.1))];
 
         msg.react(randomEmoji)
-    
+
 
     }else if(msg.content.startsWith('Ó góði botti, hvaða einkunn fékk ')){
         var input = msg.content.split('<')
@@ -342,7 +342,7 @@ bot.on('message', msg=>{
           }});
     }
     let args = msg.content.substring(PREFIX.length).split(" ");
-    
+
     switch(args[0]) {
         case 'H':
             const name = msg.author.username;
@@ -366,7 +366,7 @@ bot.on("message", async message => {
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
-    
+
     if (foundInText) {
         message.channel.send("Hver sagði þetta!?");
     }
@@ -378,7 +378,7 @@ bot.on("message", async message => {
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
-    
+
     if (foundInText) {
         message.react("👎");
         message.channel.send("NEIIII grrrr >:( \nÞÚ ert barasta bananman!!");
@@ -391,7 +391,7 @@ bot.on("message", async message => {
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
-    
+
     if (foundInText) {
         message.react("👎");
     }
@@ -403,7 +403,7 @@ bot.on("message", async message => {
     for (var i in blacklisted) {
         if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
     }
-    
+
     if (foundInText) {
         message.react("👍");
     }
@@ -515,18 +515,18 @@ bot.on('message', msg=>{
         var yyyy = today.getFullYear();
 
         today = dd + '/' + mm + '/' + yyyy;
-        const banana = Math.abs(crypto.createHash('sha256').update(today).digest().readInt8() % bananas.length);   
+        const banana = Math.abs(crypto.createHash('sha256').update(today).digest().readInt8() % bananas.length);
         console.log(banana)
         msg.reply(`\nÍ dag þann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
-        
+
 
     }else if(msg.content.startsWith("Ó góði botti hvern eigum við að biðja þann")){
 
         today = msg.content.substring(43).replace('?',"").replace(' ',"");
-        const banana = Math.abs(crypto.createHash('sha256').update(today).digest().readInt8() % bananas.length);   
+        const banana = Math.abs(crypto.createHash('sha256').update(today).digest().readInt8() % bananas.length);
         console.log(banana)
         msg.reply(`\nÞann __${today}__ ætlum við að biðja til **${ bananas[banana] }**`)
-        
+
 
     }else if(msg.content === "kirill spírill"){
 
@@ -534,8 +534,8 @@ bot.on('message', msg=>{
                 .setColor('RANDOM')
                 .setTitle('Kirill Spírill')
                 .attachFiles(["https://media.giphy.com/media/w6KndnBTp3iIIPo5qY/giphy.gif"]);
-    
-    
+
+
             msg.channel.send(spirill);
 
     }else if(msg.content === "k mad"){
@@ -718,6 +718,27 @@ distube
         console.error(e)
         message.channel.send("An error encountered: " + e);
 });
+//template for commandline to chat
+/*const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.on('line', async res => {
+	if (res == "listServers")
+	{
+	client.guilds.cache.forEach(guild => {
+		console.log(`${guild.name} | ${guild.id} `)
+	})
+	}
+
+	else if (res == "channel1"){
+		sendChannel = "channel1id"
+		console.log("channel set to channel1 in server")
+}
+	else{
+ 	(await client.channels.fetch(sendChannel)).send(res);
+}});*/
 
 
 const githubEmbed = new Discord.MessageEmbed()
@@ -732,4 +753,3 @@ nodeCleanup(function (exitCode, signal) {
     // release resources here before node exits
     bot.destroy()
 });
-
