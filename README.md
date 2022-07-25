@@ -8,7 +8,10 @@ This bot was originaly created by [James](https://github.com/JimmyJames188) for 
 * Ó góði ráðgjafar-botti lof mér að fá þær upplýsingar um hver er besti bottinn á þessari discord rás => Svo verði ósk þín. Besti bottinn á þessari discord rás er James's Good Advice Bot
 * Snær er ekki skemtilegur => NEI!!!
 * !racist-info => [https://youtu.be/USE86UbsV8c](https://youtu.be/USE86UbsV8c)
-* !nice => [https://youtu.be/ffQmb-cNFuk](https://youtu.be/ffQmb-cNFuk)
+* nice => [https://c.tenor.com/hnP8FWI5fB4AAAAC/joseph-joestar-nice.gif)
+* ruh roh => [https://tenorhttps://c.tenor.com/mYbI09S93U8AAAAd/supa-hot-fire-ooooh.gif).com/x2Yc.gif)
+* ah fuck => [https://tenor.com/bEhW8.gif)
+* yo mom => [https://c.tenor.com/mYbI09S93U8AAAAd/supa-hot-fire-ooooh.gif)
 * Jæja þá skulum við fara með bæn => Heilagi Gummi! Lífið og heilsan er helgidómur, sem þú hefur gefið okkur, því er allt heilagt sem viðheldur lífinu. Gef okkur því visku til að njóta matar og drykkjar með fögnuði og þakklátum huga og gæta jafnframt hófs. Blessaðu líf okkar og starf og gef okkur náð og þrótttil að vera trúir þjónar á akri þínum. Send snauðum og sjúkum hjálp og syrgjendum huggun. Blessaðu og helgaðu lífið sérhverja stund í Gumma krists heilaga nafni. A M E N
 * Lights out! => And away we go! I had a reaction time of `Response time`ms.
 * F => F
